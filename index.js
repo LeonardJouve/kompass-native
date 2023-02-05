@@ -10,12 +10,10 @@ import store from './kompass_redux/store';
 import App from './components/App';
 import {name as appName} from './app.json';
 
-const Index = () => {
-    return (
-        <Provider store={store}>
-            <App/>
-        </Provider>
-    );
-};
+const Index = () => (
+    <Provider store={store}>
+        <App/>
+    </Provider>
+);
 
 AppRegistry.registerComponent(appName, () => Index);
