@@ -6,6 +6,8 @@ module.exports = {
             'root': ['.'],
             'alias': {
                 '@components': './components',
+                '@i18n': './i18n',
+                '@redux': './redux',
             },
         }],
     ],

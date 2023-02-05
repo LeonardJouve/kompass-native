@@ -6,7 +6,7 @@ import React from 'react';
 import {AppRegistry} from 'react-native';
 import {Provider} from 'react-redux';
 
-import store from './kompass_redux/store';
+import store from '@redux/store';
 import App from '@components/App';
 import {name as appName} from './app.json';
 

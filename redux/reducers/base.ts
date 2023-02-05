@@ -10,8 +10,8 @@ const baseSlice = createSlice({
     reducers: {},
 });
 
-const {reducer, actions} = baseSlice;
+const {reducer, actions: actionsBase} = baseSlice;
 
-export {actions};
+export {actionsBase};
 
 export default reducer;
