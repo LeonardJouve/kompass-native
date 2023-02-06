@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
     SafeAreaView,
@@ -8,7 +8,10 @@ import {
     Text,
     useColorScheme,
     View,
+    Button,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
+import {actionsLanguage} from '@redux/reducers/language';
 
 import {
     Colors,
@@ -17,6 +20,7 @@ import {
     LearnMoreLinks,
     ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import FormattedMessage from '@components/formatted_message';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -50,6 +54,9 @@ function Section({children, title}: SectionProps): JSX.Element {
 
 function App(): JSX.Element {
     const isDarkMode = useColorScheme() === 'dark';
+    const dispatch = useDispatch();
+
+    const [myString, setMyString] = useState('state');
 
     const backgroundStyle = {
         backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -62,24 +69,30 @@ function App(): JSX.Element {
                 backgroundColor={backgroundStyle.backgroundColor}
             />
             <ScrollView
-                contentInsetAdjustmentBehavior="automatic"
+                contentInsetAdjustmentBehavior='automatic'
                 style={backgroundStyle}>
                 <Header />
                 <View
                     style={{
                         backgroundColor: isDarkMode ? Colors.black : Colors.white,
                     }}>
-                    <Section title="Step One">
+                    <Section title='Step One'>
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
                     </Section>
-                    <Section title="See Your Changes">
+                    <Button title='' onPress={() => {
+                        dispatch(actionsLanguage.setLanguage('fr'));
+                        setMyString(myString + ' test');
+                    }}/>
+                    <Text>{myString}</Text>
+                    <FormattedMessage id='cool' defaultMessage='cool {number}, {string}' values={{number: 13, string: myString}}/>
+                    <Section title='See Your Changes'>
                         <ReloadInstructions />
                     </Section>
-                    <Section title="Debug">
+                    <Section title='Debug'>
                         <DebugInstructions />
                     </Section>
-                    <Section title="Learn More">
+                    <Section title='Learn More'>
             Read the docs to discover what to do next:
                     </Section>
                     <LearnMoreLinks />

@@ -1,7 +1,7 @@
 import {BaseState} from '@redux/reducers/base';
-import {LangState} from '@redux/reducers/lang';
+import {LanguageState} from '@redux/reducers/language';
 
 export type GlobalState = {
     base: BaseState;
-    lang: LangState;
+    language: LanguageState;
 };

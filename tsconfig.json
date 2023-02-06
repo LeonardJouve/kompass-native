@@ -2,6 +2,9 @@
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
     "allowJs": false,
+    "lib": [
+      "es6", "ES2021"
+    ],
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
@@ -13,7 +16,6 @@
     "noEmit": false,
     "strict": true,
     "importHelpers": true,
-    "importsNotUsedAsValues": "error",
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
     "noImplicitAny": true,
@@ -30,7 +32,7 @@
     "baseUrl": ".",
     "paths": {
       "@components/*": ["components/*"],
-      "@i18n*": ["i18n"],
+      "@i18n/*": ["i18n/*"],
       "@redux/*": ["redux/*"],
       "@typing/*": ["types/*"],
     },

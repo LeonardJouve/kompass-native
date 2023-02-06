@@ -8,5 +8,6 @@ module.exports = {
         'object-curly-spacing': ['error', 'never'],
         'quotes': ['error', 'single'],
         'no-var': 'error',
+        'jsx-quotes': ['error', 'prefer-single'],
     },
 };

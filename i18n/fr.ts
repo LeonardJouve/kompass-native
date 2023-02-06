@@ -1,4 +1,4 @@
-import {TranslationKeys} from '@typing/translation_keys';
+import {TranslationKeys} from '@typing/language';
 
 const fr: TranslationKeys = {
     test: 'test fr',
