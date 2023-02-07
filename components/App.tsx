@@ -11,7 +11,8 @@ import {
     Button,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import {actionsLanguage} from '@redux/reducers/language';
+import {languageActions} from '@redux/reducers/language';
+import {modalActions} from '@redux/reducers/modal';
 
 import {
     Colors,
@@ -21,6 +22,7 @@ import {
     ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import FormattedMessage from '@components/formatted_message';
+import GenericModal from './generic_modal';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -81,11 +83,13 @@ function App(): JSX.Element {
             screen and then come back to see your edits.
                     </Section>
                     <Button title='' onPress={() => {
-                        dispatch(actionsLanguage.setLanguage('fr'));
+                        dispatch(languageActions.setLanguage('fr'));
                         setMyString(myString + ' test');
                     }}/>
                     <Text>{myString}</Text>
-                    <FormattedMessage id='cool' defaultMessage='cool {number}, {string}' values={{number: 13, string: myString}}/>
+                    <FormattedMessage id='test' defaultMessage='cool {number}, {string}' values={{number: 13, string: myString}}/>
+                    <GenericModal/>
+                    <Button title='Generic modal' onPress={() => dispatch(modalActions.openModal('cool'))}/>
                     <Section title='See Your Changes'>
                         <ReloadInstructions />
                     </Section>

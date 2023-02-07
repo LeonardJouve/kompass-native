@@ -3,11 +3,9 @@ import {LanguageKey} from '@typing/language';
 
 export type LanguageState = LanguageKey;
 
-export const initialLanguageState = 'en' as LanguageKey;
+const initialLanguageState = 'en' as LanguageKey;
 
-const setLanguage = (state: LanguageState, action: PayloadAction<LanguageKey>) => {
-    return action.payload;
-};
+const setLanguage = (state: LanguageState, action: PayloadAction<LanguageKey>) => action.payload;
 
 const languageSlice = createSlice({
     name: 'language',
@@ -17,8 +15,8 @@ const languageSlice = createSlice({
     },
 });
 
-const {reducer, actions: actionsLanguage} = languageSlice;
+const {reducer, actions: languageActions} = languageSlice;
 
-export {actionsLanguage};
+export {languageActions};
 
 export default reducer;

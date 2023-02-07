@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 export type BaseState = string;
 
-export const initialBaseState = 'base';
+const initialBaseState = 'base';
 
 const baseSlice = createSlice({
     name: 'base',
@@ -10,8 +10,8 @@ const baseSlice = createSlice({
     reducers: {},
 });
 
-const {reducer, actions: actionsBase} = baseSlice;
+const {reducer, actions: baseActions} = baseSlice;
 
-export {actionsBase};
+export {baseActions};
 
 export default reducer;
