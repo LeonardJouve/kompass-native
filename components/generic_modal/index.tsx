@@ -2,18 +2,83 @@ import React from 'react';
 import {Button, Modal, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {modalActions} from '@redux/reducers/modal';
-import {getModalId, isModalOpen} from '@redux/selectors/modal';
+import {isModalOpen} from '@redux/selectors/modal';
 import {GlobalState} from '@typing/global_state';
 
-const GenericModal = () => {
+type Props = {
+    modalId: string;
+    isCancelable: boolean;
+    content: JSX.Element | string;
+    header?: JSX.Element | string;
+    footer?: JSX.Element;
+    onConfirm?: () => void;
+    onCancel?: () => void;
+    confirmText?: string;
+    cancelText?: string;
+}
+
+const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm, onCancel, confirmText, cancelText}: Props) => {
     const dispatch = useDispatch();
-    const modalId = useSelector(getModalId);
     const visible = useSelector((state: GlobalState) => isModalOpen(state, modalId));
 
     const closeModal = () => dispatch(modalActions.closeModal(modalId));
 
+    const handleConfirm = () => {
+        if (onConfirm) {
+            onConfirm();
+        }
+        closeModal();
+    };
+
+    const handleCancel = () => {
+        if (onCancel) {
+            onCancel();
+        }
+        closeModal();
+    };
+
+    let confirmButtonText = confirmText ?? 'Confirm';
+    const confirmButton = (
+        <Button title={confirmButtonText} onPress={handleConfirm} color={style.header.backgroundColor}/>
+    );
+
+    let cancelButtonText = cancelText ?? 'Cancel';
+    let cancelButton = <View/>;
+    if (isCancelable) {
+        cancelButton = (
+            <Button title={cancelButtonText} onPress={handleCancel} color={style.header.backgroundColor}/>
+        );
+    }
+
+    let headerView;
+    if (header) {
+        if (typeof header === 'string') {
+            headerView = (
+                <Text style={style.headerText}>{header}</Text>
+            );
+        } else {
+            headerView = header;
+        }
+    }
+
+    let contentView;
+    if (content) {
+        if (typeof content === 'string') {
+            contentView = <Text>{content}</Text>;
+        } else {
+            contentView = content;
+        }
+    }
+
+    let footerView = footer ?? (
+        <View style={style.footer}>
+            {cancelButton}
+            {confirmButton}
+        </View>
+    );
+
     return (
-        <View style={style.view}>
+        <View>
             <Modal
                 animationType='slide'
                 visible={visible}
@@ -23,16 +88,12 @@ const GenericModal = () => {
                 <View style={[style.view]}>
                     <View style={[style.modal]}>
                         <View style={style.header}>
-                            <Text>Header</Text>
-                            <Button title='close' onPress={closeModal}/>
+                            {headerView}
                         </View>
                         <View style={style.content}>
-                            <Text style={style.text}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
+                            {contentView}
                         </View>
-                        <View style={style.footer}>
-                            <Button title='Close' onPress={closeModal}/>
-                            <Button title='Confirm'/>
-                        </View>
+                        {footerView}
                     </View>
                 </View>
             </Modal>
@@ -45,34 +106,45 @@ const style = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        gap: 5,
     },
     modal: {
         width: '90%',
-        maxHeight: '90%',
         justifyContent: 'center',
         backgroundColor: 'white',
         borderRadius: 10,
-        padding: 30,
-        elevation: 5,
+        elevation: 8,
         gap: 10,
     },
-    text: {
-        textAlign: 'center',
-    },
     header: {
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        paddingHorizontal: 30,
+        paddingVertical: 5,
+        elevation: 3,
+        backgroundColor: '#2596be',
+    },
+    headerText: {
+        textTransform: 'uppercase',
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: 'white',
     },
     content: {
         width: '100%',
+        paddingHorizontal: 30,
+        paddingVertical: 5,
     },
     footer: {
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        paddingHorizontal: 30,
+        paddingBottom: 15,
     },
 });
 

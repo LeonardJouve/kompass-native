@@ -22,7 +22,7 @@ import {
     ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import FormattedMessage from '@components/formatted_message';
-import GenericModal from './generic_modal';
+import TestModal from '@components/modals/test_modal';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -88,8 +88,8 @@ function App(): JSX.Element {
                     }}/>
                     <Text>{myString}</Text>
                     <FormattedMessage id='test' defaultMessage='cool {number}, {string}' values={{number: 13, string: myString}}/>
-                    <GenericModal/>
-                    <Button title='Generic modal' onPress={() => dispatch(modalActions.openModal('cool'))}/>
+                    <TestModal/>
+                    <Button title='Test modal' onPress={() => dispatch(modalActions.openModal('test'))}/>
                     <Section title='See Your Changes'>
                         <ReloadInstructions />
                     </Section>
