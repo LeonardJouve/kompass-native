@@ -1,5 +1,7 @@
 export type TranslationKeys = {
-    'test': string
+    'test': string;
+    'components.generic_modal.confirm': string;
+    'components.generic_modal.cancel': string;
 };
 
 export type TranslationKey = keyof TranslationKeys;
