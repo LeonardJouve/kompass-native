@@ -24,6 +24,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import FormattedMessage from '@components/formatted_message';
 import TestModal from '@components/modals/test_modal';
+import Tooltip from '@components/tooltip';
 import {NavigationStack} from '@typing/navigation';
 
 type SectionProps = PropsWithChildren<{
@@ -95,6 +96,9 @@ function App({navigation}: Props): JSX.Element {
                     <TestModal/>
                     <Button title='Test modal' onPress={() => dispatch(modalActions.openModal('test'))}/>
                     <Button title='Test' onPress={() => navigation.navigate('Test')}/>
+                    <Tooltip tip='tool tip'>
+                        <Text style={styles.text}>{'blabla'}</Text>
+                    </Tooltip>
                     <Section title='See Your Changes'>
                         <ReloadInstructions />
                     </Section>
@@ -127,6 +131,9 @@ const styles = StyleSheet.create({
     },
     highlight: {
         fontWeight: '700',
+    },
+    text: {
+        textAlign: 'center',
     },
 });
 
