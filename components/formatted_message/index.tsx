@@ -1,10 +1,8 @@
 import React from 'react';
 import {Text} from 'react-native';
-import {useSelector} from 'react-redux';
-import {getLanguage} from '@redux/selectors/laguage';
-import i18n from '@i18n/index';
 import {TranslationKey} from '@typing/language';
 import deepEqual from 'deep-equal';
+import useFormattedMessage from '@hooking/useFormattedMessage';
 
 type Props = {
     id: TranslationKey;
@@ -13,18 +11,8 @@ type Props = {
 };
 
 const FormattedMessage = ({id, defaultMessage, values}: Props) => {
-    const languageKey = useSelector(getLanguage);
-    const language = i18n[languageKey];
-    let message = defaultMessage;
-    if (language && language[id]) {
-        message = language[id];
-    }
-
-    if (values) {
-        Object.keys(values).forEach((key: string) => {
-            message = message.replaceAll('{' + key + '}', String(values[key]));
-        });
-    }
+    const formatMessage = useFormattedMessage();
+    const message = formatMessage({id, defaultMessage, values});
 
     return (
         <Text>{message}</Text>

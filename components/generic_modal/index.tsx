@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {modalActions} from '@redux/reducers/modal';
 import {isModalOpen} from '@redux/selectors/modal';
 import {GlobalState} from '@typing/global_state';
+import useFormattedMessage from '@hooking/useFormattedMessage';
 
 type Props = {
     modalId: string;
@@ -20,6 +21,7 @@ type Props = {
 const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm, onCancel, confirmText, cancelText}: Props) => {
     const dispatch = useDispatch();
     const visible = useSelector((state: GlobalState) => isModalOpen(state, modalId));
+    const formatMessage = useFormattedMessage();
 
     const closeModal = () => dispatch(modalActions.closeModal(modalId));
 
@@ -37,12 +39,12 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
         closeModal();
     };
 
-    let confirmButtonText = confirmText ?? 'Confirm';
+    let confirmButtonText = confirmText ?? formatMessage({id: 'components.generic_modal.confirm', defaultMessage: 'Confirm'});
     const confirmButton = (
         <Button title={confirmButtonText} onPress={handleConfirm} color={style.header.backgroundColor}/>
     );
 
-    let cancelButtonText = cancelText ?? 'Cancel';
+    let cancelButtonText = cancelText ?? formatMessage({id: 'components.generic_modal.cancel', defaultMessage: 'Cancel'});
     let cancelButton = <View/>;
     if (isCancelable) {
         cancelButton = (
