@@ -10,6 +10,7 @@ import {
     View,
     Button,
 } from 'react-native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useDispatch} from 'react-redux';
 import {languageActions} from '@redux/reducers/language';
 import {modalActions} from '@redux/reducers/modal';
@@ -23,6 +24,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import FormattedMessage from '@components/formatted_message';
 import TestModal from '@components/modals/test_modal';
+import {NavigationStack} from '@typing/navigation';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -54,7 +56,9 @@ function Section({children, title}: SectionProps): JSX.Element {
     );
 }
 
-function App(): JSX.Element {
+type Props = NativeStackScreenProps<NavigationStack, 'App'>
+
+function App({navigation}: Props): JSX.Element {
     const isDarkMode = useColorScheme() === 'dark';
     const dispatch = useDispatch();
 
@@ -90,6 +94,7 @@ function App(): JSX.Element {
                     <FormattedMessage id='test' defaultMessage='cool {number}, {string}' values={{number: 13, string: myString}}/>
                     <TestModal/>
                     <Button title='Test modal' onPress={() => dispatch(modalActions.openModal('test'))}/>
+                    <Button title='Test' onPress={() => navigation.navigate('Test')}/>
                     <Section title='See Your Changes'>
                         <ReloadInstructions />
                     </Section>

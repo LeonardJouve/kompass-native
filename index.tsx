@@ -3,12 +3,12 @@ import {AppRegistry} from 'react-native';
 import {Provider} from 'react-redux';
 
 import store from '@redux/store';
-import App from '@components/app';
 import {name as appName} from './app.json';
+import Rooter from './rooter';
 
 const Index = () => (
     <Provider store={store}>
-        <App/>
+        <Rooter/>
     </Provider>
 );
 
