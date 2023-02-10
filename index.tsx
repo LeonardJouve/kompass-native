@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 
 import store from '@redux/store';
 import {name as appName} from './app.json';
-import Rooter from './rooter';
+import Rooter from './router';
 
 const Index = () => (
     <Provider store={store}>
