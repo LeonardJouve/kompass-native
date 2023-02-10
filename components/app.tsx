@@ -96,9 +96,11 @@ function App({navigation}: Props): JSX.Element {
                     <TestModal/>
                     <Button title='Test modal' onPress={() => dispatch(modalActions.openModal('test'))}/>
                     <Button title='Test' onPress={() => navigation.navigate('Test')}/>
-                    <Tooltip tip='tool tip'>
-                        <Text style={styles.text}>{'blabla'}</Text>
-                    </Tooltip>
+                    <View style={styles.smallView}>
+                        <Tooltip tip='tool tip'>
+                            <Text style={styles.text}>{'dwadwadwadwadwadwadawdwa'}</Text>
+                        </Tooltip>
+                    </View>
                     <Section title='See Your Changes'>
                         <ReloadInstructions />
                     </Section>
@@ -133,7 +135,10 @@ const styles = StyleSheet.create({
         fontWeight: '700',
     },
     text: {
-        textAlign: 'center',
+        textAlign: 'left',
+    },
+    smallView: {
+        width: 100,
     },
 });
 
