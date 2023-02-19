@@ -6,6 +6,7 @@ module.exports = {
             'root': ['.'],
             'alias': {
                 '@components': './components',
+                '@constants': './constants',
                 '@hooking': './hooks',
                 '@types': './types',
                 '@i18n': './i18n',

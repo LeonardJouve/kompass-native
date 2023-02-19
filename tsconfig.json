@@ -32,6 +32,7 @@
     "baseUrl": ".",
     "paths": {
       "@components/*": ["components/*"],
+      "@constants/*": ["constants/*"],
       "@hooking/*": ["hooks/*"],
       "@i18n/*": ["i18n/*"],
       "@redux/*": ["redux/*"],
