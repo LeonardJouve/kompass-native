@@ -35,6 +35,7 @@
       "@constants/*": ["constants/*"],
       "@hooking/*": ["hooks/*"],
       "@i18n/*": ["i18n/*"],
+      "@renative/*": ["native/*"],
       "@redux/*": ["redux/*"],
       "@typing/*": ["types/*"],
     },

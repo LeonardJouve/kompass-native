@@ -26,10 +26,25 @@ enum Breakpoints {
     tablet,
 }
 
+enum ButtonVariants {
+    primary,
+    secondary,
+}
+
+enum ViewVariants {
+    primary,
+    secondary,
+}
+
+enum TextVariants {
+    primary,
+    secondary,
+}
+
 type Variants = {
-    button: Record<string, StyleProp<ViewStyle>>,
-    view: Record<string, StyleProp<ViewStyle>>,
-    text: Record<string, StyleProp<TextStyle>>,
+    button: Record<keyof typeof ButtonVariants, StyleProp<ViewStyle>>,
+    view: Record<keyof typeof ViewVariants, StyleProp<ViewStyle>>,
+    text: Record<keyof typeof TextVariants, StyleProp<TextStyle>>,
 }
 
 export type Theme = {
@@ -40,7 +55,7 @@ export type Theme = {
     variants: Variants;
 };
 
-export const useTheme = () => {
+const useTheme = () => {
     const {type, primaryColor, secondaryColor, backgroundPrimaryColor, backgroundSecondaryColor} = useSelector(getTheme);
     const colors: Theme['colors'] = {
         buttonPrimary: primaryColor,
@@ -67,9 +82,15 @@ export const useTheme = () => {
         variants: {
             button: StyleSheet.create({
                 primary: {
+                    width: 'auto',
+                    padding: 5,
+                    borderRadius: 10,
                     backgroundColor: colors.buttonPrimary,
                 },
                 secondary: {
+                    width: 'auto',
+                    padding: 5,
+                    borderRadius: 10,
                     backgroundColor: colors.buttonSecondary,
                 },
             }),
@@ -92,3 +113,5 @@ export const useTheme = () => {
         },
     } as Theme;
 };
+
+export default useTheme;

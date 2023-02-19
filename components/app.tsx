@@ -9,7 +9,6 @@ import {
     useColorScheme,
     View,
     Button,
-    Pressable,
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useDispatch} from 'react-redux';
@@ -28,7 +27,8 @@ import FormattedMessage from '@components/formatted_message';
 import TestModal from '@components/modals/test_modal';
 import Tooltip from '@components/tooltip';
 import {NavigationStack} from '@typing/navigation';
-import {useTheme} from '@hooking/useTheme';
+import useTheme from '@hooking/useTheme';
+import CustomButton from '@renative/button';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -85,14 +85,13 @@ function App({navigation}: Props): JSX.Element {
                 style={backgroundStyle}>
                 <Header />
                 <View style={{backgroundColor: isDarkMode ? Colors.black : Colors.white}}>
-                    <View style={[theme.variants.view.secondary, {paddingLeft: 70}]} onTouchEnd={() => dispatch(themeActions.setTheme(theme.type === 'dark' ? 'light' : 'dark'))}>
+                    <View
+                        style={[theme.variants.view.secondary, {paddingLeft: 70}]}
+                        onTouchEnd={() => dispatch(themeActions.setTheme(theme.type === 'dark' ? 'light' : 'dark'))}
+                    >
                         <View style={[theme.variants.view.primary, {justifyContent: 'center', gap: 30, flexDirection: 'row', paddingVertical: 10}]}>
-                            <Pressable style={[theme.variants.button.secondary, {width: 'auto', padding: 5, borderRadius: 10}]}>
-                                <Text style={theme.variants.text.secondary}>test</Text>
-                            </Pressable>
-                            <Pressable style={[theme.variants.button.primary, {width: 'auto', padding: 5, borderRadius: 10}]}>
-                                <Text style={theme.variants.text.primary}>test</Text>
-                            </Pressable>
+                            <CustomButton variant='secondary' text='secondary'/>
+                            <CustomButton variant='primary' text='primary'/>
                         </View>
                     </View>
                     <Section title='Step One'>
