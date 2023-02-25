@@ -41,14 +41,22 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
 
     let confirmButtonText = confirmText ?? formatMessage({id: 'components.generic_modal.confirm', defaultMessage: 'Confirm'});
     const confirmButton = (
-        <Button title={confirmButtonText} onPress={handleConfirm} color={style.header.backgroundColor}/>
+        <Button
+            title={confirmButtonText}
+            onPress={handleConfirm}
+            color={style.header.backgroundColor}
+        />
     );
 
     let cancelButtonText = cancelText ?? formatMessage({id: 'components.generic_modal.cancel', defaultMessage: 'Cancel'});
     let cancelButton = <View/>;
     if (isCancelable) {
         cancelButton = (
-            <Button title={cancelButtonText} onPress={handleCancel} color={style.header.backgroundColor}/>
+            <Button
+                title={cancelButtonText}
+                onPress={handleCancel}
+                color={style.header.backgroundColor}
+            />
         );
     }
 

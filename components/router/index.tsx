@@ -9,9 +9,18 @@ const Stack = createNativeStackNavigator<NavigationStack>();
 
 const Rooter = () => (
     <NavigationContainer>
-        <Stack.Navigator initialRouteName='App' screenOptions={{headerShown: false}}>
-            <Stack.Screen name='App' component={App}/>
-            <Stack.Screen name='Test' component={Test}/>
+        <Stack.Navigator
+            initialRouteName='App'
+            screenOptions={{headerShown: false}}
+        >
+            <Stack.Screen
+                name='App'
+                component={App}
+            />
+            <Stack.Screen
+                name='Test'
+                component={Test}
+            />
         </Stack.Navigator>
     </NavigationContainer>
 );

@@ -22,7 +22,10 @@ const Tooltip = ({children, tip}: Props) => {
     let tooltip: JSX.Element | undefined;
     if (isVisible) {
         tooltip = (
-            <View onLayout={onLayout} style={[style.tooltipWrapper, {transform: [{translateY: -height}, {translateX: -(width / 2)}]}]}>
+            <View
+                onLayout={onLayout}
+                style={[style.tooltipWrapper, {transform: [{translateY: -height}, {translateX: -(width / 2)}]}]}
+            >
                 <View style={style.tooltipView}>
                     <Text style={style.tooltip}>{tip}</Text>
                 </View>
@@ -33,7 +36,10 @@ const Tooltip = ({children, tip}: Props) => {
     return (
         <View style={style.wrapper}>
             {tooltip}
-            <Pressable onLongPress={handleLongPress} onPressOut={handlePressOut}>
+            <Pressable
+                onLongPress={handleLongPress}
+                onPressOut={handlePressOut}
+            >
                 {children}
             </Pressable>
         </View>

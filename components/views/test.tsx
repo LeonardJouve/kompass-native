@@ -7,7 +7,10 @@ type Props = NativeStackScreenProps<NavigationStack, 'Test'>
 
 const Test = ({navigation}: Props) => (
     <View style={style.view}>
-        <Button title='app' onPress={() => navigation.navigate('App')}/>
+        <Button
+            title='app'
+            onPress={() => navigation.navigate('App')}
+        />
     </View>
 );
 

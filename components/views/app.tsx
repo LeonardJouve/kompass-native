@@ -90,23 +90,42 @@ function App({navigation}: Props): JSX.Element {
                         onTouchEnd={() => dispatch(themeActions.setTheme(theme.type === 'dark' ? 'light' : 'dark'))}
                     >
                         <View style={[theme.variants.view.primary, {justifyContent: 'center', gap: 30, flexDirection: 'row', paddingVertical: 10}]}>
-                            <CustomButton variant='secondary' text='secondary'/>
-                            <CustomButton variant='primary' text='primary'/>
+                            <CustomButton
+                                variant='secondary'
+                                text='secondary'
+                            />
+                            <CustomButton
+                                variant='primary'
+                                text='primary'
+                            />
                         </View>
                     </View>
                     <Section title='Step One'>
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
                     </Section>
-                    <Button title='' onPress={() => {
-                        dispatch(languageActions.setLanguage('fr'));
-                        setMyString(myString + ' test');
-                    }}/>
+                    <Button
+                        title=''
+                        onPress={() => {
+                            dispatch(languageActions.setLanguage('fr'));
+                            setMyString(myString + ' test');
+                        }}
+                    />
                     <Text>{myString}</Text>
-                    <FormattedMessage id='test' defaultMessage='cool {number}, {string}' values={{number: 13, string: myString}}/>
+                    <FormattedMessage
+                        id='test'
+                        defaultMessage='cool {number}, {string}'
+                        values={{number: 13, string: myString}}
+                    />
                     <TestModal/>
-                    <Button title='Test modal' onPress={() => dispatch(modalActions.openModal('test'))}/>
-                    <Button title='Test' onPress={() => navigation.navigate('Test')}/>
+                    <Button
+                        title='Test modal'
+                        onPress={() => dispatch(modalActions.openModal('test'))}
+                    />
+                    <Button
+                        title='Test'
+                        onPress={() => navigation.navigate('Test')}
+                    />
                     <View style={styles.smallView}>
                         <Tooltip tip='tool tip'>
                             <Text style={styles.text}>{'dwadwadwadwadwadwadawdwa'}</Text>
