@@ -1,15 +1,5 @@
-import React from 'react';
 import {AppRegistry} from 'react-native';
-import {Provider} from 'react-redux';
-
-import store from '@redux/store';
 import {name as appName} from './app.json';
-import Router from './router';
+import Root from '@components/root';
 
-const Index = () => (
-    <Provider store={store}>
-        <Router/>
-    </Provider>
-);
-
-AppRegistry.registerComponent(appName, () => Index);
+AppRegistry.registerComponent(appName, () => Root);
