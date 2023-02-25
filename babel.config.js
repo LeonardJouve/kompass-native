@@ -9,7 +9,7 @@ module.exports = {
                 '@constants': './constants',
                 '@hooking': './hooks',
                 '@i18n': './i18n',
-                '@renative': './native',
+                '@renative': './renative',
                 '@redux': './redux',
                 '@types': './types',
             },
