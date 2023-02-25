@@ -9,5 +9,6 @@ module.exports = {
         'quotes': ['error', 'single'],
         'no-var': 'error',
         'jsx-quotes': ['error', 'prefer-single'],
+        'react/jsx-max-props-per-line': ['error', {maximum: 1, when: 'always'}],
     },
 };
