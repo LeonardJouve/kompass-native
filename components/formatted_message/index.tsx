@@ -1,7 +1,7 @@
 import React from 'react';
-import {Text} from 'react-native';
 import {TranslationKey} from '@typing/language';
 import deepEqual from 'deep-equal';
+import {Text} from '@renative/index';
 import useFormattedMessage from '@hooking/useFormattedMessage';
 
 type Props = {
@@ -15,7 +15,7 @@ const FormattedMessage = ({id, defaultMessage, values}: Props) => {
     const message = formatMessage({id, defaultMessage, values});
 
     return (
-        <Text>{message}</Text>
+        <Text variants={['primary']}>{message}</Text>
     );
 };
 

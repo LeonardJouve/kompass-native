@@ -1,8 +1,10 @@
-export type TranslationKeys = {
-    'test': string;
-    'components.generic_modal.confirm': string;
-    'components.generic_modal.cancel': string;
-};
+enum TranslationKeysEnum {
+    'test',
+    'components.generic_modal.confirm',
+    'components.generic_modal.cancel',
+}
+
+export type TranslationKeys = Record<keyof typeof TranslationKeysEnum, string>;
 
 export type TranslationKey = keyof TranslationKeys;
 

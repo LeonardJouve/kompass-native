@@ -1,61 +1,9 @@
 import {StyleSheet} from 'react-native';
 import {getTheme} from '@redux/selectors/theme';
 import {useSelector} from 'react-redux';
-import {StyleProp, TextStyle, ViewStyle} from 'react-native/types';
-import {ThemeState} from '@redux/reducers/theme';
+import {Theme} from '@typing/theme';
 
-enum Colors {
-    buttonPrimary,
-    buttonSecondary,
-    viewPrimary,
-    viewSecondary,
-    textPrimary,
-    textSecondary,
-}
-
-enum Sizes {
-    xl,
-    l,
-    m,
-    s,
-    xs,
-}
-
-enum Breakpoints {
-    phone,
-    tablet,
-}
-
-enum ButtonVariants {
-    primary,
-    secondary,
-}
-
-enum ViewVariants {
-    primary,
-    secondary,
-}
-
-enum TextVariants {
-    primary,
-    secondary,
-}
-
-type Variants = {
-    button: Record<keyof typeof ButtonVariants, StyleProp<ViewStyle>>,
-    view: Record<keyof typeof ViewVariants, StyleProp<ViewStyle>>,
-    text: Record<keyof typeof TextVariants, StyleProp<TextStyle>>,
-}
-
-export type Theme = {
-    type: ThemeState['type']
-    colors: Record<keyof typeof Colors, string>;
-    spacing: Record<keyof typeof Sizes, number>;
-    breakpoints: Record<keyof typeof Breakpoints, number>;
-    variants: Variants;
-};
-
-const useTheme = () => {
+const useTheme = (): Theme => {
     const {type, primaryColor, secondaryColor, backgroundPrimaryColor, backgroundSecondaryColor} = useSelector(getTheme);
     const colors: Theme['colors'] = {
         buttonPrimary: primaryColor,
@@ -69,8 +17,8 @@ const useTheme = () => {
         type,
         colors,
         spacing: {
-            xl: 20,
-            l: 15,
+            xl: 30,
+            l: 20,
             m: 15,
             s: 10,
             xs: 5,
@@ -101,6 +49,31 @@ const useTheme = () => {
                 secondary: {
                     backgroundColor: colors.viewSecondary,
                 },
+                row: {
+                    flexDirection: 'row',
+                    gap: 10,
+                },
+                column: {
+                    flexDirection: 'column',
+                    gap: 10,
+                },
+                centered: {
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                },
+                rounded: {
+                    borderRadius: 8,
+                },
+                elevationLow: {
+                    elevation: 2,
+                },
+                elevationMedium: {
+                    elevation: 5,
+                },
+                elevationHigh: {
+                    elevation: 8,
+                },
             }),
             text: StyleSheet.create({
                 primary: {
@@ -109,9 +82,14 @@ const useTheme = () => {
                 secondary: {
                     color: colors.textSecondary,
                 },
+                header: {
+                    textTransform: 'uppercase',
+                    fontWeight: 'bold',
+                    fontSize: 20,
+                },
             }),
         },
-    } as Theme;
+    };
 };
 
 export default useTheme;

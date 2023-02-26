@@ -1,25 +1,19 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {NavigationStack} from '@typing/navigation';
 import React from 'react';
-import {Button, StyleSheet, View} from 'react-native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {View, Button} from '@renative/index';
+import {NavigationStack} from '@typing/navigation';
 
 type Props = NativeStackScreenProps<NavigationStack, 'Test'>
 
 const Test = ({navigation}: Props) => (
-    <View style={style.view}>
+    <View variants={['centered', 'primary']}>
         <Button
-            title='app'
+            variants={['primary']}
+            textVariants={['primary']}
+            text='app'
             onPress={() => navigation.navigate('App')}
         />
     </View>
 );
-
-const style = StyleSheet.create({
-    view: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-});
 
 export default Test;

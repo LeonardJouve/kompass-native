@@ -5,13 +5,15 @@ module.exports = {
         ['module-resolver', {
             'root': ['.'],
             'alias': {
+                '@api': './api',
                 '@components': './components',
                 '@constants': './constants',
                 '@hooking': './hooks',
                 '@i18n': './i18n',
-                '@renative': './renative',
+                '@renative': './components/renative',
                 '@redux': './redux',
                 '@types': './types',
+                '@utils': './utils',
             },
         }],
     ],
