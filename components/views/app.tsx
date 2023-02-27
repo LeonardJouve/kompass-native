@@ -24,7 +24,6 @@ import {
     ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import FormattedMessage from '@components/formatted_message';
-import TestModal from '@components/modals/test_modal';
 import Tooltip from '@components/tooltip';
 import {NavigationStack} from '@typing/navigation';
 import useTheme from '@hooking/useTheme';
@@ -136,7 +135,6 @@ function App({navigation}: Props): JSX.Element {
                         defaultMessage='cool {number}, {string}'
                         values={{number: 13, string: myString}}
                     />
-                    <TestModal/>
                     <Button
                         title='Test modal'
                         onPress={() => dispatch(modalActions.openModal('test'))}
