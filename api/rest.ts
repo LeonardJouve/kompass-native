@@ -1,10 +1,11 @@
 import {Options, Response} from '@typing/rest';
+import {BASE_URL} from '@env';
 
 class Client {
     baseUrl: string;
 
     constructor() {
-        this.baseUrl = process.env.BASE_URL!;
+        this.baseUrl = BASE_URL;
     }
 
     async fetch(route: string, options: Options): Response<any> {
