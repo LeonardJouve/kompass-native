@@ -1,7 +1,7 @@
 import {StyleProp as NativeStyleProp, TextStyle, ViewStyle} from 'react-native/types';
 import {ThemeState} from '@redux/reducers/theme';
 
-export enum ThemeTypes {
+enum ThemeTypes {
     light,
     dark,
 }
@@ -85,7 +85,9 @@ export type PaddingProp = Partial<Record<Padding, Size | number>>;
 
 export type Spacings = Record<Size, number>;
 
-export type Themes = Record<keyof typeof ThemeTypes, ThemeState>;
+export type ThemeType = keyof typeof ThemeTypes;
+
+export type Themes = Record<ThemeType, ThemeState>;
 
 export type Color = keyof typeof Colors;
 

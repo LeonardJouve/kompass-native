@@ -2,7 +2,7 @@ import React from 'react';
 import GenericModal from '@components/generic_modal';
 import {ModalIdentifiers} from '@typing/modals';
 
-const TestModal = () => {
+const ErrorModal = () => {
     return (
         <GenericModal
             modalId={ModalIdentifiers.ERROR}
@@ -15,4 +15,4 @@ const TestModal = () => {
     );
 };
 
-export default TestModal;
+export default ErrorModal;

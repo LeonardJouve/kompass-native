@@ -15,7 +15,7 @@ module.exports = {
                 '@i18n': './i18n',
                 '@renative': './components/renative',
                 '@redux': './redux',
-                '@types': './types',
+                '@typing': './types',
                 '@utils': './utils',
             },
         }],

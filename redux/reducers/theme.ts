@@ -1,9 +1,9 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Themes} from '@constants/themes';
-import {ThemeTypes} from '@typing/theme';
+import {ThemeType} from '@typing/theme';
 
 export type ThemeState = {
-    type: keyof typeof ThemeTypes | 'custom';
+    type: ThemeType | 'custom';
     primaryColor: string;
     secondaryColor: string;
     backgroundPrimaryColor: string;
@@ -12,7 +12,7 @@ export type ThemeState = {
 
 const initialThemeState = {...Themes.light};
 
-const setTheme = (state: ThemeState, action: PayloadAction<keyof typeof ThemeTypes>) => Themes[action.payload];
+const setTheme = (state: ThemeState, action: PayloadAction<ThemeType>) => Themes[action.payload];
 
 const setCustomTheme = (state: ThemeState, action: PayloadAction<ThemeState>) => action.payload;
 
