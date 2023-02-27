@@ -7,9 +7,10 @@ import {modalActions} from '@redux/reducers/modal';
 import {isModalOpen} from '@redux/selectors/modal';
 import {GlobalState} from '@typing/global_state';
 import useFormattedMessage from '@hooking/useFormattedMessage';
+import {ModalIdentifier} from '@typing/modals';
 
 type Props = {
-    modalId: string;
+    modalId: ModalIdentifier;
     isCancelable: boolean;
     content: JSX.Element | string;
     header?: JSX.Element | string;
@@ -107,7 +108,10 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
                     variants={['centered']}
                     margin={{margin: 'm'}}
                 >
-                    <View variants={['primary', 'rounded', 'elevationHigh', 'column']}>
+                    <View
+                        variants={['primary', 'rounded', 'elevationHigh', 'column']}
+                        style={style.modal}
+                    >
                         <View
                             variants={['secondary', 'elevationLow']}
                             padding={{paddingHorizontal: 'xl', paddingVertical: 'xs'}}
@@ -133,6 +137,9 @@ const style = StyleSheet.create({
     header: {
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
+    },
+    modal: {
+        width: '90%',
     },
     footer: {
         justifyContent: 'space-between',

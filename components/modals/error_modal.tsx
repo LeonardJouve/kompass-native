@@ -1,16 +1,43 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useSelector} from 'react-redux';
+import {useAppDispatch} from '@redux/store';
+import {getModalProps} from '@redux/selectors/modal';
+import useFormattedMessage from '@hooking/useFormattedMessage';
 import GenericModal from '@components/generic_modal';
 import {ModalIdentifiers} from '@typing/modals';
 
 const ErrorModal = () => {
+    const dispatch = useAppDispatch();
+    const formatMessage = useFormattedMessage();
+    const {id, defaultMessage, values, url} = useSelector(getModalProps);
+    const message = formatMessage({
+        id,
+        defaultMessage,
+        values,
+    });
+
+    // useEffect(() => {
+    //     if (message && url) {
+    //         dispatch(sendError(message, url));
+    //     }
+    // }, [message, url]);
+
     return (
         <GenericModal
             modalId={ModalIdentifiers.ERROR}
-            isCancelable={true}
-            header={'header'}
-            content={'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}
-            onConfirm={() => console.log('confirm !')}
-            onCancel={() => console.log('cancel !')}
+            isCancelable={false}
+            header={formatMessage({
+                id: 'components.error_modal.header',
+                defaultMessage: 'error',
+            })}
+            content={formatMessage({
+                id: 'components.error_modal.content',
+                defaultMessage: 'An error has occurred, if you encounter a problem, try to restart the application.\n{url}: {message}',
+                values: {
+                    message,
+                    url,
+                },
+            })}
         />
     );
 };
