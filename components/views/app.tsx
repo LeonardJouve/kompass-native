@@ -33,6 +33,7 @@ import {getTest} from '@redux/selectors/test';
 import {getTest as getTestAction} from '@redux/actions/test';
 import {useAppDispatch} from '@redux/store';
 import {testActions} from '@redux/reducers/test';
+import {ModalIdentifiers} from '@typing/modals';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -137,7 +138,7 @@ function App({navigation}: Props): JSX.Element {
                     />
                     <Button
                         title='Test modal'
-                        onPress={() => dispatch(modalActions.openModal('test'))}
+                        onPress={() => dispatch(modalActions.openModal(ModalIdentifiers.TEST))}
                     />
                     <Button
                         title='Test'

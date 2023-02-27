@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {ModalIdentifier} from '@typing/modals';
 
 export type ModalState = {
     modalId: string;
@@ -10,12 +11,12 @@ const initialModalState = {
     visible: false,
 } as ModalState;
 
-const openModal = (state: ModalState, action: PayloadAction<string>) => ({
+const openModal = (state: ModalState, action: PayloadAction<ModalIdentifier>) => ({
     modalId: action.payload,
     visible: true,
 });
 
-const closeModal = (state: ModalState, action: PayloadAction<string>) => {
+const closeModal = (state: ModalState, action: PayloadAction<ModalIdentifier>) => {
     if (state.modalId === action.payload) {
         return {
             modalId: action.payload,

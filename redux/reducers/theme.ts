@@ -1,10 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Themes} from '@constants/themes';
-
-export enum ThemeTypes {
-    light,
-    dark,
-}
+import {ThemeTypes} from '@typing/theme';
 
 export type ThemeState = {
     type: keyof typeof ThemeTypes | 'custom';
