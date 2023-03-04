@@ -49,7 +49,6 @@ class Client {
     }
 
     async sendError(error: Omit<Error, 'error'>): Response<Record<string, any>> {
-        console.log(error)
         return await this.fetch(
             `${this.getApiRoute()}/errors`,
             {method: 'POST', body: JSON.stringify(error)}
