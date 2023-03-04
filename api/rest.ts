@@ -1,4 +1,4 @@
-import {Options, Response} from '@typing/rest';
+import {Options, Response, Error} from '@typing/rest';
 import {BASE_URL} from '@env';
 
 class Client {
@@ -8,23 +8,25 @@ class Client {
         this.baseUrl = BASE_URL;
     }
 
-    async fetch(route: string, options: Options): Response<any> {
-        const result = await fetch(route, options);
+    async fetch(url: string, options: Options): Response<any> {
+        const result = await fetch(url, options);
         let data;
         try {
             data = await result.json();
-        } catch (err) {
+        } catch (error) {
             return {
                 data: {
                     id: 'api.rest.error.invalid_json',
-                    message: 'Received invalid response from the server.',
+                    defaultMessage: 'Received invalid response from the server.',
                 },
+                url,
                 error: true,
-                status: 422,
+                status: result.status,
             };
         }
         return {
             data,
+            url,
             error: !result.ok,
             status: result.status,
         };
@@ -42,6 +44,13 @@ class Client {
         return await this.fetch(
             `${this.getApiRoute()}/test`,
             {method: 'GET'},
+        );
+    }
+
+    async sendError(error: Omit<Error, 'error'>) {
+        return await this.fetch(
+            `${this.getApiRoute()}/errors`,
+            {method: 'POST', body: JSON.stringify(error)}
         );
     }
 }

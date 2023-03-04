@@ -138,7 +138,7 @@ function App({navigation}: Props): JSX.Element {
                     />
                     <Button
                         title='Test modal'
-                        onPress={() => dispatch(modalActions.openModal({modalId: ModalIdentifiers.ERROR, props: {id: 'components.error_modal.header', defaultMessage: 'Error', values: {}, url: 'http://url.ch'}}))}
+                        onPress={() => dispatch(modalActions.openModal({modalId: ModalIdentifiers.ERROR, props: {id: 'components.error_modal.header', values: {}, url: 'http://url.ch', status: 422}}))}
                     />
                     <Button
                         title='Test'
