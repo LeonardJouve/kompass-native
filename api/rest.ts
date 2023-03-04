@@ -9,7 +9,8 @@ class Client {
     }
 
     async fetch(url: string, options: Options): Response<any> {
-        const result = await fetch(url, options);
+        const headers = {'Content-Type': 'application/json', 'Accept': 'application/json'};
+        const result = await fetch(url, {...options, headers: {...options.headers, ...headers}});
         let data;
         try {
             data = await result.json();
@@ -47,7 +48,8 @@ class Client {
         );
     }
 
-    async sendError(error: Omit<Error, 'error'>) {
+    async sendError(error: Omit<Error, 'error'>): Response<Record<string, any>> {
+        console.log(error)
         return await this.fetch(
             `${this.getApiRoute()}/errors`,
             {method: 'POST', body: JSON.stringify(error)}
