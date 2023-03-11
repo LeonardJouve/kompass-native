@@ -1,13 +1,16 @@
 import React from 'react';
-import {Button, Modal, StyleSheet, Text, View} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {Modal, StyleSheet} from 'react-native';
+import {useSelector} from 'react-redux';
+import {useAppDispatch} from '@redux/store';
+import {Button, Text, View} from '@renative/index';
 import {modalActions} from '@redux/reducers/modal';
 import {isModalOpen} from '@redux/selectors/modal';
 import {GlobalState} from '@typing/global_state';
 import useFormattedMessage from '@hooking/useFormattedMessage';
+import {ModalIdentifier} from '@typing/modals';
 
 type Props = {
-    modalId: string;
+    modalId: ModalIdentifier;
     isCancelable: boolean;
     content: JSX.Element | string;
     header?: JSX.Element | string;
@@ -19,7 +22,7 @@ type Props = {
 }
 
 const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm, onCancel, confirmText, cancelText}: Props) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const visible = useSelector((state: GlobalState) => isModalOpen(state, modalId));
     const formatMessage = useFormattedMessage();
 
@@ -41,14 +44,24 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
 
     let confirmButtonText = confirmText ?? formatMessage({id: 'components.generic_modal.confirm', defaultMessage: 'Confirm'});
     const confirmButton = (
-        <Button title={confirmButtonText} onPress={handleConfirm} color={style.header.backgroundColor}/>
+        <Button
+            variants={['primary']}
+            textVariants={['primary']}
+            text={confirmButtonText}
+            onPress={handleConfirm}
+        />
     );
 
     let cancelButtonText = cancelText ?? formatMessage({id: 'components.generic_modal.cancel', defaultMessage: 'Cancel'});
     let cancelButton = <View/>;
     if (isCancelable) {
         cancelButton = (
-            <Button title={cancelButtonText} onPress={handleCancel} color={style.header.backgroundColor}/>
+            <Button
+                variants={['secondary']}
+                textVariants={['secondary']}
+                text={cancelButtonText}
+                onPress={handleCancel}
+            />
         );
     }
 
@@ -56,7 +69,7 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
     if (header) {
         if (typeof header === 'string') {
             headerView = (
-                <Text style={style.headerText}>{header}</Text>
+                <Text variants={['primary', 'header']}>{header}</Text>
             );
         } else {
             headerView = header;
@@ -66,14 +79,18 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
     let contentView;
     if (content) {
         if (typeof content === 'string') {
-            contentView = <Text>{content}</Text>;
+            contentView = <Text variants={['primary']}>{content}</Text>;
         } else {
             contentView = content;
         }
     }
 
     let footerView = footer ?? (
-        <View style={style.footer}>
+        <View
+            variants={['row']}
+            style={style.footer}
+            padding={{paddingHorizontal: 'xl', paddingBottom: 's'}}
+        >
             {cancelButton}
             {confirmButton}
         </View>
@@ -87,12 +104,25 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
                 transparent={true}
                 onRequestClose={closeModal}
             >
-                <View style={[style.view]}>
-                    <View style={[style.modal]}>
-                        <View style={style.header}>
+                <View
+                    variants={['centered']}
+                    margin={{margin: 'm'}}
+                >
+                    <View
+                        variants={['primary', 'rounded', 'elevationHigh', 'column']}
+                        style={style.modal}
+                    >
+                        <View
+                            variants={['secondary', 'elevationLow']}
+                            padding={{paddingHorizontal: 'xl', paddingVertical: 'xs'}}
+                            style={style.header}
+                        >
                             {headerView}
                         </View>
-                        <View style={style.content}>
+                        <View
+                            variants={['primary']}
+                            padding={{paddingHorizontal: 'xl'}}
+                        >
                             {contentView}
                         </View>
                         {footerView}
@@ -104,49 +134,17 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
 };
 
 const style = StyleSheet.create({
-    view: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+    header: {
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8,
     },
     modal: {
         width: '90%',
-        justifyContent: 'center',
-        backgroundColor: 'white',
-        borderRadius: 10,
-        elevation: 8,
-        gap: 10,
-    },
-    header: {
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 30,
-        paddingVertical: 5,
-        elevation: 3,
-        backgroundColor: '#2596be',
-    },
-    headerText: {
-        textTransform: 'uppercase',
-        fontWeight: 'bold',
-        fontSize: 20,
-        color: 'white',
-    },
-    content: {
-        width: '100%',
-        paddingHorizontal: 30,
-        paddingVertical: 5,
     },
     footer: {
-        borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10,
-        width: '100%',
-        flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 30,
-        paddingBottom: 15,
+        borderBottomLeftRadius: 8,
+        borderBottomRightRadius: 8,
     },
 });
 

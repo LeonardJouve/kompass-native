@@ -11,7 +11,7 @@ import {
     Button,
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {languageActions} from '@redux/reducers/language';
 import {modalActions} from '@redux/reducers/modal';
 import {themeActions} from '@redux/reducers/theme';
@@ -24,11 +24,16 @@ import {
     ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import FormattedMessage from '@components/formatted_message';
-import TestModal from '@components/modals/test_modal';
 import Tooltip from '@components/tooltip';
 import {NavigationStack} from '@typing/navigation';
 import useTheme from '@hooking/useTheme';
-import CustomButton from '@renative/button';
+import CustomButton from '@components/renative/button';
+import CustomView from '@components/renative/view';
+import {getTest} from '@redux/selectors/test';
+import {getTest as getTestAction} from '@redux/actions/test';
+import {useAppDispatch} from '@redux/store';
+import {testActions} from '@redux/reducers/test';
+import {ModalIdentifiers} from '@typing/modals';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -64,9 +69,10 @@ type Props = NativeStackScreenProps<NavigationStack, 'App'>
 
 function App({navigation}: Props): JSX.Element {
     const isDarkMode = useColorScheme() === 'dark';
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const [myString, setMyString] = useState('state');
+    const test = useSelector(getTest);
 
     const backgroundStyle = {
         backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -89,24 +95,55 @@ function App({navigation}: Props): JSX.Element {
                         style={[theme.variants.view.secondary, {paddingLeft: 70}]}
                         onTouchEnd={() => dispatch(themeActions.setTheme(theme.type === 'dark' ? 'light' : 'dark'))}
                     >
-                        <View style={[theme.variants.view.primary, {justifyContent: 'center', gap: 30, flexDirection: 'row', paddingVertical: 10}]}>
-                            <CustomButton variant='secondary' text='secondary'/>
-                            <CustomButton variant='primary' text='primary'/>
-                        </View>
+                        <CustomView variants={['row', 'centered', 'primary']}>
+                            <CustomButton
+                                variants={['secondary']}
+                                textVariants={['secondary']}
+                                text='secondary'
+                            />
+                            <CustomButton
+                                variants={['primary']}
+                                textVariants={['primary']}
+                                text='primary'
+                            />
+                        </CustomView>
                     </View>
-                    <Section title='Step One'>
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-                    </Section>
-                    <Button title='' onPress={() => {
-                        dispatch(languageActions.setLanguage('fr'));
-                        setMyString(myString + ' test');
-                    }}/>
+                    <CustomView variants={['row', 'centered', 'primary']}>
+                        <CustomButton
+                            variants={['primary']}
+                            textVariants={['primary']}
+                            text='fetch'
+                            onPress={() => dispatch(getTestAction())}
+                        />
+                        <CustomButton
+                            variants={['secondary']}
+                            textVariants={['secondary']}
+                            text='reset'
+                            onPress={() => dispatch(testActions.setTest('intial test'))}
+                        />
+                    </CustomView>
+                    <Text>{'test fetch: ' + test}</Text>
+                    <Button
+                        title=''
+                        onPress={() => {
+                            dispatch(languageActions.setLanguage('fr'));
+                            setMyString(myString + ' test');
+                        }}
+                    />
                     <Text>{myString}</Text>
-                    <FormattedMessage id='test' defaultMessage='cool {number}, {string}' values={{number: 13, string: myString}}/>
-                    <TestModal/>
-                    <Button title='Test modal' onPress={() => dispatch(modalActions.openModal('test'))}/>
-                    <Button title='Test' onPress={() => navigation.navigate('Test')}/>
+                    <FormattedMessage
+                        id='test'
+                        defaultMessage='cool {number}, {string}'
+                        values={{number: 13, string: myString}}
+                    />
+                    <Button
+                        title='Test modal'
+                        onPress={() => dispatch(modalActions.openModal({modalId: ModalIdentifiers.ERROR, props: {id: 'components.error_modal.header', values: {}, url: 'http://url.ch', status: 422}}))}
+                    />
+                    <Button
+                        title='Test'
+                        onPress={() => navigation.navigate('Test')}
+                    />
                     <View style={styles.smallView}>
                         <Tooltip tip='tool tip'>
                             <Text style={styles.text}>{'dwadwadwadwadwadwadawdwa'}</Text>

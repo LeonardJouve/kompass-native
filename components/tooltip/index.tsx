@@ -1,11 +1,13 @@
-import React, {PropsWithChildren} from 'react';
+import React from 'react';
 import {useState} from 'react';
-import {LayoutChangeEvent, Pressable, Text, View} from 'react-native';
+import {LayoutChangeEvent, Pressable} from 'react-native';
+import {View, Text} from '@renative/index';
 import {StyleSheet} from 'react-native';
 
-type Props = PropsWithChildren<{
+type Props = {
     tip: string;
-}>;
+    children: React.ReactNode;
+};
 
 const Tooltip = ({children, tip}: Props) => {
     const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -22,8 +24,14 @@ const Tooltip = ({children, tip}: Props) => {
     let tooltip: JSX.Element | undefined;
     if (isVisible) {
         tooltip = (
-            <View onLayout={onLayout} style={[style.tooltipWrapper, {transform: [{translateY: -height}, {translateX: -(width / 2)}]}]}>
-                <View style={style.tooltipView}>
+            <View
+                onLayout={onLayout}
+                style={[style.tooltipWrapper, {transform: [{translateY: -height}, {translateX: -(width / 2)}]}]}
+            >
+                <View
+                    variants={['rounded']}
+                    style={style.tooltipView}
+                >
                     <Text style={style.tooltip}>{tip}</Text>
                 </View>
                 <View style={style.arrow}/>
@@ -31,9 +39,15 @@ const Tooltip = ({children, tip}: Props) => {
         );
     }
     return (
-        <View style={style.wrapper}>
+        <View
+            variants={['centered']}
+            style={style.wrapper}
+        >
             {tooltip}
-            <Pressable onLongPress={handleLongPress} onPressOut={handlePressOut}>
+            <Pressable
+                onLongPress={handleLongPress}
+                onPressOut={handlePressOut}
+            >
                 {children}
             </Pressable>
         </View>
@@ -42,7 +56,6 @@ const Tooltip = ({children, tip}: Props) => {
 
 const style = StyleSheet.create({
     wrapper: {
-        alignItems: 'center',
         position: 'relative',
     },
     tooltipWrapper: {
@@ -53,7 +66,6 @@ const style = StyleSheet.create({
     },
     tooltipView: {
         backgroundColor: '#333333',
-        borderRadius: 5,
         padding: 5,
     },
     tooltip: {

@@ -1,5 +1,6 @@
 {
   "extends": "@tsconfig/react-native/tsconfig.json",
+  "typeRoots": ["./types"],
   "compilerOptions": {
     "allowJs": false,
     "lib": [
@@ -31,13 +32,15 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
+      "@api/*": ["api/*"],
       "@components/*": ["components/*"],
       "@constants/*": ["constants/*"],
       "@hooking/*": ["hooks/*"],
       "@i18n/*": ["i18n/*"],
-      "@renative/*": ["renative/*"],
+      "@renative/*": ["components/renative/*"],
       "@redux/*": ["redux/*"],
       "@typing/*": ["types/*"],
+      "@utils/*": ["utils/*"],
     },
   },
 }
