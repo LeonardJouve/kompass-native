@@ -1,6 +1,6 @@
 import Reactotron from 'reactotron-react-native';
 
 Reactotron
-    .configure()
+    .configure({name: 'Kompass'})
     .useReactNative()
     .connect();

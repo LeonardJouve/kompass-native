@@ -11,6 +11,7 @@ module.exports = {
         'jsx-quotes': ['error', 'prefer-single'],
         'react/jsx-max-props-per-line': ['error', {maximum: 1, when: 'always'}],
         'eqeqeq': ['error', 'always'],
+        'react-hooks/exhaustive-deps': 'warn',
         'no-restricted-imports': ['error', {
             paths: [
                 {
