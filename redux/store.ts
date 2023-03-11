@@ -4,6 +4,7 @@ import test from '@redux/reducers/test';
 import language from '@redux/reducers/language';
 import modal from '@redux/reducers/modal';
 import theme from '@redux/reducers/theme';
+import config from '@redux/reducers/config';
 import {GlobalState} from '@typing/global_state';
 
 export type AppDispatch = ThunkDispatch<GlobalState, any, AnyAction>;
@@ -15,6 +16,7 @@ const store = configureStore({
         language,
         modal,
         theme,
+        config,
     },
     devTools: process.env.NODE_ENV === 'development',
 });

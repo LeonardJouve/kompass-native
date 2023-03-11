@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
     SafeAreaView,
@@ -34,6 +34,9 @@ import {getTest as getTestAction} from '@redux/actions/test';
 import {useAppDispatch} from '@redux/store';
 import {testActions} from '@redux/reducers/test';
 import {ModalIdentifiers} from '@typing/modals';
+import {initialFetch} from '@redux/actions/global';
+import {getConfig} from '@redux/selectors/config';
+import Websocket from '@api/websocket';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -68,6 +71,8 @@ function Section({children, title}: SectionProps): JSX.Element {
 type Props = NativeStackScreenProps<NavigationStack, 'App'>
 
 function App({navigation}: Props): JSX.Element {
+    const {websocket_host: websocketHost, websocket_port: websocketPort, websocket_key: websocketKey} = useSelector(getConfig);
+
     const isDarkMode = useColorScheme() === 'dark';
     const dispatch = useAppDispatch();
 
@@ -79,6 +84,16 @@ function App({navigation}: Props): JSX.Element {
     };
 
     const theme = useTheme();
+
+    useEffect(() => {
+        if (websocketHost && websocketPort && websocketKey) {
+            Websocket.init(websocketHost, websocketPort, websocketKey);
+        }
+    }, [websocketHost, websocketPort, websocketKey]);
+
+    useEffect(() => {
+        dispatch(initialFetch());
+    }, [dispatch]);
 
     return (
         <SafeAreaView style={backgroundStyle}>

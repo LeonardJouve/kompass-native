@@ -1,16 +1,15 @@
 
 import Pusher from 'pusher-js/react-native';
 import Echo from 'laravel-echo';
-import {PUSHER_KEY, PUSHER_HOST, PUSHER_PORT} from '@env';
 
 class Websocket {
     private pusher?: Pusher;
     private echo?: Echo;
 
-    init() {
-        this.pusher = new Pusher(PUSHER_KEY, {
-            wsHost: PUSHER_HOST,
-            wsPort: Number(PUSHER_PORT),
+    init(websocketHost: string, websocketPort: string, websocketKey: string) {
+        this.pusher = new Pusher(websocketKey, {
+            wsHost: websocketHost,
+            wsPort: Number(websocketPort),
             enabledTransports: ['ws'],
             forceTLS: false,
         });
