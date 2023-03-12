@@ -45,6 +45,7 @@ enum ViewVariants {
     elevationLow,
     elevationMedium,
     elevationHigh,
+    flex,
 }
 
 enum TextVariants {

@@ -79,6 +79,9 @@ const useTheme = (): Theme => {
                 elevationHigh: {
                     elevation: 8,
                 },
+                flex: {
+                    flex: 1,
+                },
             }),
             text: StyleSheet.create({
                 primary: {

@@ -105,7 +105,7 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
                 onRequestClose={closeModal}
             >
                 <View
-                    variants={['centered']}
+                    variants={['centered', 'flex']}
                     margin={{margin: 'm'}}
                 >
                     <View
