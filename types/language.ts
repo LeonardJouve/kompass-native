@@ -1,5 +1,4 @@
 enum TranslationKeysEnum {
-    'test',
     'components.generic_modal.confirm',
     'components.generic_modal.cancel',
     'components.error_modal.header',

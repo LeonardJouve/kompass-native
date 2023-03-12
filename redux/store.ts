@@ -1,6 +1,5 @@
-import {AnyAction, configureStore, ThunkDispatch} from '@reduxjs/toolkit';
 import {useDispatch} from 'react-redux';
-import test from '@redux/reducers/test';
+import {AnyAction, configureStore, ThunkDispatch} from '@reduxjs/toolkit';
 import language from '@redux/reducers/language';
 import modal from '@redux/reducers/modal';
 import theme from '@redux/reducers/theme';
@@ -12,7 +11,6 @@ export const useAppDispatch: () => AppDispatch = useDispatch;
 
 const store = configureStore({
     reducer: {
-        test,
         language,
         modal,
         theme,

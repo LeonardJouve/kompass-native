@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {getTheme} from '@redux/selectors/theme';
 import {useSelector} from 'react-redux';
+import {getTheme} from '@redux/selectors/theme';
 import {Theme} from '@typing/theme';
 
 const useTheme = (): Theme => {
@@ -58,9 +58,14 @@ const useTheme = (): Theme => {
                     gap: 10,
                 },
                 centered: {
-                    flex: 1,
                     justifyContent: 'center',
                     alignItems: 'center',
+                },
+                fullWidth: {
+                    width: '100%',
+                },
+                fullHeight: {
+                    height: '100%',
                 },
                 rounded: {
                     borderRadius: 8,

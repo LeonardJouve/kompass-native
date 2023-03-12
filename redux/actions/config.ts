@@ -1,6 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
+import {sendError} from '@redux/actions/error';
 import Client from '@api/rest';
-import {sendError} from './error';
 
 export const getConfig = createAsyncThunk(
     'getConfig',

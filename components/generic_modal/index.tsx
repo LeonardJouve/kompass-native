@@ -2,11 +2,11 @@ import React from 'react';
 import {Modal, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useAppDispatch} from '@redux/store';
-import {Button, Text, View} from '@renative/index';
 import {modalActions} from '@redux/reducers/modal';
 import {isModalOpen} from '@redux/selectors/modal';
-import {GlobalState} from '@typing/global_state';
+import {Button, Text, View} from '@renative/index';
 import useFormattedMessage from '@hooking/useFormattedMessage';
+import {GlobalState} from '@typing/global_state';
 import {ModalIdentifier} from '@typing/modals';
 
 type Props = {

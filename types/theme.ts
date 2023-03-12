@@ -1,5 +1,5 @@
-import {StyleProp as NativeStyleProp, TextStyle, ViewStyle} from 'react-native/types';
 import {ThemeState} from '@redux/reducers/theme';
+import {StyleProp as NativeStyleProp, TextStyle, ViewStyle} from 'react-native/types';
 
 enum ThemeTypes {
     light,
@@ -34,15 +34,17 @@ enum ButtonVariants {
 }
 
 enum ViewVariants {
+    primary,
+    secondary,
     row,
     column,
     centered,
     rounded,
+    fullWidth,
+    fullHeight,
     elevationLow,
     elevationMedium,
     elevationHigh,
-    primary,
-    secondary,
 }
 
 enum TextVariants {

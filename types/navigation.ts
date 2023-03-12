@@ -1,4 +1,4 @@
 export type NavigationStack = {
     App: undefined;
-    Test: undefined;
+    ExampleView: undefined;
 };

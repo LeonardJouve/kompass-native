@@ -1,7 +1,7 @@
 import {useSelector} from 'react-redux';
 import {getLanguage} from '@redux/selectors/laguage';
-import {TranslationKey} from '@typing/language';
 import i18n from '@i18n/index';
+import {TranslationKey} from '@typing/language';
 
 type Props = {
     id: TranslationKey;

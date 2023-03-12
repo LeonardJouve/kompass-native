@@ -1,8 +1,8 @@
 import React from 'react';
 import {useState} from 'react';
-import {LayoutChangeEvent, Pressable} from 'react-native';
+import {Pressable, StyleSheet} from 'react-native';
 import {View, Text} from '@renative/index';
-import {StyleSheet} from 'react-native';
+import {LayoutChangeEvent} from 'react-native/types';
 
 type Props = {
     tip: string;
@@ -17,8 +17,8 @@ const Tooltip = ({children, tip}: Props) => {
     const handlePressOut = () => setIsVisible(false);
     const onLayout = (event: LayoutChangeEvent) => {
         const {width: tooltipWidth, height: tooltipHeight} = event.nativeEvent.layout;
-        setWidth(tooltipWidth);
-        setHeight(tooltipHeight);
+        setWidth(Math.floor(tooltipWidth));
+        setHeight(Math.floor(tooltipHeight));
     };
 
     let tooltip: JSX.Element | undefined;
@@ -26,7 +26,7 @@ const Tooltip = ({children, tip}: Props) => {
         tooltip = (
             <View
                 onLayout={onLayout}
-                style={[style.tooltipWrapper, {transform: [{translateY: -height}, {translateX: -(width / 2)}]}]}
+                style={{...style.tooltipWrapper, transform: [{translateY: -height}, {translateX: -(width / 2)}]}}
             >
                 <View
                     variants={['rounded']}
@@ -39,17 +39,19 @@ const Tooltip = ({children, tip}: Props) => {
         );
     }
     return (
-        <View
-            variants={['centered']}
-            style={style.wrapper}
-        >
-            {tooltip}
-            <Pressable
-                onLongPress={handleLongPress}
-                onPressOut={handlePressOut}
+        <View>
+            <View
+                variants={['centered']}
+                style={style.wrapper}
             >
-                {children}
-            </Pressable>
+                {tooltip}
+                <Pressable
+                    onLongPress={handleLongPress}
+                    onPressOut={handlePressOut}
+                >
+                    {children}
+                </Pressable>
+            </View>
         </View>
     );
 };

@@ -1,6 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import Client from '@api/rest';
 import {modalActions} from '@redux/reducers/modal';
+import Client from '@api/rest';
 import {ModalIdentifiers} from '@typing/modals';
 import {Error} from '@typing/rest';
 

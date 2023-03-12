@@ -1,7 +1,7 @@
 import React from 'react';
 import {Animated, Pressable} from 'react-native';
-import useTheme from '@hooking/useTheme';
 import {Text} from '@renative/index';
+import useTheme from '@hooking/useTheme';
 import {getSpacings} from '@utils/theme';
 import {ViewStyle, PressableProps, TextStyle, StyleProp} from 'react-native/types';
 import {ButtonVariant, MarginProp, PaddingProp, TextVariant} from '@typing/theme';

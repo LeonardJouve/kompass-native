@@ -1,5 +1,4 @@
 export enum ModalIdentifiers {
-    TEST = 'TEST',
     ERROR = 'ERROR',
 }
 

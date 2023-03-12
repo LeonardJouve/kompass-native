@@ -1,8 +1,8 @@
 import React from 'react';
-import {TranslationKey} from '@typing/language';
 import deepEqual from 'deep-equal';
 import {Text} from '@renative/index';
 import useFormattedMessage from '@hooking/useFormattedMessage';
+import {TranslationKey} from '@typing/language';
 
 type Props = {
     id: TranslationKey;
