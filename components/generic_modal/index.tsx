@@ -79,7 +79,7 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
     let contentView;
     if (content) {
         if (typeof content === 'string') {
-            contentView = <Text variants={['primary']}>{content}</Text>;
+            contentView = <Text variants={['default']}>{content}</Text>;
         } else {
             contentView = content;
         }

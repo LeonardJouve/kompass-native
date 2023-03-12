@@ -86,7 +86,7 @@ function App({navigation}: Props): JSX.Element {
                     onPress={changeView}
                 />
                 <Tooltip tip='tip'>
-                    <Text variants={['primary']}>
+                    <Text variants={['default']}>
                         {'Tooltip'}
                     </Text>
                 </Tooltip>

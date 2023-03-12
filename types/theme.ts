@@ -11,6 +11,7 @@ enum Colors {
     buttonSecondary,
     viewPrimary,
     viewSecondary,
+    textDefault,
     textPrimary,
     textSecondary,
 }
@@ -49,6 +50,7 @@ enum ViewVariants {
 }
 
 enum TextVariants {
+    default,
     primary,
     secondary,
     header,

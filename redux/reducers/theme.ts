@@ -8,6 +8,7 @@ export type ThemeState = {
     secondaryColor: string;
     backgroundPrimaryColor: string;
     backgroundSecondaryColor: string;
+    textColor: string;
 };
 
 const initialThemeState = {...Themes.light};

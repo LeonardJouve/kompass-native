@@ -4,12 +4,13 @@ import {getTheme} from '@redux/selectors/theme';
 import {Theme} from '@typing/theme';
 
 const useTheme = (): Theme => {
-    const {type, primaryColor, secondaryColor, backgroundPrimaryColor, backgroundSecondaryColor} = useSelector(getTheme);
+    const {type, primaryColor, secondaryColor, backgroundPrimaryColor, backgroundSecondaryColor, textColor} = useSelector(getTheme);
     const colors: Theme['colors'] = {
         buttonPrimary: primaryColor,
         buttonSecondary: secondaryColor,
         viewPrimary: backgroundPrimaryColor,
         viewSecondary: backgroundSecondaryColor,
+        textDefault: textColor,
         textPrimary: secondaryColor,
         textSecondary: primaryColor,
     };
@@ -84,6 +85,9 @@ const useTheme = (): Theme => {
                 },
             }),
             text: StyleSheet.create({
+                default: {
+                    color: colors.textDefault,
+                },
                 primary: {
                     color: colors.textPrimary,
                 },

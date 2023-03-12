@@ -7,6 +7,7 @@ const lightTheme: ThemeState = {
     secondaryColor: '#E3E3E3',
     backgroundPrimaryColor: '#FFFFFF',
     backgroundSecondaryColor: '#224477',
+    textColor: '#555555',
 };
 
 const darkTheme: ThemeState = {
@@ -15,6 +16,7 @@ const darkTheme: ThemeState = {
     secondaryColor: '#9E9E9E',
     backgroundPrimaryColor: '#223366',
     backgroundSecondaryColor: '#002244',
+    textColor: '#111111',
 };
 
 export const Themes: ThemesType = {
