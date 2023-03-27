@@ -10,7 +10,7 @@ const ExempleView = ({navigation}: Props) => {
     const changeView = () => navigation.navigate('App');
 
     return (
-        <View variants={['centered', 'primary', 'fullHeight', 'fullWidth']}>
+        <View variants={['primary', 'fullHeight', 'fullWidth']}>
             <Maps/>
             <Button
                 variants={['primary']}
