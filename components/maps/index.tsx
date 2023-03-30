@@ -1,10 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {StyleSheet} from 'react-native';
-import MapView, {Camera, MapType, MapViewProps, PanDragEvent, UserLocationChangeEvent} from 'react-native-maps';
+import MapView, {Camera, MapType, MapViewProps, PanDragEvent, UserLocationChangeEvent, PROVIDER_GOOGLE, Point} from 'react-native-maps';
 import {check, request, PERMISSIONS, RESULTS, Permission} from 'react-native-permissions';
 
+const DRAG_INTERVAL = 300;
+
 const mapProps: MapViewProps = {
-    provider: 'google',
+    provider: PROVIDER_GOOGLE,
     userLocationUpdateInterval: 1_000,
     showsUserLocation: true,
     minZoomLevel: 17,
@@ -33,7 +35,8 @@ const Maps = ({mapType}: Props) => {
     const mapsRef = useRef<MapView | null>(null);
     const location = useRef<UserLocationChangeEvent['nativeEvent']['coordinate'] | null>(null);
     const camera = useRef<Camera | null>(null);
-
+    const touchPosition = useRef<Point | null>(null);
+    const lastDragTime = useRef(0);
 
     useEffect(() => {
         checkPermissions();
@@ -63,7 +66,33 @@ const Maps = ({mapType}: Props) => {
         }
     };
 
-    const onPanDrag = (e: PanDragEvent) => {};
+    const onPanDrag = async (e: PanDragEvent) => {
+        if (!mapsRef.current || !camera.current) {
+            return;
+        }
+        const {coordinate, position} = e.nativeEvent;
+        const lastTouch = touchPosition.current;
+        const lastDragEnded = Date.now() - lastDragTime.current > DRAG_INTERVAL;
+        if (!lastTouch || lastDragEnded) {
+            touchPosition.current = position;
+            lastDragTime.current = Date.now();
+            return;
+        }
+        const deltaX = position.x - lastTouch.x;
+        const deltaY = position.y - lastTouch.y;
+        const {x: currentX, y: currentY} = await mapsRef.current.pointForCoordinate(camera.current.center);
+        const {x: touchX, y: touchY} = await mapsRef.current.pointForCoordinate(coordinate);
+        let headingDelta;
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            headingDelta = deltaX * Math.sign(touchY - currentY);
+        } else {
+            headingDelta = deltaY * Math.sign(currentX - touchX);
+        }
+        camera.current = {...camera.current, heading: camera.current.heading + (headingDelta / 10)};
+        mapsRef.current.setCamera(camera.current);
+        touchPosition.current = position;
+        lastDragTime.current = Date.now();
+    };
 
     if (!permissionsGranted) {
         return null;
