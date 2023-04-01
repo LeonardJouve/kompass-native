@@ -13,6 +13,7 @@ module.exports = {
                 '@redux': './redux',
                 '@typing': './types',
                 '@utils': './utils',
+                '@res': './res',
             },
         }],
     ],

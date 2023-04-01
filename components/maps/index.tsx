@@ -7,8 +7,10 @@ import {check, request, PERMISSIONS, RESULTS, Permission} from 'react-native-per
 import {useAppDispatch} from '@redux/store';
 import {getPois} from '@redux/actions/map';
 import {getPois as getPoisSelector} from '@redux/selectors/map';
+import MarkerIcons from '@components/icons/marker_icons';
 
 const DRAG_INTERVAL = 300;
+const MARKER_SIZE = 30;
 
 const mapProps: MapViewProps = {
     provider: PROVIDER_GOOGLE,
@@ -30,6 +32,48 @@ const checkAndRequestPermissionsIfNeeded = async (permissions: Permission[]) => 
         }
         return granted;
     });
+};
+
+const getPoiIcon = (kinds: string) => {
+    const markerProps = {
+        width: MARKER_SIZE,
+        height: MARKER_SIZE,
+        fill: 'black',
+    };
+    if (kinds.includes('foods')) {
+        return <MarkerIcons.MarkerFood {...markerProps}/>;
+    }
+    if (kinds.includes('shops')) {
+        return <MarkerIcons.MarkerShop {...markerProps}/>;
+    }
+    if (kinds.includes('transport')) {
+        return <MarkerIcons.MarkerTransport {...markerProps}/>;
+    }
+    if (kinds.includes('banks')) {
+        return <MarkerIcons.MarkerBank {...markerProps}/>;
+    }
+    if (kinds.includes('natural')) {
+        return <MarkerIcons.MarkerLand {...markerProps}/>;
+    }
+    if (kinds.includes('accomodations')) {
+        return <MarkerIcons.MarkerLodging {...markerProps}/>;
+    }
+    if (kinds.includes('industrial_facilities')) {
+        return <MarkerIcons.MarkerIndustry {...markerProps}/>;
+    }
+    if (kinds.includes('religion')) {
+        return <MarkerIcons.MarkerReligion {...markerProps}/>;
+    }
+    if (kinds.includes('sport')) {
+        return <MarkerIcons.MarkerSport {...markerProps}/>;
+    }
+    if (kinds.includes('amusements')) {
+        return <MarkerIcons.MarkerHobby {...markerProps}/>;
+    }
+    if (kinds.includes('adult')) {
+        return <MarkerIcons.MarkerAdult {...markerProps}/>;
+    }
+    return <MarkerIcons.MarkerGeneric {...markerProps}/>;
 };
 
 type Props = {
@@ -115,14 +159,17 @@ const Maps = ({mapType}: Props) => {
     );
 
     const renderedPois = pois.map((poi) => {
-        const {xid, point, name} = poi;
+        const {xid, point, name, kinds} = poi;
         const {lat: latitude, lon: longitude} = point;
         return (
             <Marker
                 key={xid}
                 coordinate={{latitude, longitude}}
                 title={name}
-            />
+                style={styles.marker}
+            >
+                {getPoiIcon(kinds)}
+            </Marker>
         );
     });
 
@@ -145,5 +192,12 @@ const Maps = ({mapType}: Props) => {
         </MapView>
     );
 };
+
+const styles = StyleSheet.create({
+    marker: {
+        width: MARKER_SIZE,
+        height: MARKER_SIZE,
+    },
+});
 
 export default Maps;
