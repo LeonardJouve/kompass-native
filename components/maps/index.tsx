@@ -70,6 +70,9 @@ const getPoiIcon = (kinds: string) => {
     if (kinds.includes('amusements')) {
         return <MarkerIcons.MarkerHobby {...markerProps}/>;
     }
+    if (kinds.includes('monuments')) {
+        return <MarkerIcons.MarkerMonument {...markerProps}/>;
+    }
     if (kinds.includes('adult')) {
         return <MarkerIcons.MarkerAdult {...markerProps}/>;
     }
