@@ -1,4 +1,4 @@
-import {BASE_URL} from '@env';
+import BuildConfig from 'react-native-config';
 import {ConfigState} from '@redux/reducers/config';
 import {Options, Response, Error} from '@typing/rest';
 import {Poi} from '@typing/map';
@@ -7,7 +7,7 @@ class Client {
     baseUrl: string;
 
     constructor() {
-        this.baseUrl = BASE_URL;
+        this.baseUrl = BuildConfig.BASE_URL!;
     }
 
     async fetch(url: string, options: Options): Response<any> {

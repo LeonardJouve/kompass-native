@@ -15,6 +15,7 @@ const mapProps: MapViewProps = {
     userLocationUpdateInterval: 2_000,
     showsUserLocation: true,
     minZoomLevel: 17,
+    maxZoomLevel: 19,
     showsMyLocationButton: false,
     showsIndoors: false,
     scrollEnabled: false,
@@ -67,7 +68,9 @@ const Maps = ({mapType}: Props) => {
         const {coordinate} = e.nativeEvent;
         if (coordinate && camera.current && mapsRef.current) {
             const {latitude, longitude} = coordinate;
-            dispatch(getPois({latitude, longitude}));
+            if (location?.latitude !== latitude && location?.longitude !== longitude) {
+                dispatch(getPois({latitude, longitude}));
+            }
             setLocation({latitude, longitude});
             const newCamera = {center: {latitude, longitude}};
             camera.current = {...camera.current, ...newCamera};
