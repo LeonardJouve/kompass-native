@@ -1,13 +1,18 @@
 import React, {useEffect, useRef, useState} from 'react';
+import {useSelector} from 'react-redux';
 import {StyleSheet} from 'react-native';
-import MapView, {Camera, MapType, MapViewProps, PanDragEvent, UserLocationChangeEvent, PROVIDER_GOOGLE, Point} from 'react-native-maps';
+import MapView, {Circle, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import type {Camera, MapType, MapViewProps, PanDragEvent, UserLocationChangeEvent, Point, LatLng} from 'react-native-maps';
 import {check, request, PERMISSIONS, RESULTS, Permission} from 'react-native-permissions';
+import {useAppDispatch} from '@redux/store';
+import {getPois} from '@redux/actions/map';
+import {getPois as getPoisSelector} from '@redux/selectors/map';
 
 const DRAG_INTERVAL = 300;
 
 const mapProps: MapViewProps = {
     provider: PROVIDER_GOOGLE,
-    userLocationUpdateInterval: 1_000,
+    userLocationUpdateInterval: 2_000,
     showsUserLocation: true,
     minZoomLevel: 17,
     showsMyLocationButton: false,
@@ -31,9 +36,11 @@ type Props = {
 };
 
 const Maps = ({mapType}: Props) => {
+    const dispatch = useAppDispatch();
+    const pois = useSelector(getPoisSelector);
     const [permissionsGranted, setPermissionsGranted] = useState(false);
+    const [location, setLocation] = useState<LatLng | null>(null);
     const mapsRef = useRef<MapView | null>(null);
-    const location = useRef<UserLocationChangeEvent['nativeEvent']['coordinate'] | null>(null);
     const camera = useRef<Camera | null>(null);
     const touchPosition = useRef<Point | null>(null);
     const lastDragTime = useRef(0);
@@ -59,10 +66,12 @@ const Maps = ({mapType}: Props) => {
     const onUserLocationChange = (e: UserLocationChangeEvent) => {
         const {coordinate} = e.nativeEvent;
         if (coordinate && camera.current && mapsRef.current) {
-            location.current = coordinate;
             const {latitude, longitude} = coordinate;
-            camera.current = {...camera.current, center: {latitude, longitude}};
-            mapsRef.current.animateCamera(camera.current);
+            dispatch(getPois({latitude, longitude}));
+            setLocation({latitude, longitude});
+            const newCamera = {center: {latitude, longitude}};
+            camera.current = {...camera.current, ...newCamera};
+            mapsRef.current.animateCamera(newCamera);
         }
     };
 
@@ -88,11 +97,31 @@ const Maps = ({mapType}: Props) => {
         } else {
             headingDelta = deltaY * Math.sign(currentX - touchX);
         }
-        camera.current = {...camera.current, heading: camera.current.heading + (headingDelta / 10)};
-        mapsRef.current.setCamera(camera.current);
+        const newCamera = {heading: camera.current.heading + (headingDelta / 10)};
+        camera.current = {...camera.current, ...newCamera};
+        mapsRef.current.setCamera(newCamera);
         touchPosition.current = position;
         lastDragTime.current = Date.now();
     };
+
+    const circle = location && (
+        <Circle
+            center={location}
+            radius={150}
+        />
+    );
+
+    const renderedPois = pois.map((poi) => {
+        const {xid, point, name} = poi;
+        const {lat: latitude, lon: longitude} = point;
+        return (
+            <Marker
+                key={xid}
+                coordinate={{latitude, longitude}}
+                title={name}
+            />
+        );
+    });
 
     if (!permissionsGranted) {
         return null;
@@ -107,7 +136,10 @@ const Maps = ({mapType}: Props) => {
             onPanDrag={onPanDrag}
             mapType={mapType}
             {...mapProps}
-        />
+        >
+            {renderedPois}
+            {circle}
+        </MapView>
     );
 };
 
