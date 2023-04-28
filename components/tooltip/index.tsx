@@ -26,15 +26,15 @@ const Tooltip = ({children, tip}: Props) => {
         tooltip = (
             <View
                 onLayout={onLayout}
-                style={{...style.tooltipWrapper, transform: [{translateY: -height}, {translateX: -(width / 2)}]}}
+                style={{...styles.tooltipWrapper, transform: [{translateY: -height}, {translateX: -(width / 2)}]}}
             >
                 <View
                     variants={['rounded']}
-                    style={style.tooltipView}
+                    style={styles.tooltipView}
                 >
-                    <Text style={style.tooltip}>{tip}</Text>
+                    <Text style={styles.tooltip}>{tip}</Text>
                 </View>
-                <View style={style.arrow}/>
+                <View style={styles.arrow}/>
             </View>
         );
     }
@@ -42,7 +42,7 @@ const Tooltip = ({children, tip}: Props) => {
         <View>
             <View
                 variants={['centered']}
-                style={style.wrapper}
+                style={styles.wrapper}
             >
                 {tooltip}
                 <Pressable
@@ -56,7 +56,7 @@ const Tooltip = ({children, tip}: Props) => {
     );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     wrapper: {
         position: 'relative',
     },

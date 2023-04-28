@@ -88,7 +88,7 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
     let footerView = footer ?? (
         <View
             variants={['row']}
-            style={style.footer}
+            style={styles.footer}
             padding={{paddingHorizontal: 'xl', paddingBottom: 's'}}
         >
             {cancelButton}
@@ -110,12 +110,12 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
                 >
                     <View
                         variants={['primary', 'rounded', 'elevationHigh', 'column']}
-                        style={style.modal}
+                        style={styles.modal}
                     >
                         <View
                             variants={['secondary', 'elevationLow']}
                             padding={{paddingHorizontal: 'xl', paddingVertical: 'xs'}}
-                            style={style.header}
+                            style={styles.header}
                         >
                             {headerView}
                         </View>
@@ -133,7 +133,7 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
     );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     header: {
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8,
