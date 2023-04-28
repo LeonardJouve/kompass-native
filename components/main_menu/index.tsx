@@ -28,7 +28,7 @@ const MainMenu = () => {
     const items = itemsProps.map((itemProps, index) => {
         const active = activeItem === itemProps.key;
         const onTouch = () => {
-            if (!index) {
+            if (index === 0) {
                 setOpen(!open);
             }
             setActiveItem(itemProps.key);
