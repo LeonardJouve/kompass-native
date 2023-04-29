@@ -1,28 +1,33 @@
 import React, {FunctionComponent, useEffect} from 'react';
 import {Animated, ViewStyle} from 'react-native';
 import {SvgProps} from 'react-native-svg';
+import useTheme from '@hooking/useTheme';
 
 export type Props = {
     index: number;
-    onTouch: () => void;
     active: boolean;
     open: boolean;
     Icon: FunctionComponent<SvgProps>;
+    margin?: number;
     padding?: number;
     size?: number;
+    onTouch: () => void;
 };
 
 const MainMenuItem = ({
     index,
-    onTouch,
     active,
     open,
     Icon,
+    margin = 7,
     padding = 7,
     size = 35,
+    onTouch,
 }: Props) => {
-    const animatedTop = new Animated.Value(open ? padding : padding + ((size + padding) * index));
-    const animatedRotate = new Animated.Value(open ? 180 : 0);
+    const theme = useTheme();
+
+    const animatedTop = new Animated.Value(open ? margin : margin + ((size + margin) * index));
+    const animatedRotate = new Animated.Value(open && index === 0 ? 180 : 0);
 
     useEffect(() => {
         if (index === 0) {
@@ -34,7 +39,7 @@ const MainMenuItem = ({
             return;
         }
         Animated.timing(animatedTop, {
-            toValue: open ? padding + ((size + padding) * index) : padding,
+            toValue: open ? margin + ((size + margin) * index) : margin,
             duration: 200,
             useNativeDriver: false,
         }).start();
@@ -46,10 +51,17 @@ const MainMenuItem = ({
     });
 
     const style: Animated.WithAnimatedObject<ViewStyle> = {
+        display: 'flex',
         position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: size,
+        height: size,
         top: animatedTop,
-        right: padding,
+        right: margin,
         transform: [{rotate}],
+        backgroundColor: theme.colors.viewSecondary,
+        borderRadius: size / 2,
     };
 
     return (
@@ -58,9 +70,9 @@ const MainMenuItem = ({
             onTouchEnd={onTouch}
         >
             <Icon
-                width={size}
-                height={size}
-                fill={active ? 'red' : 'black'}
+                width={size - padding}
+                height={size - padding}
+                fill={theme.colors.buttonSecondary}
             />
         </Animated.View>
     );
