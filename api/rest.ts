@@ -1,12 +1,13 @@
-import {Options, Response, Error} from '@typing/rest';
-import {BASE_URL} from '@env';
+import BuildConfig from 'react-native-config';
 import {ConfigState} from '@redux/reducers/config';
+import {Options, Response, Error} from '@typing/rest';
+import {Poi} from '@typing/map';
 
 class Client {
     baseUrl: string;
 
     constructor() {
-        this.baseUrl = BASE_URL;
+        this.baseUrl = BuildConfig.BASE_URL!;
     }
 
     async fetch(url: string, options: Options): Response<any> {
@@ -67,6 +68,13 @@ class Client {
         return await this.fetch(
             `${this.getApiRoute()}/config`,
             {method: 'GET'},
+        );
+    }
+
+    async getPois(latitude: number, longitude: number): Response<Poi[]> {
+        return await this.fetch(
+            `${this.getApiRoute()}/opentripmap?latitude=${latitude}&longitude=${longitude}`,
+            {method: 'GET'}
         );
     }
 }
