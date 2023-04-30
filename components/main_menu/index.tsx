@@ -1,37 +1,51 @@
 import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
 import {View} from '@renative/index';
 import MainMenuItem from '@components/main_menu/main_menu_item';
+import MainMenuView from '@components/main_menu/main_menu_views';
+import {ViewVariant} from '@typing/theme';
 import ToggleIcon from '@res/toggle_icon.svg';
 import SettingsIcon from '@res/settings_icon.svg';
 import WeatherIcon from '@res/weather_icon.svg';
 import HelpIcon from '@res/help_icon.svg';
 
+export enum MainMenuSection {
+    TOGGLE = 'menu-toggle',
+    SETTINGS = 'menu-settings',
+    WEATHER = 'menu-weather',
+    HELP = 'menu-help',
+}
+
+const itemSizeProps = {
+    margin: 7,
+    padding: 7,
+    size: 35,
+};
+
 const itemsProps = [{
-    key: 'menu-toggle',
+    key: MainMenuSection.TOGGLE,
     Icon: ToggleIcon,
 }, {
-    key: 'menu-settings',
+    key: MainMenuSection.SETTINGS,
     Icon: SettingsIcon,
 }, {
-    key: 'menu-weather',
+    key: MainMenuSection.WEATHER,
     Icon: WeatherIcon,
 }, {
-    key: 'menu-help',
+    key: MainMenuSection.HELP,
     Icon: HelpIcon,
 }];
 
 const MainMenu = () => {
-    const [activeItem, setActiveItem] = useState<string>('');
+    const [activeSection, setActiveSection] = useState<MainMenuSection>(MainMenuSection.TOGGLE);
     const [open, setOpen] = useState<boolean>(false);
 
     const items = itemsProps.map((itemProps, index) => {
-        const active = activeItem === itemProps.key;
+        const active = activeSection === itemProps.key;
         const onTouch = () => {
             if (index === 0) {
                 setOpen(!open);
             }
-            setActiveItem(itemProps.key);
+            setActiveSection(itemProps.key);
         };
         return (
             <MainMenuItem
@@ -39,26 +53,29 @@ const MainMenu = () => {
                 active={active}
                 onTouch={onTouch}
                 open={open}
+                {...itemSizeProps}
                 {...itemProps}
             />
         );
     }).reverse();
 
+    const sectionIndex = itemsProps.findIndex((itemProps) => itemProps.key === activeSection);
+
+    const wrapperVariants: ViewVariant[] = ['absolute', 'fullWidth'];
+    if (sectionIndex !== 0) {
+        wrapperVariants.push('fullHeight');
+    }
+
     return (
-        <View
-            variants={['absolute']}
-            style={styles.wrapper}
-        >
+        <View variants={wrapperVariants}>
             {items}
+            <MainMenuView
+                activeSection={activeSection}
+                sectionIndex={sectionIndex}
+                itemSizeProps={itemSizeProps}
+            />
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    wrapper: {
-        top: 0,
-        right: 0,
-    },
-});
 
 export default MainMenu;

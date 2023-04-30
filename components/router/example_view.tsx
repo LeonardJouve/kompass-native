@@ -12,7 +12,6 @@ const ExempleView = ({navigation}: Props) => {
 
     return (
         <View variants={['primary', 'fullHeight', 'fullWidth', 'relative']}>
-            {/* <Maps/> */}
             <Button
                 variants={['primary']}
                 textVariants={['primary']}
@@ -20,6 +19,7 @@ const ExempleView = ({navigation}: Props) => {
                 onPress={changeView}
             />
             <MainMenu/>
+            {/* <Maps/> */}
         </View>
     );
 };
