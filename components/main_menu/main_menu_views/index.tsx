@@ -57,12 +57,16 @@ const MainMenuView = ({
 
     const arrowStyle: Animated.WithAnimatedObject<ViewStyle> = {
         position: 'absolute',
-        width: itemSizeProps.size,
-        height: itemSizeProps.size,
         top: animatedTop,
-        right: 0,
-        transform: [{rotate: '45deg'}],
-        backgroundColor: theme.colors.viewSecondary,
+        right: -itemSizeProps.margin,
+        borderTopWidth: itemSizeProps.size / 2,
+        borderBottomWidth: itemSizeProps.size / 2,
+        borderLeftWidth: itemSizeProps.margin,
+        borderStyle: 'solid',
+        backgroundColor: 'transparent',
+        borderTopColor: 'transparent',
+        borderBottomColor: 'transparent',
+        borderLeftColor: theme.colors.viewSecondary,
     };
 
 
