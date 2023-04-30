@@ -83,6 +83,12 @@ const useTheme = (): Theme => {
                 flex: {
                     flex: 1,
                 },
+                relative: {
+                    position: 'relative',
+                },
+                absolute: {
+                    position: 'absolute',
+                },
             }),
             text: StyleSheet.create({
                 default: {
