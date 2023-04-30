@@ -42,6 +42,12 @@ const useTheme = (): Theme => {
                     borderRadius: 10,
                     backgroundColor: colors.buttonSecondary,
                 },
+                relative: {
+                    position: 'relative',
+                },
+                absolute: {
+                    position: 'absolute',
+                },
             }),
             view: StyleSheet.create({
                 primary: {
@@ -104,6 +110,12 @@ const useTheme = (): Theme => {
                     textTransform: 'uppercase',
                     fontWeight: 'bold',
                     fontSize: 20,
+                },
+                relative: {
+                    position: 'relative',
+                },
+                absolute: {
+                    position: 'absolute',
                 },
             }),
         },

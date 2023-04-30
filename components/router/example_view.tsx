@@ -13,13 +13,13 @@ const ExempleView = ({navigation}: Props) => {
     return (
         <View variants={['primary', 'fullHeight', 'fullWidth', 'relative']}>
             <Button
-                variants={['primary']}
+                variants={['primary', 'absolute']}
                 textVariants={['primary']}
                 text='Change view'
                 onPress={changeView}
             />
-            <MainMenu/>
             {/* <Maps/> */}
+            <MainMenu/>
         </View>
     );
 };
