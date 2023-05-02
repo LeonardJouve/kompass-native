@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationStack} from '@typing/navigation';
 import App from '@components/router/app';
 import ExempleView from '@components/router/example_view';
+import Backpack from '@components/router/backpack';
 
 const Stack = createNativeStackNavigator<NavigationStack>();
 
@@ -20,6 +21,10 @@ const Rooter = () => (
             <Stack.Screen
                 name='ExampleView'
                 component={ExempleView}
+            />
+            <Stack.Screen
+                name='Backpack'
+                component={Backpack}
             />
         </Stack.Navigator>
     </NavigationContainer>
