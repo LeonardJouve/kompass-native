@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {View} from '@renative/index';
 import {Navigation} from '@typing/navigation';
 
-const Inventory = () => {
+const BackpackTrigger = () => {
     const navigation = useNavigation<Navigation>();
     const onTouch = () => navigation.navigate('Backpack');
     return (
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Inventory;
+export default BackpackTrigger;

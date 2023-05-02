@@ -7,3 +7,12 @@ export type NavigationStack = {
 };
 
 export type Navigation = NativeStackNavigationProp<NavigationStack>;
+
+export type BackpackTabs = {
+    Inventory: undefined;
+    Craft: undefined;
+    Equipement: undefined;
+    Encyclopedia: undefined;
+};
+
+export type NavigationBackpackTabs = NativeStackNavigationProp<BackpackTabs>;

@@ -21,7 +21,7 @@ const ExempleView = ({navigation}: Props) => {
                 textVariants={['primary']}
                 text='Change view'
                 onPress={changeView}
-                />
+            />
             <BackpackTrigger/>
             <MainMenu/>
         </View>
