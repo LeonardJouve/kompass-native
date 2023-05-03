@@ -9,7 +9,7 @@ import {Navigation} from '@typing/navigation';
 const BackpackClose = () => {
     const navigation = useNavigation<Navigation>();
     const theme = useTheme();
-    const onPress = () => navigation.goBack();
+    const onPress = () => navigation.navigate('ExampleView');
     return (
         <Button
             variants={['secondary', 'absolute']}
