@@ -48,7 +48,7 @@ function App({navigation}: Props): JSX.Element {
 
     return (
         <View
-            variants={['secondary', 'centered', 'fullHeight']}
+            variants={['secondary', 'centered', 'flex']}
             padding={{paddingLeft: 'xl'}}
         >
             <View

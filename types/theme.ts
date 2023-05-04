@@ -32,6 +32,8 @@ enum Breakpoints {
 enum ButtonVariants {
     primary,
     secondary,
+    absolute,
+    relative,
 }
 
 enum ViewVariants {
@@ -56,6 +58,8 @@ enum TextVariants {
     primary,
     secondary,
     header,
+    relative,
+    absolute,
 }
 
 enum Margins {
