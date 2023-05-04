@@ -16,7 +16,6 @@ import CraftIcon from '@res/craft_icon.svg';
 import EquipementIcon from '@res/equipement_icon.svg';
 import EncyclopediaIcon from '@res/encyclopedia_icon.svg';
 import {BackpackTabs, NavigationStack} from '@typing/navigation';
-import {ViewVariant} from '@typing/theme';
 
 type Props = NativeStackScreenProps<NavigationStack, 'Backpack'>
 
