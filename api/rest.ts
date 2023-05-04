@@ -7,7 +7,7 @@ class Client {
     baseUrl: string;
 
     constructor() {
-        this.baseUrl = BuildConfig.BASE_URL!;
+        this.baseUrl = BuildConfig.API_URL!;
     }
 
     async fetch(url: string, options: Options): Response<any> {
