@@ -8,7 +8,7 @@ type Props = NativeStackScreenProps<BackpackTabs, 'Equipement'>;
 const Equipement = ({}: Props) => {
     return (
         <View variants={['primary', 'flex']}>
-            <Text variants={['primary']}>{'Equipement'}</Text>
+            <Text variants={['default']}>{'Equipement'}</Text>
         </View>
     );
 };
