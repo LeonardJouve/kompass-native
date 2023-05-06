@@ -1,6 +1,6 @@
 import BuildConfig from 'react-native-config';
 import {ConfigState} from '@redux/reducers/config';
-import {Options, Response, Error} from '@typing/rest';
+import {Options, Response, Error, Status} from '@typing/rest';
 import {Poi} from '@typing/map';
 
 class Client {
@@ -75,6 +75,13 @@ class Client {
         return await this.fetch(
             `${this.getApiRoute()}/opentripmap?latitude=${latitude}&longitude=${longitude}`,
             {method: 'GET'}
+        );
+    }
+
+    async login(email: string, password: string): Response<Status> {
+        return await this.fetch(
+            `${this.getBaseUrl()}/login`,
+            {method: 'POST', body: JSON.stringify({email, password})}
         );
     }
 }

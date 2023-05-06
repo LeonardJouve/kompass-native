@@ -31,16 +31,16 @@ const useTheme = (): Theme => {
         variants: {
             button: StyleSheet.create({
                 primary: {
-                    width: 'auto',
                     padding: 5,
                     borderRadius: 10,
                     backgroundColor: colors.buttonPrimary,
+                    alignItems: 'center',
                 },
                 secondary: {
-                    width: 'auto',
                     padding: 5,
                     borderRadius: 10,
                     backgroundColor: colors.buttonSecondary,
+                    alignItems: 'center',
                 },
                 relative: {
                     position: 'relative',
@@ -116,6 +116,20 @@ const useTheme = (): Theme => {
                 },
                 absolute: {
                     position: 'absolute',
+                },
+                start: {
+                    alignSelf: 'flex-start',
+                },
+                end: {
+                    alignSelf: 'flex-end',
+                },
+            }),
+            textInput: StyleSheet.create({
+                primary: {
+                    backgroundColor: colors.viewPrimary,
+                },
+                secondary: {
+                    backgroundColor: colors.viewSecondary,
                 },
             }),
         },

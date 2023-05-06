@@ -3,6 +3,9 @@ import {NavigationContainer, Theme} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationStack} from '@typing/navigation';
 import App from '@components/router/app';
+import Register from '@components/router/register';
+import Login from '@components/router/login';
+import ResetPassword from '@components/router/reset_password';
 import ExempleView from '@components/router/example_view';
 import Backpack from '@components/router/backpack';
 import useTheme from '@hooking/useTheme';
@@ -32,6 +35,18 @@ const Rooter = () => {
                 <Stack.Screen
                     name='App'
                     component={App}
+                />
+                <Stack.Screen
+                    name='Register'
+                    component={Register}
+                />
+                <Stack.Screen
+                    name='Login'
+                    component={Login}
+                />
+                <Stack.Screen
+                    name='ResetPassword'
+                    component={ResetPassword}
                 />
                 <Stack.Screen
                     name='ExampleView'

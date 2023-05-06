@@ -46,6 +46,8 @@ function App({navigation}: Props): JSX.Element {
 
     const changeView = () => navigation.navigate('ExampleView');
 
+    const handleLogin = () => navigation.navigate('Login');
+
     return (
         <View
             variants={['secondary', 'centered', 'flex']}
@@ -59,13 +61,13 @@ function App({navigation}: Props): JSX.Element {
                     variants={['secondary']}
                     textVariants={['secondary']}
                     text='secondary'
-                    onTouchEnd={changeTheme}
+                    onPress={changeTheme}
                 />
                 <Button
                     variants={['primary']}
                     textVariants={['primary']}
                     text='primary'
-                    onTouchEnd={changeTheme}
+                    onPress={changeTheme}
                 />
                 <Button
                     variants={['primary']}
@@ -84,6 +86,12 @@ function App({navigation}: Props): JSX.Element {
                     textVariants={['primary']}
                     text='Change view'
                     onPress={changeView}
+                />
+                <Button
+                    variants={['primary']}
+                    textVariants={['primary']}
+                    text='Login'
+                    onPress={handleLogin}
                 />
                 <Tooltip tip='tip'>
                     <Text variants={['default']}>

@@ -25,4 +25,8 @@ export type Options = {
     body?: string;
 };
 
+export type Status = {
+    status: 'ok';
+};
+
 export type Response<T> = Promise<Result<T> | Error>;

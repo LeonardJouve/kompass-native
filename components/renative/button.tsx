@@ -41,16 +41,16 @@ const Button = ({variants = [], textVariants = [], style, textStyle, margin = {}
         }).start();
     };
 
+    const opacityStyle = {opacity: animated};
     const buttonStyle = variants.map((variant) => theme.variants.button[variant]);
     const marginSpacings = getSpacings(theme.spacing, margin);
     const paddingSpacing = getSpacings(theme.spacing, padding);
 
     return (
-        <Animated.View style={{opacity: animated}}>
+        <Animated.View style={[opacityStyle, buttonStyle, marginSpacings, paddingSpacing, style]}>
             <Pressable
                 onPressIn={onPressIn}
                 onPressOut={onPressOut}
-                style={[...buttonStyle, marginSpacings, paddingSpacing, style]}
                 {...props}
             >
                 {text ? (

@@ -60,6 +60,13 @@ enum TextVariants {
     header,
     relative,
     absolute,
+    start,
+    end,
+}
+
+enum TextInputVariants {
+    primary,
+    secondary,
 }
 
 enum Margins {
@@ -112,10 +119,13 @@ export type TextVariant = keyof typeof TextVariants;
 
 export type ViewVariant = keyof typeof ViewVariants;
 
+export type TextInputVariant = keyof typeof TextInputVariants;
+
 type Variants = {
     button: Record<ButtonVariant, NativeStyleProp<ViewStyle>>,
     view: Record<ViewVariant, NativeStyleProp<ViewStyle>>,
     text: Record<TextVariant, NativeStyleProp<TextStyle>>,
+    textInput: Record<TextInputVariant, NativeStyleProp<TextStyle>>,
 }
 
 export type Theme = {

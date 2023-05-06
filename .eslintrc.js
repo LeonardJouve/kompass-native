@@ -21,7 +21,7 @@ module.exports = {
                 },
                 {
                     name: 'react-native',
-                    importNames: ['Button', 'View', 'Text'],
+                    importNames: ['Button', 'View', 'Text', 'TextInput'],
                     message: 'Use @renative instead',
                 },
             ],
@@ -45,7 +45,7 @@ module.exports = {
                 'no-restricted-imports': ['off', {
                     paths: [{
                         name: 'react-native',
-                        importNames: ['Button', 'View', 'Text'],
+                        importNames: ['Button', 'View', 'Text', 'TextInput'],
                     }],
                 }],
             },

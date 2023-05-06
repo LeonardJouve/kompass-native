@@ -3,6 +3,9 @@ enum TranslationKeysEnum {
     'components.generic_modal.cancel',
     'components.error_modal.header',
     'components.error_modal.content',
+    'components.login.email.placeholder',
+    'components.login.password.placeholder',
+    'components.login.submit.text',
     'api.rest.error.invalid_json'
 }
 

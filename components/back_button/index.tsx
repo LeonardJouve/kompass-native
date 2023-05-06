@@ -4,12 +4,23 @@ import {useNavigation} from '@react-navigation/native';
 import {Button} from '@renative/index';
 import useTheme from '@hooking/useTheme';
 import CloseIcon from '@res/close_icon.svg';
-import {Navigation} from '@typing/navigation';
+import {Navigation, NavigationStack} from '@typing/navigation';
 
-const BackpackClose = () => {
+type Props = {
+    routeName?: keyof NavigationStack;
+};
+
+const BackButton = ({routeName}: Props) => {
     const navigation = useNavigation<Navigation>();
     const theme = useTheme();
-    const onPress = () => navigation.navigate('ExampleView');
+    const onPress = () => {
+        if (routeName) {
+            navigation.navigate(routeName);
+            return;
+        }
+        navigation.goBack();
+
+    };
     return (
         <Button
             variants={['secondary', 'absolute']}
@@ -33,4 +44,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default BackpackClose;
+export default BackButton;
