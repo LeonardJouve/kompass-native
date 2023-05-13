@@ -27,8 +27,10 @@ const Login = ({navigation}: Props) => {
     const handleRegister = () => navigation.navigate('Register');
     const handleResetPassword = () => navigation.navigate('ResetPassword');
     const handleSubmit = () => {
-        Client.login(email, password);
+        // TODO: use real device name
+        Client.login(email, password, 'test');
     };
+
     return (
         <View
             variants={['primary', 'flex', 'column']}
@@ -36,32 +38,29 @@ const Login = ({navigation}: Props) => {
         >
             <BackButton routeName='App'/>
             <Text variants={['default', 'header', 'start']}>{'Login'}</Text>
-            <View
-                variants={['secondary', 'rounded', 'centered', 'column']}
-                padding={{padding: 'l'}}
-            >
-                <TextInput
-                    variants={['primary']}
-                    value={email}
-                    placeholder={emailPlaceholder}
-                    onChangeText={setEmail}
-                    style={{width: '100%', borderRadius: 10}}
-                />
-                <TextInput
-                    variants={['primary']}
-                    value={password}
-                    placeholder={passwordPlaceholder}
-                    onChangeText={setPassword}
-                    style={{width: '100%', borderRadius: 10}}
-                />
-                <Button
-                    variants={['primary']}
-                    textVariants={['primary']}
-                    text={submitButtonText}
-                    onPress={handleSubmit}
-                    style={{width: '100%'}}
-                />
-            </View>
+            <TextInput
+                variants={['primary']}
+                value={email}
+                placeholder={emailPlaceholder}
+                onChangeText={setEmail}
+                padding={{paddingHorizontal: 'm', paddingVertical: 's'}}
+                style={{width: '100%', borderRadius: 10, borderColor: '#333333', borderWidth: 1, borderStyle: 'solid'}}
+            />
+            <TextInput
+                variants={['primary']}
+                value={password}
+                placeholder={passwordPlaceholder}
+                onChangeText={setPassword}
+                padding={{paddingHorizontal: 'm', paddingVertical: 's'}}
+                style={{width: '100%', borderRadius: 10, borderColor: '#333333', borderWidth: 1, borderStyle: 'solid'}}
+            />
+            <Button
+                variants={['primary']}
+                textVariants={['primary']}
+                text={submitButtonText}
+                onPress={handleSubmit}
+                style={{width: '100%'}}
+            />
             <Text
                 variants={['default', 'start']}
                 onPress={handleRegister}
