@@ -61,12 +61,16 @@ enum TextVariants {
     relative,
     absolute,
     start,
+    center,
     end,
 }
 
 enum TextInputVariants {
     primary,
     secondary,
+    fullWidth,
+    fullHeight,
+    rounded,
 }
 
 enum Margins {

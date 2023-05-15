@@ -16,7 +16,7 @@ export type Error = {
     data: any;
     url: string;
     error: true;
-    status: number;
+    status?: number;
 };
 
 export type Options = {

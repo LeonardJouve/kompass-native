@@ -120,6 +120,9 @@ const useTheme = (): Theme => {
                 start: {
                     alignSelf: 'flex-start',
                 },
+                center: {
+                    alignSelf: 'center',
+                },
                 end: {
                     alignSelf: 'flex-end',
                 },
@@ -127,9 +130,24 @@ const useTheme = (): Theme => {
             textInput: StyleSheet.create({
                 primary: {
                     backgroundColor: colors.viewPrimary,
+                    borderColor: colors.textDefault,
+                    borderWidth: 1,
+                    borderStyle: 'solid',
                 },
                 secondary: {
                     backgroundColor: colors.viewSecondary,
+                    borderColor: colors.textDefault,
+                    borderWidth: 1,
+                    borderStyle: 'solid',
+                },
+                fullWidth: {
+                    width: '100%',
+                },
+                fullHeight: {
+                    height: '100%',
+                },
+                rounded: {
+                    borderRadius: 8,
                 },
             }),
         },

@@ -46,7 +46,7 @@ function App({navigation}: Props): JSX.Element {
 
     const changeView = () => navigation.navigate('ExampleView');
 
-    const handleLogin = () => navigation.navigate('Login');
+    const handleLogin = () => navigation.navigate('Auth');
 
     return (
         <View

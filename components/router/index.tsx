@@ -1,11 +1,10 @@
-import React from 'react';
-import {NavigationContainer, Theme} from '@react-navigation/native';
+import React, {useEffect} from 'react';
+import {NavigationContainer, Theme, useNavigationContainerRef} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationStack} from '@typing/navigation';
+import Client from '@api/rest';
 import App from '@components/router/app';
-import Register from '@components/router/register';
-import Login from '@components/router/login';
-import ResetPassword from '@components/router/reset_password';
+import Auth from '@components/router/auth';
 import ExempleView from '@components/router/example_view';
 import Backpack from '@components/router/backpack';
 import useTheme from '@hooking/useTheme';
@@ -14,6 +13,7 @@ const Stack = createNativeStackNavigator<NavigationStack>();
 
 
 const Rooter = () => {
+    const navigationRef = useNavigationContainerRef<NavigationStack>();
     const renativeTheme = useTheme();
     const theme: Theme = {
         dark: renativeTheme.type === 'dark',
@@ -26,8 +26,14 @@ const Rooter = () => {
             notification: renativeTheme.colors.buttonPrimary,
         },
     };
+    useEffect(() => {
+        Client.setNavigation(() => navigationRef.current);
+    }, []);
     return (
-        <NavigationContainer theme={theme}>
+        <NavigationContainer
+            ref={navigationRef}
+            theme={theme}
+        >
             <Stack.Navigator
                 initialRouteName='App'
                 screenOptions={{headerShown: false}}
@@ -37,16 +43,8 @@ const Rooter = () => {
                     component={App}
                 />
                 <Stack.Screen
-                    name='Register'
-                    component={Register}
-                />
-                <Stack.Screen
-                    name='Login'
-                    component={Login}
-                />
-                <Stack.Screen
-                    name='ResetPassword'
-                    component={ResetPassword}
+                    name='Auth'
+                    component={Auth}
                 />
                 <Stack.Screen
                     name='ExampleView'

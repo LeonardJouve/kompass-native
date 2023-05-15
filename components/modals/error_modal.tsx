@@ -31,7 +31,7 @@ const ErrorModal = () => {
                 defaultMessage: 'An error has occurred, if you encounter a problem, try to restart the application.\n\n{url}: {status}\n{error}',
                 values: {
                     error,
-                    status,
+                    status: status ?? '',
                     url,
                 },
             })}
