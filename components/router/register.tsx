@@ -31,8 +31,8 @@ const Register = ({onLogin, onConnect}: Props) => {
         defaultMessage: 'Confirm your password',
     });
     const submitButtonText = formatMessage({
-        id: 'components.auth.submit.text',
-        defaultMessage: 'Submit',
+        id: 'components.auth.register.text',
+        defaultMessage: 'Register',
     });
     const loginText = formatMessage({
         id: 'components.auth.login.text',
@@ -60,6 +60,7 @@ const Register = ({onLogin, onConnect}: Props) => {
                 placeholder={emailPlaceholder}
                 onChangeText={setEmail}
                 padding={{paddingHorizontal: 'm', paddingVertical: 's'}}
+                keyboardType='email-address'
             />
             <TextInput
                 variants={['primary', 'fullWidth', 'rounded']}
@@ -67,6 +68,7 @@ const Register = ({onLogin, onConnect}: Props) => {
                 placeholder={passwordPlaceholder}
                 onChangeText={setPassword}
                 padding={{paddingHorizontal: 'm', paddingVertical: 's'}}
+                secureTextEntry={true}
             />
             <TextInput
                 variants={['primary', 'fullWidth', 'rounded']}
@@ -74,6 +76,7 @@ const Register = ({onLogin, onConnect}: Props) => {
                 placeholder={passwordConfirmPlaceholder}
                 onChangeText={setPasswordConfirm}
                 padding={{paddingHorizontal: 'm', paddingVertical: 's'}}
+                secureTextEntry={true}
             />
             <Button
                 variants={['primary']}

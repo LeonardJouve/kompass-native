@@ -47,12 +47,12 @@ const Button = ({variants = [], textVariants = [], style, textStyle, margin = {}
     const paddingSpacing = getSpacings(theme.spacing, padding);
 
     return (
-        <Animated.View style={[opacityStyle, buttonStyle, marginSpacings, paddingSpacing, style]}>
-            <Pressable
-                onPressIn={onPressIn}
-                onPressOut={onPressOut}
-                {...props}
-            >
+        <Animated.View
+            onTouchStart={onPressIn}
+            onTouchEnd={onPressOut}
+            style={[opacityStyle, buttonStyle, marginSpacings, paddingSpacing, style]}
+        >
+            <Pressable {...props}>
                 {text ? (
                     <Text
                         variants={textVariants}

@@ -7,6 +7,7 @@ import App from '@components/router/app';
 import Auth from '@components/router/auth';
 import ExempleView from '@components/router/example_view';
 import Backpack from '@components/router/backpack';
+import Profile from '@components/router/profile';
 import useTheme from '@hooking/useTheme';
 
 const Stack = createNativeStackNavigator<NavigationStack>();
@@ -27,7 +28,7 @@ const Rooter = () => {
         },
     };
     useEffect(() => {
-        Client.setNavigation(() => navigationRef.current);
+        Client.redirectToAuth = () => navigationRef.current?.navigate('Auth');
     }, []);
     return (
         <NavigationContainer
@@ -53,6 +54,10 @@ const Rooter = () => {
                 <Stack.Screen
                     name='Backpack'
                     component={Backpack}
+                />
+                <Stack.Screen
+                    name='Profile'
+                    component={Profile}
                 />
             </Stack.Navigator>
         </NavigationContainer>

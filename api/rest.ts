@@ -1,13 +1,11 @@
 import BuildConfig from 'react-native-config';
-import {NavigationContainerRef} from '@react-navigation/native';
 import {ConfigState} from '@redux/reducers/config';
 import {Options, Response, Error} from '@typing/rest';
 import {Poi} from '@typing/map';
-import {NavigationStack} from '@typing/navigation';
 
 class Client {
+    public redirectToAuth?: () => void;
     baseUrl: string;
-    getNavigation?: () => NavigationContainerRef<NavigationStack> | null;
     xsrfToken?: string;
     apiToken?: string;
 
@@ -15,11 +13,11 @@ class Client {
         this.baseUrl = BuildConfig.API_URL!;
     }
 
-    async fetch(url: string, options: Options): Response<any> {
+    async fetch(url: string, options: Options, apiTokenRequired = true): Response<any> {
         if (!this.xsrfToken) {
             await this.getCsrfToken();
         }
-        if (!this.xsrfToken || !this.apiToken) {
+        if (!this.xsrfToken || (!this.apiToken && apiTokenRequired)) {
             this.disconnect();
             return {
                 data: {
@@ -34,9 +32,11 @@ class Client {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             'X-XSRF-TOKEN': this.xsrfToken,
-            'Authorization': `Bearer ${this.apiToken}`,
             ...options.headers,
         };
+        if (apiTokenRequired) {
+            headers.Authorization = `Bearer ${this.apiToken}`;
+        }
         const result = await fetch(url, {
             ...options,
             headers,
@@ -71,10 +71,6 @@ class Client {
         return `${this.getBaseUrl()}/api`;
     }
 
-    setNavigation(navigation: () => NavigationContainerRef<NavigationStack> | null) {
-        this.getNavigation = navigation;
-    }
-
     parseCookie (name: string, headers: Headers, decode = true): string | undefined {
         let value;
         const setCookieHeader = headers.get('set-cookie');
@@ -90,7 +86,7 @@ class Client {
     disconnect() {
         this.xsrfToken = undefined;
         this.apiToken = undefined;
-        this.getNavigation?.()?.navigate('Auth');
+        this.redirectToAuth?.();
     }
 
     async getCsrfToken() {
@@ -135,6 +131,7 @@ class Client {
         let result = await this.fetch(
             `${this.getBaseUrl()}/login`,
             {method: 'POST', body: JSON.stringify({email, password})},
+            false,
         );
         if (!result.error) {
             result = await this.getApiToken(email, password);
@@ -146,6 +143,7 @@ class Client {
         let result = await this.fetch(
             `${this.getBaseUrl()}/register`,
             {method: 'POST', body: JSON.stringify({name, email, password, password_confirmation})},
+            false,
         );
         if (!result.error) {
             result = await this.getApiToken(email, password);
@@ -164,6 +162,7 @@ class Client {
         const result = await this.fetch(
             `${this.getBaseUrl()}/token`,
             {method: 'POST', body: JSON.stringify({email, password})},
+            false,
         );
         const {data, error} = result;
         if (!error && data.token) {

@@ -25,8 +25,8 @@ const ResetPassword = ({onLogin}: Props) => {
         defaultMessage: 'Confirm your new password',
     });
     const submitButtonText = formatMessage({
-        id: 'components.auth.submit.text',
-        defaultMessage: 'Submit',
+        id: 'components.auth.reset_password.text',
+        defaultMessage: 'Reset Password',
     });
     const loginText = formatMessage({
         id: 'components.auth.login.text',
@@ -42,6 +42,7 @@ const ResetPassword = ({onLogin}: Props) => {
                 placeholder={emailPlaceholder}
                 onChangeText={setEmail}
                 padding={{paddingHorizontal: 'm', paddingVertical: 's'}}
+                keyboardType='email-address'
             />
             <TextInput
                 variants={['primary', 'fullWidth', 'rounded']}
@@ -49,6 +50,7 @@ const ResetPassword = ({onLogin}: Props) => {
                 placeholder={passwordNewPlaceholder}
                 onChangeText={setPasswordNew}
                 padding={{paddingHorizontal: 'm', paddingVertical: 's'}}
+                secureTextEntry={true}
             />
             <TextInput
                 variants={['primary', 'fullWidth', 'rounded']}
@@ -56,6 +58,7 @@ const ResetPassword = ({onLogin}: Props) => {
                 placeholder={passwordNewConfirmPlaceholder}
                 onChangeText={setPasswordNewConfirm}
                 padding={{paddingHorizontal: 'm', paddingVertical: 's'}}
+                secureTextEntry={true}
             />
             <Button
                 variants={['primary']}

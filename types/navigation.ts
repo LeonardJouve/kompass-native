@@ -5,6 +5,7 @@ export type NavigationStack = {
     ExampleView: undefined;
     Backpack: undefined;
     Auth: undefined;
+    Profile: undefined;
 };
 
 export type Navigation = NativeStackNavigationProp<NavigationStack>;

@@ -11,19 +11,19 @@ type Props = {
 
 const Login = ({onResetPassword, onRegister, onConnect}: Props) => {
     const formatMessage = useFormattedMessage();
-    const [usernameOrEmail, setUsernameOrEmail] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const usernameOrEmailPlaceholder = formatMessage({
-        id: 'components.auth.username_or_email.placeholder',
-        defaultMessage: 'Enter your username or email',
+    const emailPlaceholder = formatMessage({
+        id: 'components.auth.email.placeholder',
+        defaultMessage: 'Enter your email',
     });
     const passwordPlaceholder = formatMessage({
         id: 'components.auth.password.placeholder',
         defaultMessage: 'Enter your password',
     });
     const submitButtonText = formatMessage({
-        id: 'components.auth.submit.text',
-        defaultMessage: 'Submit',
+        id: 'components.auth.login.text',
+        defaultMessage: 'Login',
     });
     const resetPasswordText = formatMessage({
         id: 'components.auth.reset_password.text',
@@ -34,7 +34,7 @@ const Login = ({onResetPassword, onRegister, onConnect}: Props) => {
         defaultMessage: 'Register',
     });
     const handleSubmit = async () => {
-        const {error} = await Client.login(usernameOrEmail, password);
+        const {error} = await Client.login(email, password);
         if (!error) {
             onConnect();
         }
@@ -44,10 +44,11 @@ const Login = ({onResetPassword, onRegister, onConnect}: Props) => {
         <View variants={['primary', 'flex', 'column']}>
             <TextInput
                 variants={['primary', 'fullWidth', 'rounded']}
-                value={usernameOrEmail}
-                placeholder={usernameOrEmailPlaceholder}
-                onChangeText={setUsernameOrEmail}
+                value={email}
+                placeholder={emailPlaceholder}
+                onChangeText={setEmail}
                 padding={{paddingHorizontal: 'm', paddingVertical: 's'}}
+                keyboardType='email-address'
             />
             <TextInput
                 variants={['primary', 'fullWidth', 'rounded']}
@@ -55,6 +56,7 @@ const Login = ({onResetPassword, onRegister, onConnect}: Props) => {
                 placeholder={passwordPlaceholder}
                 onChangeText={setPassword}
                 padding={{paddingHorizontal: 'm', paddingVertical: 's'}}
+                secureTextEntry={true}
             />
             <Button
                 variants={['primary']}
