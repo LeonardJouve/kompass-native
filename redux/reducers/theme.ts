@@ -9,6 +9,7 @@ export type ThemeState = {
     backgroundPrimaryColor: string;
     backgroundSecondaryColor: string;
     textColor: string;
+    dangerous: string;
 };
 
 const initialThemeState = {...Themes.light};

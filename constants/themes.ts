@@ -8,6 +8,7 @@ const lightTheme: ThemeState = {
     backgroundPrimaryColor: '#FFFFFF',
     backgroundSecondaryColor: '#224477',
     textColor: '#555555',
+    dangerous: '#FF4646',
 };
 
 const darkTheme: ThemeState = {
@@ -17,6 +18,7 @@ const darkTheme: ThemeState = {
     backgroundPrimaryColor: '#223366',
     backgroundSecondaryColor: '#002244',
     textColor: '#111111',
+    dangerous: '#C80000',
 };
 
 export const Themes: ThemesType = {

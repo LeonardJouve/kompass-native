@@ -4,7 +4,6 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useAppDispatch} from '@redux/store';
 import {View, Button, Text} from '@renative/index';
 import {languageActions} from '@redux/reducers/language';
-import {modalActions} from '@redux/reducers/modal';
 import {themeActions} from '@redux/reducers/theme';
 import {initialFetch} from '@redux/actions/global';
 import {getConfig} from '@redux/selectors/config';
@@ -13,7 +12,6 @@ import Websocket from '@api/websocket';
 import useTheme from '@hooking/useTheme';
 import Tooltip from '@components/tooltip';
 import {NavigationStack} from '@typing/navigation';
-import {ModalIdentifiers} from '@typing/modals';
 
 type Props = NativeStackScreenProps<NavigationStack, 'App'>;
 
@@ -41,8 +39,6 @@ function App({navigation}: Props): JSX.Element {
     const changeTheme = () => dispatch(themeActions.setTheme(theme.type === 'dark' ? 'light' : 'dark'));
 
     const changeLanguage = () => dispatch(languageActions.setLanguage(language === 'en' ? 'fr' : 'en'));
-
-    const openModal = () => dispatch(modalActions.openModal({modalId: ModalIdentifiers.ERROR, props: {id: 'components.error_modal.header', values: {}, url: 'http://url.ch', status: 422}}));
 
     const changeView = () => navigation.navigate('ExampleView');
 
@@ -74,12 +70,6 @@ function App({navigation}: Props): JSX.Element {
                     textVariants={['primary']}
                     text='Change language'
                     onPress={changeLanguage}
-                />
-                <Button
-                    variants={['primary']}
-                    textVariants={['primary']}
-                    text='Open modal'
-                    onPress={openModal}
                 />
                 <Button
                     variants={['primary']}

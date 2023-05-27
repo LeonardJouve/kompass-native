@@ -2,10 +2,10 @@ import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {View, Button} from '@renative/index';
 import {NavigationStack} from '@typing/navigation';
-import MainMenu from '@components/main_menu';
+import MainMenu from '@components/main_menu/main_menu';
 import ProfileTrigger from '@components/profile_trigger';
 import BackpackTrigger from '@components/backpack_trigger';
-import Maps from '@components/maps';
+import Map from '@components/map';
 
 type Props = NativeStackScreenProps<NavigationStack, 'ExampleView'>
 
@@ -14,7 +14,7 @@ const ExempleView = ({navigation}: Props) => {
 
     return (
         <View variants={['primary', 'flex']}>
-            {/* <Maps/> */}
+            {/* <Map/> */}
             <Button
                 variants={['primary', 'absolute']}
                 textVariants={['primary']}

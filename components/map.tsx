@@ -83,7 +83,7 @@ type Props = {
     mapType?: MapType;
 };
 
-const Maps = ({mapType}: Props) => {
+const Map = ({mapType}: Props) => {
     const dispatch = useAppDispatch();
     const pois = useSelector(getPoisSelector);
     const [permissionsGranted, setPermissionsGranted] = useState(false);
@@ -203,4 +203,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Maps;
+export default Map;

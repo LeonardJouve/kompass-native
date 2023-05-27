@@ -4,7 +4,7 @@ import {getTheme} from '@redux/selectors/theme';
 import {Theme} from '@typing/theme';
 
 const useTheme = (): Theme => {
-    const {type, primaryColor, secondaryColor, backgroundPrimaryColor, backgroundSecondaryColor, textColor} = useSelector(getTheme);
+    const {type, primaryColor, secondaryColor, backgroundPrimaryColor, backgroundSecondaryColor, textColor, dangerous} = useSelector(getTheme);
     const colors: Theme['colors'] = {
         buttonPrimary: primaryColor,
         buttonSecondary: secondaryColor,
@@ -13,6 +13,7 @@ const useTheme = (): Theme => {
         textDefault: textColor,
         textPrimary: secondaryColor,
         textSecondary: primaryColor,
+        textDangerous: dangerous,
     };
     return {
         type,
@@ -105,6 +106,9 @@ const useTheme = (): Theme => {
                 },
                 secondary: {
                     color: colors.textSecondary,
+                },
+                error: {
+                    color: colors.textDangerous,
                 },
                 header: {
                     textTransform: 'uppercase',

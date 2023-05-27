@@ -14,6 +14,7 @@ enum Colors {
     textDefault,
     textPrimary,
     textSecondary,
+    textDangerous,
 }
 
 enum Sizes {
@@ -57,6 +58,7 @@ enum TextVariants {
     default,
     primary,
     secondary,
+    error,
     header,
     relative,
     absolute,

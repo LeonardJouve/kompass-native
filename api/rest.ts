@@ -1,6 +1,6 @@
 import BuildConfig from 'react-native-config';
 import {ConfigState} from '@redux/reducers/config';
-import {Options, Response, Error} from '@typing/rest';
+import {Options, Response} from '@typing/rest';
 import {Poi} from '@typing/map';
 
 class Client {
@@ -41,6 +41,7 @@ class Client {
             ...options,
             headers,
         });
+        const {ok, status} = result;
         let data;
         try {
             data = await result.json();
@@ -52,14 +53,17 @@ class Client {
                 },
                 url,
                 error: true,
-                status: result.status,
+                status: status,
             };
+        }
+        if (status === 419 || status === 422) {
+            this.disconnect();
         }
         return {
             data,
             url,
-            error: !result.ok,
-            status: result.status,
+            error: !ok,
+            status: status,
         };
     }
 
@@ -97,21 +101,6 @@ class Client {
         this.xsrfToken = this.parseCookie('XSRF-TOKEN', result.headers);
     }
 
-    async getTest(): Response<{test: string}> {
-        return await this.fetch(
-            `${this.getApiRoute()}/test`,
-            {method: 'GET'},
-        );
-    }
-
-    // TODO: remove
-    async sendError(error: Omit<Error, 'error'>): Response<Record<string, any>> {
-        return await this.fetch(
-            `${this.getApiRoute()}/errors`,
-            {method: 'POST', body: JSON.stringify(error)},
-        );
-    }
-
     async getConfig(): Response<ConfigState> {
         return await this.fetch(
             `${this.getApiRoute()}/config`,
@@ -126,7 +115,7 @@ class Client {
         );
     }
 
-    // TODO: auth endpoints return type
+    // TODO: auth endpoints return type / "remember" boolean field
     async login(email: string, password: string): Response<any> {
         let result = await this.fetch(
             `${this.getBaseUrl()}/login`,
@@ -149,14 +138,6 @@ class Client {
             result = await this.getApiToken(email, password);
         }
         return result;
-    }
-
-    async resetPassword(email: string, password: string, password_confirmation: string): Response<any> {
-        return await this.fetch(
-            `${this.getBaseUrl()}/reset-password`,
-            {method: 'POST', body: JSON.stringify({email, password, password_confirmation})},
-            false,
-        );
     }
 
     async getApiToken(email: string, password: string): Response<any> {

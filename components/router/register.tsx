@@ -39,14 +39,14 @@ const Register = ({onLogin, onConnect}: Props) => {
         defaultMessage: 'Login',
     });
     const handleSubmit = async () => {
-        const {error} = await Client.register(name, email, password, passwordConfirm); // TODO: handle error / verify input
+        const {error} = await Client.register(name, email, password, passwordConfirm);
         if (!error) {
             onConnect();
         }
-    };
+    }; // TODO: handle error / verify input
 
     return (
-        <View variants={['primary', 'flex', 'column']}>
+        <View variants={['primary', 'column']}>
             <TextInput
                 variants={['primary', 'fullWidth', 'rounded']}
                 value={name}

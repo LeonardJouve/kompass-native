@@ -4,12 +4,11 @@ import {Button, Text, View, TextInput} from '@renative/index';
 import useFormattedMessage from '@hooking/useFormattedMessage';
 
 type Props = {
-    onResetPassword: () => void;
     onRegister: () => void;
     onConnect: () => void;
 };
 
-const Login = ({onResetPassword, onRegister, onConnect}: Props) => {
+const Login = ({onRegister, onConnect}: Props) => {
     const formatMessage = useFormattedMessage();
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -25,10 +24,6 @@ const Login = ({onResetPassword, onRegister, onConnect}: Props) => {
         id: 'components.auth.login.text',
         defaultMessage: 'Login',
     });
-    const resetPasswordText = formatMessage({
-        id: 'components.auth.reset_password.text',
-        defaultMessage: 'Reset Password',
-    });
     const registerText = formatMessage({
         id: 'components.auth.register.text',
         defaultMessage: 'Register',
@@ -41,7 +36,7 @@ const Login = ({onResetPassword, onRegister, onConnect}: Props) => {
     }; // TODO: handle error / verify input
 
     return (
-        <View variants={['primary', 'flex', 'column']}>
+        <View variants={['primary', 'column']}>
             <TextInput
                 variants={['primary', 'fullWidth', 'rounded']}
                 value={email}
@@ -64,12 +59,6 @@ const Login = ({onResetPassword, onRegister, onConnect}: Props) => {
                 text={submitButtonText}
                 onPress={handleSubmit}
             />
-            <Text
-                variants={['default', 'secondary', 'center']}
-                onPress={onResetPassword}
-            >
-                {resetPasswordText}
-            </Text>
             <Text
                 variants={['default', 'secondary', 'center']}
                 onPress={onRegister}

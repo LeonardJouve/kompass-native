@@ -5,6 +5,7 @@ import modal from '@redux/reducers/modal';
 import theme from '@redux/reducers/theme';
 import config from '@redux/reducers/config';
 import map from '@redux/reducers/map';
+import error from '@redux/reducers/error';
 import {GlobalState} from '@typing/global_state';
 
 export type AppDispatch = ThunkDispatch<GlobalState, any, AnyAction>;
@@ -17,6 +18,7 @@ const store = configureStore({
         theme,
         config,
         map,
+        error,
     },
     devTools: process.env.NODE_ENV === 'development',
 });

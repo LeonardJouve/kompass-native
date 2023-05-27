@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {sendError} from '@redux/actions/error';
+import {errorActions} from '@redux/reducers/error';
 import Client from '@api/rest';
 
 export const getConfig = createAsyncThunk(
@@ -7,7 +7,7 @@ export const getConfig = createAsyncThunk(
     async (args, {dispatch, rejectWithValue}) => {
         const {data, error, url, status} = await Client.getConfig();
         if (error) {
-            dispatch(sendError({data, url, status}));
+            dispatch(errorActions.setError({data, url, status}));
             return rejectWithValue('error');
         }
         return data;
