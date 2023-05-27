@@ -71,7 +71,7 @@ class Client {
         return `${this.getBaseUrl()}/api`;
     }
 
-    parseCookie (name: string, headers: Headers, decode = true): string | undefined {
+    parseCookie(name: string, headers: Headers, decode = true): string | undefined {
         let value;
         const setCookieHeader = headers.get('set-cookie');
         if (setCookieHeader?.includes(name + '=')) {
@@ -155,6 +155,7 @@ class Client {
         return await this.fetch(
             `${this.getBaseUrl()}/reset-password`,
             {method: 'POST', body: JSON.stringify({email, password, password_confirmation})},
+            false,
         );
     }
 

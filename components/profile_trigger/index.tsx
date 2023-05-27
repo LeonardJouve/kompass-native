@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {View} from '@renative/index';
+import {Button} from '@renative/index';
 import useTheme from '@hooking/useTheme';
 import ProfileIcon from '@res/profile_icon.svg';
 import {Navigation} from '@typing/navigation';
@@ -11,22 +11,22 @@ const ProfileTrigger = () => {
     const theme = useTheme();
     const onTouch = () => navigation.navigate('Profile');
     return (
-        <View
+        <Button
             variants={['absolute']}
             onTouchEnd={onTouch}
-            style={styles.view}
+            style={styles.button}
         >
             <ProfileIcon
                 width={50}
                 height={50}
                 fill={theme.colors.viewSecondary}
             />
-        </View>
+        </Button>
     );
 };
 
 const styles = StyleSheet.create({
-    view: {
+    button: {
         top: 7,
         left: 7,
     },
