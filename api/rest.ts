@@ -3,7 +3,7 @@ import {ConfigState} from '@redux/reducers/config';
 import {Options, Response} from '@typing/rest';
 import {Poi} from '@typing/map';
 
-class Client {
+class Rest {
     public redirectToAuth?: () => void;
     baseUrl: string;
     xsrfToken?: string;
@@ -115,43 +115,30 @@ class Client {
         );
     }
 
-    // TODO: auth endpoints return type / "remember" boolean field
+    // TODO: auth endpoints return type
     async login(email: string, password: string): Response<any> {
-        let result = await this.fetch(
+        return await this.fetch(
             `${this.getBaseUrl()}/login`,
             {method: 'POST', body: JSON.stringify({email, password})},
             false,
         );
-        if (!result.error) {
-            result = await this.getApiToken(email, password);
-        }
-        return result;
     }
 
-    async register(name: string, email: string, password: string, password_confirmation: string): Response<any> {
-        let result = await this.fetch(
+    async register(name: string, email: string, password: string, passwordConfirm: string): Response<any> {
+        return await this.fetch(
             `${this.getBaseUrl()}/register`,
-            {method: 'POST', body: JSON.stringify({name, email, password, password_confirmation})},
+            {method: 'POST', body: JSON.stringify({name, email, password, password_confirmation: passwordConfirm})},
             false,
         );
-        if (!result.error) {
-            result = await this.getApiToken(email, password);
-        }
-        return result;
     }
 
-    async getApiToken(email: string, password: string): Response<any> {
-        const result = await this.fetch(
+    async getApiToken(email: string, password: string): Response<{token: string}> {
+        return await this.fetch(
             `${this.getBaseUrl()}/token`,
             {method: 'POST', body: JSON.stringify({email, password})},
             false,
         );
-        const {data, error} = result;
-        if (!error && data.token) {
-            this.apiToken = data.token;
-        }
-        return result;
     }
 }
 
-export default new Client();
+export default new Rest();

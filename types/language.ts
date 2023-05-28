@@ -11,6 +11,7 @@ enum TranslationKeysEnum {
     'components.auth.password_new_confirm.placeholder',
     'components.auth.login.text',
     'components.auth.register.text',
+    'components.auth.remember.text',
     'components.profile.header.text',
     'components.profile.disconnect.text',
     'api.rest.error.invalid_json',

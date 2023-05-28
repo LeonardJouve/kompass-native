@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
-import Client from '@api/rest';
+import {useAppDispatch} from '@redux/store';
+import {register} from '@redux/actions/auth';
 import {Button, Text, View, TextInput} from '@renative/index';
 import useFormattedMessage from '@hooking/useFormattedMessage';
+import Checkbox from '@components/checkbox';
 
 type Props = {
     onLogin: () => void;
@@ -9,11 +11,13 @@ type Props = {
 };
 
 const Register = ({onLogin, onConnect}: Props) => {
+    const dispatch = useAppDispatch();
     const formatMessage = useFormattedMessage();
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [passwordConfirm, setPasswordConfirm] = useState<string>('');
+    const [remember, setRemember] = useState<boolean>(false);
     const namePlaceholder = formatMessage({
         id: 'components.auth.username.placeholder',
         defaultMessage: 'Enter your username',
@@ -38,12 +42,14 @@ const Register = ({onLogin, onConnect}: Props) => {
         id: 'components.auth.login.text',
         defaultMessage: 'Login',
     });
+    const rememberText = formatMessage({
+        id: 'components.auth.remember.text',
+        defaultMessage: 'Remember',
+    });
     const handleSubmit = async () => {
-        const {error} = await Client.register(name, email, password, passwordConfirm);
-        if (!error) {
-            onConnect();
-        }
-    }; // TODO: handle error / verify input
+        console.log(await dispatch(register({name, email, password, passwordConfirm, remember})))
+        // onConnect();
+    }; // TODO: handle error -> move to redux / store token / verify input
 
     return (
         <View variants={['primary', 'column']}>
@@ -77,6 +83,11 @@ const Register = ({onLogin, onConnect}: Props) => {
                 onChangeText={setPasswordConfirm}
                 padding={{paddingHorizontal: 'm', paddingVertical: 's'}}
                 secureTextEntry={true}
+            />
+            <Checkbox
+                checked={remember}
+                onChange={setRemember}
+                label={rememberText}
             />
             <Button
                 variants={['primary']}

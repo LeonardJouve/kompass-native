@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
-import Client from '@api/rest';
+import {useAppDispatch} from '@redux/store';
+import {login} from '@redux/actions/auth';
 import {Button, Text, View, TextInput} from '@renative/index';
 import useFormattedMessage from '@hooking/useFormattedMessage';
+import Checkbox from '@components/checkbox';
 
 type Props = {
     onRegister: () => void;
@@ -9,9 +11,11 @@ type Props = {
 };
 
 const Login = ({onRegister, onConnect}: Props) => {
+    const dispatch = useAppDispatch();
     const formatMessage = useFormattedMessage();
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [remember, setRemember] = useState<boolean>(false);
     const emailPlaceholder = formatMessage({
         id: 'components.auth.email.placeholder',
         defaultMessage: 'Enter your email',
@@ -28,11 +32,13 @@ const Login = ({onRegister, onConnect}: Props) => {
         id: 'components.auth.register.text',
         defaultMessage: 'Register',
     });
+    const rememberText = formatMessage({
+        id: 'components.auth.remember.text',
+        defaultMessage: 'Remember',
+    });
     const handleSubmit = async () => {
-        const {error} = await Client.login(email, password);
-        if (!error) {
-            onConnect();
-        }
+        console.log(await dispatch(login({email, password, remember})));
+        // onConnect();
     }; // TODO: handle error / verify input
 
     return (
@@ -52,6 +58,11 @@ const Login = ({onRegister, onConnect}: Props) => {
                 onChangeText={setPassword}
                 padding={{paddingHorizontal: 'm', paddingVertical: 's'}}
                 secureTextEntry={true}
+            />
+            <Checkbox
+                checked={remember}
+                label={rememberText}
+                onChange={setRemember}
             />
             <Button
                 variants={['primary']}

@@ -1,12 +1,12 @@
 import React from 'react';
 import BackButton from '@components/back_button';
-import Client from '@api/rest';
+import Rest from '@api/rest';
 import {Button, Text, View} from '@renative/index';
 import useFormattedMessage from '@hooking/useFormattedMessage';
 
 const Profile = () => {
     const formatMessage = useFormattedMessage();
-    const handleDisconnect = () => Client.disconnect();
+    const handleDisconnect = () => Rest.disconnect();
     const header = formatMessage({
         id: 'components.profile.header.text',
         defaultMessage: 'Profile',

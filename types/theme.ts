@@ -15,6 +15,7 @@ enum Colors {
     textPrimary,
     textSecondary,
     textDangerous,
+    border,
 }
 
 enum Sizes {
@@ -43,6 +44,7 @@ enum ViewVariants {
     row,
     column,
     centered,
+    alignCenter,
     rounded,
     fullWidth,
     fullHeight,
@@ -60,6 +62,7 @@ enum TextVariants {
     secondary,
     error,
     header,
+    label,
     relative,
     absolute,
     start,
@@ -127,6 +130,10 @@ export type ViewVariant = keyof typeof ViewVariants;
 
 export type TextInputVariant = keyof typeof TextInputVariants;
 
+type Others = {
+    rounded: number;
+}
+
 type Variants = {
     button: Record<ButtonVariant, NativeStyleProp<ViewStyle>>,
     view: Record<ViewVariant, NativeStyleProp<ViewStyle>>,
@@ -139,5 +146,6 @@ export type Theme = {
     colors: Record<Color, string>;
     spacing: Spacings;
     breakpoints: Record<Breakpoint, number>;
+    others: Others;
     variants: Variants;
 };

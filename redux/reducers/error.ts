@@ -12,7 +12,7 @@ const initialErrorState = {
     data: {},
 };
 
-const setError = (state: ErrorState, action: PayloadAction<ErrorState>) => ({
+const setError = (state: ErrorState, action: PayloadAction<Omit<ErrorState, 'visible'>>) => ({
     ...action.payload,
     visible: true,
 });

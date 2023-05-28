@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {NavigationContainer, Theme, useNavigationContainerRef} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationStack} from '@typing/navigation';
-import Client from '@api/rest';
+import Rest from '@api/rest';
 import App from '@components/router/app';
 import Auth from '@components/router/auth';
 import ExempleView from '@components/router/example_view';
@@ -28,7 +28,7 @@ const Rooter = () => {
         },
     };
     useEffect(() => {
-        Client.redirectToAuth = () => navigationRef.current?.navigate('Auth');
+        Rest.redirectToAuth = () => navigationRef.current?.navigate('Auth');
     }, []);
     return (
         <NavigationContainer
