@@ -6,7 +6,7 @@ import {getError} from '@redux/selectors/error';
 import {Text} from '@renative/index';
 import useFormattedMessage from '@hooking/useFormattedMessage';
 
-const ERROR_VISIBILITY_TIME = 5000;
+const ERROR_VISIBILITY_TIME = 10_000;
 
 const ErrorMessage = () => {
     const dispatch = useAppDispatch();

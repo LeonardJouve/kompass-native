@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 import {useAppDispatch} from '@redux/store';
 import {login} from '@redux/actions/auth';
 import {Button, Text, View, TextInput} from '@renative/index';
+import useTheme from '@hooking/useTheme';
 import useFormattedMessage from '@hooking/useFormattedMessage';
 import Checkbox from '@components/checkbox';
+import {ActionStatus} from '@typing/redux';
 
 type Props = {
     onRegister: () => void;
@@ -12,6 +14,7 @@ type Props = {
 
 const Login = ({onRegister, onConnect}: Props) => {
     const dispatch = useAppDispatch();
+    const theme = useTheme();
     const formatMessage = useFormattedMessage();
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -37,9 +40,11 @@ const Login = ({onRegister, onConnect}: Props) => {
         defaultMessage: 'Remember',
     });
     const handleSubmit = async () => {
-        console.log(await dispatch(login({email, password, remember})));
-        // onConnect();
-    }; // TODO: handle error / verify input
+        const {payload} = await dispatch(login({email, password, remember}));
+        if (payload && payload.status === ActionStatus.OK) {
+            onConnect();
+        }
+    }; // TODO: verify input
 
     return (
         <View variants={['primary', 'column']}>
@@ -61,8 +66,9 @@ const Login = ({onRegister, onConnect}: Props) => {
             />
             <Checkbox
                 checked={remember}
-                label={rememberText}
                 onChange={setRemember}
+                uncheckedColor={theme.colors.viewPrimary}
+                label={rememberText}
             />
             <Button
                 variants={['primary']}
