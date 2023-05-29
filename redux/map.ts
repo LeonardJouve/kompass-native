@@ -37,7 +37,7 @@ const mapSlice = createSlice({
         setPois,
     },
     extraReducers: (builder) => {
-        builder.addCase(getPois.fulfilled, (state, action) => setPois(state, {...action, payload: {action.payload.data}}));
+        builder.addCase(getPois.fulfilled, (state, action) => setPois(state, {...action, payload: action.payload.data}));
     },
 });
 
