@@ -5,7 +5,7 @@ import MapView, {Circle, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import type {Camera, MapType, MapViewProps, PanDragEvent, UserLocationChangeEvent, Point, LatLng} from 'react-native-maps';
 import {check, request, PERMISSIONS, RESULTS, Permission} from 'react-native-permissions';
 import {useAppDispatch} from '@redux/store';
-import {mapActions} from '@redux/reducers/map';
+import {mapActions} from '@redux/map';
 import {getPois} from '@redux/selectors/map';
 import MarkerIcons from '@components/icons/marker_icons';
 

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useAppDispatch} from '@redux/store';
-import {authActions} from '@redux/reducers/auth';
+import {authActions} from '@redux/auth';
 import {Button, Text, View, TextInput} from '@renative/index';
 import useTheme from '@hooking/useTheme';
 import useFormattedMessage from '@hooking/useFormattedMessage';

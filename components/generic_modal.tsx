@@ -2,7 +2,7 @@ import React from 'react';
 import {Modal, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useAppDispatch} from '@redux/store';
-import {modalActions} from '@redux/reducers/modal';
+import {modalActions} from '@redux/modal';
 import {isModalOpen} from '@redux/selectors/modal';
 import {Button, Text, View} from '@renative/index';
 import useFormattedMessage from '@hooking/useFormattedMessage';

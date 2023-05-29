@@ -1,5 +1,5 @@
 import {PayloadAction, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {errorActions} from '@redux/reducers/error';
+import {errorActions} from '@redux/error';
 import Rest from '@api/rest';
 import {ActionStatus, type ActionFulfilled, type ActionRejected} from '@typing/redux';
 
@@ -10,7 +10,7 @@ export type AuthState = {
 
 const intialAuthState = {};
 
-const setAuth = (state: AuthState, action: PayloadAction<AuthState>) => action.payload;
+const setAuth = (_state: AuthState, action: PayloadAction<AuthState>) => action.payload;
 
 type GetToken = {
     email: string;
@@ -94,10 +94,7 @@ const authSlice = createSlice({
         setAuth,
     },
     extraReducers: (builder) => {
-        builder.addCase(getToken.fulfilled, (state, action) => setAuth(state, {
-            ...action,
-            payload: action.payload.data,
-        }));
+        builder.addCase(getToken.fulfilled, (state, action) => setAuth(state, {...action, payload: action.payload.data}));
     },
 });
 

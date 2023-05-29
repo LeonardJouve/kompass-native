@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {useAppDispatch} from '@redux/store';
-import {errorActions} from '@redux/reducers/error';
+import {errorActions} from '@redux/error';
 import {getError} from '@redux/selectors/error';
 import {Text} from '@renative/index';
 import useFormattedMessage from '@hooking/useFormattedMessage';

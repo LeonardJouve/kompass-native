@@ -1,4 +1,4 @@
-import {ThemeState} from '@redux/reducers/theme';
+import {ThemeState} from '@redux/theme';
 import {StyleProp as NativeStyleProp, TextStyle, ViewStyle} from 'react-native/types';
 
 enum ThemeTypes {

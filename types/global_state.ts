@@ -1,9 +1,10 @@
-import {LanguageState} from '@redux/reducers/language';
-import {ModalState} from '@redux/reducers/modal';
-import {ThemeState} from '@redux/reducers/theme';
-import {ConfigState} from '@redux/reducers/config';
-import {MapState} from '@redux/reducers/map';
-import {ErrorState} from '@redux/reducers/error';
+import {type LanguageState} from '@redux/language';
+import {type ModalState} from '@redux/modal';
+import {type ThemeState} from '@redux/theme';
+import {type ConfigState} from '@redux/config';
+import {type MapState} from '@redux/map';
+import {type ErrorState} from '@redux/error';
+import {type AuthState} from '@redux/auth';
 
 export type GlobalState = {
     language: LanguageState;
@@ -12,4 +13,5 @@ export type GlobalState = {
     config: ConfigState,
     map: MapState,
     error: ErrorState,
+    auth: AuthState,
 };

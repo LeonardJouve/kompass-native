@@ -1,5 +1,5 @@
 import BuildConfig from 'react-native-config';
-import {ConfigState} from '@redux/reducers/config';
+import {ConfigState} from '@redux/config';
 import {Options, Response} from '@typing/rest';
 import {Poi} from '@typing/map';
 

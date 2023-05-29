@@ -1,5 +1,5 @@
-import {ThemeState} from '@redux/reducers/theme';
-import {Themes as ThemesType} from '@typing/theme';
+import {ThemeState} from '@redux/theme';
+import {Themes} from '@typing/theme';
 
 const lightTheme: ThemeState = {
     type: 'light',
@@ -21,7 +21,7 @@ const darkTheme: ThemeState = {
     dangerous: '#C80000',
 };
 
-export const Themes: ThemesType = {
+export const themes: Themes = {
     light: lightTheme,
     dark: darkTheme,
 };

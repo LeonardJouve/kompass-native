@@ -1,22 +1,23 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {errorActions} from '@redux/reducers/error';
+import {errorActions} from '@redux/error';
 import Rest from '@api/rest';
+import {ActionStatus, type ActionFulfilled, type ActionRejected} from '@typing/redux';
 
 export type ConfigState = Record<string, any>;
 
 const initialConfigState = {};
 
-const setConfig = (state: ConfigState, action: PayloadAction<ConfigState>) => action.payload;
+const setConfig = (_state: ConfigState, action: PayloadAction<ConfigState>) => action.payload;
 
-const getConfig = createAsyncThunk(
+const getConfig = createAsyncThunk<ActionFulfilled<ConfigState>, undefined, ActionRejected>(
     'getConfig',
-    async (args, {dispatch, rejectWithValue}) => {
+    async (_args, {dispatch, rejectWithValue}) => {
         const {data, error, url, status} = await Rest.getConfig();
         if (error) {
             dispatch(errorActions.setError({data, url, status}));
-            return rejectWithValue('error');
+            return rejectWithValue({status: ActionStatus.ERROR});
         }
-        return data;
+        return {status: ActionStatus.OK, data};
     },
 );
 
@@ -27,7 +28,7 @@ const configSlice = createSlice({
         setConfig,
     },
     extraReducers: (builder) => {
-        builder.addCase(getConfig.fulfilled, setConfig);
+        builder.addCase(getConfig.fulfilled, (state, action) => setConfig(state, {...action, payload: action.payload.data}));
     },
 });
 

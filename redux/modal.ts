@@ -11,9 +11,9 @@ const initialModalState = {
     modalId: '',
     props: {},
     visible: false,
-} as ModalState;
+};
 
-const openModal = (state: ModalState, action: PayloadAction<{modalId: ModalIdentifier; props?: Record<string, any>}>) => ({
+const openModal = (_state: ModalState, action: PayloadAction<{modalId: ModalIdentifier; props?: Record<string, any>}>) => ({
     modalId: action.payload.modalId,
     props: action.payload.props ?? {},
     visible: true,
