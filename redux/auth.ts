@@ -5,6 +5,7 @@ import {ActionStatus, type ActionFulfilled, type ActionRejected} from '@typing/r
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CONSTANTS from '@constants/index';
 
+// TODO: move async storage to individual items to simplify state reconciliation
 export type AuthState = {
     isLoggedIn: boolean;
     token?: string;
@@ -41,7 +42,9 @@ const getToken = createAsyncThunk<ActionFulfilled<AuthState>, GetToken, ActionRe
         };
         Rest.apiToken = token;
         if (remember) {
-            await AsyncStorage.setItem(CONSTANTS.STORAGE.AUTH, JSON.stringify(authState));
+            try {
+                await AsyncStorage.setItem(CONSTANTS.STORAGE.AUTH, JSON.stringify(authState));
+            } catch (e) {}
         }
         return {
             status: ActionStatus.OK,

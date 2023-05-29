@@ -14,7 +14,7 @@ enum Colors {
     textDefault,
     textPrimary,
     textSecondary,
-    textDangerous,
+    dangerous,
     border,
 }
 
@@ -34,6 +34,7 @@ enum Breakpoints {
 enum ButtonVariants {
     primary,
     secondary,
+    disabled,
     absolute,
     relative,
 }
@@ -76,6 +77,7 @@ enum TextInputVariants {
     fullWidth,
     fullHeight,
     rounded,
+    error,
 }
 
 enum Margins {

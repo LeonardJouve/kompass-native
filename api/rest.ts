@@ -115,7 +115,6 @@ class Rest {
         );
     }
 
-    // TODO: auth endpoints return type
     async login(email: string, password: string): Response<any> {
         return await this.fetch(
             `${this.getBaseUrl()}/login`,

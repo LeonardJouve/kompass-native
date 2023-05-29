@@ -7,6 +7,7 @@ const fr: TranslationKeys = {
     'api.rest.error.auth.credentials': 'Identifiants incorrectes. Veuillez reessayer.',
     'api.rest.error.auth.password': 'Mot de passe incorrect.',
     'api.rest.error.auth.throttle': 'Trop de tentatives de connection. Veuillez reessayer plus tard.',
+    'api.rest.error.auth.invalid': 'Identifiants invalides.',
 };
 
 export default fr;

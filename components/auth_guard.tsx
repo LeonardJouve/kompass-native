@@ -27,7 +27,9 @@ const AuthGuard = () => {
     };
 
     const onDisconnect = () => {
-        AsyncStorage.removeItem(CONSTANTS.STORAGE.AUTH);
+        try {
+            AsyncStorage.removeItem(CONSTANTS.STORAGE.AUTH);
+        } catch (e) {}
         navigationRef.current?.navigate('Auth');
         dispatch(authActions.disconnect());
     };

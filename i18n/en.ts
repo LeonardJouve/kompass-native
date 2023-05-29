@@ -7,6 +7,7 @@ const en: TranslationKeys = {
     'api.rest.error.auth.credentials': 'Wrong credentials. Please try again.',
     'api.rest.error.auth.password': 'The provided password is incorrect.',
     'api.rest.error.auth.throttle': 'Too many login attempts. Please try again later.',
+    'api.rest.error.auth.invalid': 'Invalid credentials.',
 };
 
 export default en;

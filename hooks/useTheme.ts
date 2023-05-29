@@ -13,8 +13,8 @@ const useTheme = (): Theme => {
         textDefault: textColor,
         textPrimary: secondaryColor,
         textSecondary: primaryColor,
-        textDangerous: dangerous,
         border: textColor,
+        dangerous,
     };
     const rounded = 8;
     return {
@@ -47,6 +47,9 @@ const useTheme = (): Theme => {
                     borderRadius: rounded,
                     backgroundColor: colors.buttonSecondary,
                     alignItems: 'center',
+                },
+                disabled: {
+                    opacity: 0.7,
                 },
                 relative: {
                     position: 'relative',
@@ -116,7 +119,7 @@ const useTheme = (): Theme => {
                     color: colors.textSecondary,
                 },
                 error: {
-                    color: colors.textDangerous,
+                    color: colors.dangerous,
                 },
                 header: {
                     textTransform: 'uppercase',
@@ -153,6 +156,9 @@ const useTheme = (): Theme => {
                     backgroundColor: colors.viewSecondary,
                     borderColor: colors.border,
                     borderWidth: 1,
+                },
+                error: {
+                    borderColor: colors.dangerous,
                 },
                 fullWidth: {
                     width: '100%',

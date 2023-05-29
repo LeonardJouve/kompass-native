@@ -17,13 +17,31 @@ type Props = {
     margin?: MarginProp;
     textMargin?: MarginProp;
     padding?: PaddingProp;
+    disabled?: boolean;
     textPadding?: PaddingProp;
 } & Omit<PressableProps, 'style' | 'onPressIn' | 'onPressOut'>;
 
-const Button = ({variants = [], textVariants = [], style, textStyle, margin = {}, textMargin = {}, padding = {}, textPadding = {}, text, onPress, children, ...props}: Props) => {
+const Button = ({
+    variants = [],
+    textVariants = [],
+    style,
+    textStyle,
+    margin = {},
+    textMargin = {},
+    padding = {},
+    textPadding = {},
+    text,
+    disabled,
+    onPress,
+    children,
+    ...props
+}: Props) => {
     const theme = useTheme();
     const animated = new Animated.Value(1);
     const onPressIn = () => {
+        if (disabled) {
+            return;
+        }
         Animated.timing(animated, {
             toValue: 0.6,
             duration: 200,
@@ -31,9 +49,10 @@ const Button = ({variants = [], textVariants = [], style, textStyle, margin = {}
         }).start();
     };
     const onPressOut = () => {
-        if (onPress) {
-            onPress();
+        if (disabled) {
+            return;
         }
+        onPress?.();
         Animated.timing(animated, {
             toValue: 1,
             duration: 200,
@@ -43,6 +62,9 @@ const Button = ({variants = [], textVariants = [], style, textStyle, margin = {}
 
     const opacityStyle = {opacity: animated};
     const buttonStyle = variants.map((variant) => theme.variants.button[variant]);
+    if (disabled) {
+        buttonStyle.push(theme.variants.button.disabled);
+    }
     const marginSpacings = getSpacings(theme.spacing, margin);
     const paddingSpacing = getSpacings(theme.spacing, padding);
 

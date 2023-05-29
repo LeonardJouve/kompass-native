@@ -12,13 +12,18 @@ enum TranslationKeysEnum {
     'components.auth.login.text',
     'components.auth.register.text',
     'components.auth.remember.text',
+    'components.auth.error.email',
+    'components.auth.error.password',
+    'components.auth.error.password_confirm',
     'components.profile.header.text',
     'components.profile.disconnect.text',
+    'components.text_input.error.required',
     'api.rest.error.invalid_json',
     'api.rest.error.token',
     'api.rest.error.auth.credentials',
     'api.rest.error.auth.password',
     'api.rest.error.auth.throttle',
+    'api.rest.error.auth.invalid',
     'error.generic',
 }
 
