@@ -1,7 +1,7 @@
 import React from 'react';
 import {TextInput as NativeTextInput, TextInputProps} from 'react-native';
 import useTheme from '@hooking/useTheme';
-import {getSpacings} from '@utils/theme';
+import {getSpacings} from '@utils/renative';
 import {MarginProp, PaddingProp, TextInputVariant} from '@typing/theme';
 
 type Props = {

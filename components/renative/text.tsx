@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text as NativeText} from 'react-native';
 import useTheme from '@hooking/useTheme';
-import {getSpacings} from '@utils/theme';
+import {getSpacings} from '@utils/renative';
 import {TextStyle, TextProps, StyleProp} from 'react-native/types';
 import {MarginProp, PaddingProp, TextVariant} from '@typing/theme';
 

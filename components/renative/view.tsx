@@ -1,7 +1,7 @@
 import React from 'react';
 import {View as NativeView} from 'react-native';
 import useTheme from '@hooking/useTheme';
-import {getSpacings} from '@utils/theme';
+import {getSpacings} from '@utils/renative';
 import {ViewStyle, ViewProps, StyleProp} from 'react-native/types';
 import {ViewVariant, PaddingProp, MarginProp} from '@typing/theme';
 
