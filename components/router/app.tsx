@@ -3,9 +3,9 @@ import {useSelector} from 'react-redux';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useAppDispatch} from '@redux/store';
 import {View, Button, Text} from '@renative/index';
+import {configActions} from '@redux/reducers/config';
 import {languageActions} from '@redux/reducers/language';
 import {themeActions} from '@redux/reducers/theme';
-import {initialFetch} from '@redux/actions/global';
 import {getConfig} from '@redux/selectors/config';
 import {getLanguage} from '@redux/selectors/laguage';
 import Websocket from '@api/websocket';
@@ -32,9 +32,13 @@ function App({navigation}: Props): JSX.Element {
         }
     }, [websocketHost, websocketPort, websocketKey]);
 
+    const initialFetch = () => {
+        dispatch(configActions.getConfig());
+    };
+
     useEffect(() => {
-        dispatch(initialFetch());
-    }, [dispatch]);
+        initialFetch();
+    }, []);
 
     const changeTheme = () => dispatch(themeActions.setTheme(theme.type === 'dark' ? 'light' : 'dark'));
 

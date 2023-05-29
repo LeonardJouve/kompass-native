@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useAppDispatch} from '@redux/store';
-import {register} from '@redux/actions/auth';
+import {authActions} from '@redux/reducers/auth';
 import {Button, Text, View, TextInput} from '@renative/index';
 import useTheme from '@hooking/useTheme';
 import useFormattedMessage from '@hooking/useFormattedMessage';
@@ -50,7 +50,7 @@ const Register = ({onLogin, onConnect}: Props) => {
         defaultMessage: 'Remember',
     });
     const handleSubmit = async () => {
-        const {payload} = await dispatch(register({name, email, password, passwordConfirm, remember}));
+        const {payload} = await dispatch(authActions.register({name, email, password, passwordConfirm, remember}));
         if (payload && payload.status === ActionStatus.OK) {
             onConnect();
         }

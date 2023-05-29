@@ -1,11 +1,24 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {getConfig} from '@redux/actions/config';
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {errorActions} from '@redux/reducers/error';
+import Rest from '@api/rest';
 
 export type ConfigState = Record<string, any>;
 
 const initialConfigState = {};
 
 const setConfig = (state: ConfigState, action: PayloadAction<ConfigState>) => action.payload;
+
+const getConfig = createAsyncThunk(
+    'getConfig',
+    async (args, {dispatch, rejectWithValue}) => {
+        const {data, error, url, status} = await Rest.getConfig();
+        if (error) {
+            dispatch(errorActions.setError({data, url, status}));
+            return rejectWithValue('error');
+        }
+        return data;
+    },
+);
 
 const configSlice = createSlice({
     name: 'config',
@@ -18,7 +31,12 @@ const configSlice = createSlice({
     },
 });
 
-const {reducer, actions: configActions} = configSlice;
+const {reducer, actions} = configSlice;
+
+const configActions = {
+    ...actions,
+    getConfig,
+};
 
 export {configActions};
 
