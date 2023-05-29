@@ -2,15 +2,22 @@ import {PayloadAction, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {errorActions} from '@redux/error';
 import Rest from '@api/rest';
 import {ActionStatus, type ActionFulfilled, type ActionRejected} from '@typing/redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import CONSTANTS from '@constants/index';
 
 export type AuthState = {
+    isLoggedIn: boolean;
     token?: string;
     email?: string;
 };
 
-const intialAuthState = {};
+const intialAuthState = {
+    isLoggedIn: false,
+};
 
 const setAuth = (_state: AuthState, action: PayloadAction<AuthState>) => action.payload;
+
+const disconnect = () => ({isLoggedIn: false});
 
 type GetToken = {
     email: string;
@@ -27,16 +34,18 @@ const getToken = createAsyncThunk<ActionFulfilled<AuthState>, GetToken, ActionRe
             return rejectWithValue({status: ActionStatus.ERROR});
         }
         const {token} = data;
+        const authState = {
+            isLoggedIn: true,
+            email,
+            token,
+        };
         Rest.apiToken = token;
         if (remember) {
-            // TODO: Store token with redux persist
+            await AsyncStorage.setItem(CONSTANTS.STORAGE.AUTH, JSON.stringify(authState));
         }
         return {
             status: ActionStatus.OK,
-            data: {
-                email,
-                token,
-            },
+            data: authState,
         };
     }
 );
@@ -92,6 +101,7 @@ const authSlice = createSlice({
     initialState: intialAuthState,
     reducers: {
         setAuth,
+        disconnect,
     },
     extraReducers: (builder) => {
         builder.addCase(getToken.fulfilled, (state, action) => setAuth(state, {...action, payload: action.payload.data}));

@@ -1,13 +1,13 @@
 import BuildConfig from 'react-native-config';
-import {ConfigState} from '@redux/config';
-import {Options, Response} from '@typing/rest';
-import {Poi} from '@typing/map';
+import {type ConfigState} from '@redux/config';
+import type {Options, Response} from '@typing/rest';
+import type {Poi} from '@typing/map';
 
 class Rest {
-    public redirectToAuth?: () => void;
+    public onDisconnect?: () => void;
+    public apiToken?: string;
     baseUrl: string;
     xsrfToken?: string;
-    apiToken?: string;
 
     constructor() {
         this.baseUrl = BuildConfig.API_URL!;
@@ -87,10 +87,10 @@ class Rest {
         return value;
     }
 
-    disconnect() {
+    public disconnect() {
         this.xsrfToken = undefined;
         this.apiToken = undefined;
-        this.redirectToAuth?.();
+        this.onDisconnect?.();
     }
 
     async getCsrfToken() {

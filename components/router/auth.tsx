@@ -32,7 +32,7 @@ const Auth = ({navigation}: Props) => {
 
     const handleLogin = () => setCurrentView('login');
     const handleRegister = () => setCurrentView('register');
-    const handleConnect = () => navigation.goBack();
+    const handleConnect = () => navigation.navigate('App');
 
     const CurrentView = views[currentView];
 
