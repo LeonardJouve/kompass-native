@@ -5,7 +5,6 @@ import {ActionStatus, type ActionFulfilled, type ActionRejected} from '@typing/r
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CONSTANTS from '@constants/index';
 
-// TODO: move async storage to individual items to simplify state reconciliation
 export type AuthState = {
     isLoggedIn: boolean;
     token?: string;
@@ -20,38 +19,30 @@ const setAuth = (_state: AuthState, action: PayloadAction<AuthState>) => action.
 
 const disconnect = () => ({isLoggedIn: false});
 
-type GetToken = {
-    email: string;
-    password: string;
-    remember: boolean;
+export type Token = {
+    token: string;
 };
 
-const getToken = createAsyncThunk<ActionFulfilled<AuthState>, GetToken, ActionRejected>(
-    'getToken',
-    async ({email, password, remember}, {dispatch, rejectWithValue}) => {
-        const {data, error, url, status} = await Rest.getApiToken(email, password);
-        if (error) {
-            dispatch(errorActions.setError({data, url, status}));
-            return rejectWithValue({status: ActionStatus.ERROR});
-        }
-        const {token} = data;
-        const authState = {
-            isLoggedIn: true,
-            email,
-            token,
-        };
-        Rest.apiToken = token;
-        if (remember) {
-            try {
-                await AsyncStorage.setItem(CONSTANTS.STORAGE.AUTH, JSON.stringify(authState));
-            } catch (e) {}
-        }
-        return {
-            status: ActionStatus.OK,
-            data: authState,
-        };
+const getAuthState = async (data: Token, email: string, remember?: boolean) => {
+    const {token} = data;
+    const status: typeof ActionStatus.OK = ActionStatus.OK;
+    const authState: AuthState = {
+        isLoggedIn: true,
+        email,
+        token,
+    };
+    Rest.apiToken = token;
+    if (remember) {
+        try {
+            // TODO: move async storage to individual items to simplify state reconciliation
+            await AsyncStorage.setItem(CONSTANTS.STORAGE.AUTH, JSON.stringify(authState));
+        } catch (e) {}
     }
-);
+    return {
+        status,
+        data: authState,
+    };
+};
 
 type Login = {
     email: string;
@@ -59,7 +50,7 @@ type Login = {
     remember: boolean;
 }
 
-const login = createAsyncThunk<ActionFulfilled, Login, ActionRejected>(
+const login = createAsyncThunk<ActionFulfilled<AuthState>, Login, ActionRejected>(
     'login',
     async ({email, password, remember}, {dispatch, rejectWithValue}) => {
         const {data, error, url, status} = await Rest.login(email, password);
@@ -67,11 +58,7 @@ const login = createAsyncThunk<ActionFulfilled, Login, ActionRejected>(
             dispatch(errorActions.setError({data, url, status}));
             return rejectWithValue({status: ActionStatus.ERROR});
         }
-        const {payload} = await dispatch(getToken({email, password, remember}));
-        if (payload && payload.status === ActionStatus.ERROR) {
-            return rejectWithValue({status: ActionStatus.ERROR});
-        }
-        return {status: ActionStatus.OK};
+        return await getAuthState(data, email, remember);
     },
 );
 
@@ -83,7 +70,7 @@ type Register = {
     remember: boolean;
 }
 
-const register = createAsyncThunk<ActionFulfilled, Register, ActionRejected>(
+const register = createAsyncThunk<ActionFulfilled<AuthState>, Register, ActionRejected>(
     'register',
     async ({name, email, password, passwordConfirm, remember}, {dispatch, rejectWithValue}) => {
         const {data, error, url, status} = await Rest.register(name, email, password, passwordConfirm);
@@ -91,11 +78,7 @@ const register = createAsyncThunk<ActionFulfilled, Register, ActionRejected>(
             dispatch(errorActions.setError({data, url, status}));
             return rejectWithValue({status: ActionStatus.ERROR});
         }
-        const {payload} = await dispatch(getToken({email, password, remember}));
-        if (payload && payload.status === ActionStatus.ERROR) {
-            return rejectWithValue({status: ActionStatus.ERROR});
-        }
-        return {status: ActionStatus.OK};
+        return await getAuthState(data, email, remember);
     },
 );
 
@@ -107,7 +90,8 @@ const authSlice = createSlice({
         disconnect,
     },
     extraReducers: (builder) => {
-        builder.addCase(getToken.fulfilled, (state, action) => setAuth(state, {...action, payload: action.payload.data}));
+        builder.addCase(login.fulfilled, (state, action) => setAuth(state, {...action, payload: action.payload.data}));
+        builder.addCase(register.fulfilled, (state, action) => setAuth(state, {...action, payload: action.payload.data}));
     },
 });
 

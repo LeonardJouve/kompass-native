@@ -21,6 +21,7 @@ type Props = {
     textPadding?: PaddingProp;
 } & Omit<PressableProps, 'style' | 'onPressIn' | 'onPressOut'>;
 
+// TODO: ripple animation
 const Button = ({
     variants = [],
     textVariants = [],

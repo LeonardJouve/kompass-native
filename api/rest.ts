@@ -1,23 +1,20 @@
 import BuildConfig from 'react-native-config';
 import {type ConfigState} from '@redux/config';
+import {type Token} from '@redux/auth';
 import type {Options, Response} from '@typing/rest';
 import type {Poi} from '@typing/map';
 
-class Rest {
+class RestClient {
     public onDisconnect?: () => void;
     public apiToken?: string;
     baseUrl: string;
-    xsrfToken?: string;
 
     constructor() {
         this.baseUrl = BuildConfig.API_URL!;
     }
 
     async fetch(url: string, options: Options, apiTokenRequired = true): Response<any> {
-        if (!this.xsrfToken) {
-            await this.getCsrfToken();
-        }
-        if (!this.xsrfToken || (!this.apiToken && apiTokenRequired)) {
+        if (!this.apiToken && apiTokenRequired) {
             this.disconnect();
             return {
                 data: {
@@ -31,7 +28,6 @@ class Rest {
         let headers: Record<string, string> = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'X-XSRF-TOKEN': this.xsrfToken,
             ...options.headers,
         };
         if (apiTokenRequired) {
@@ -56,9 +52,6 @@ class Rest {
                 status: status,
             };
         }
-        if (status === 419 || status === 422) {
-            this.disconnect();
-        }
         return {
             data,
             url,
@@ -75,30 +68,9 @@ class Rest {
         return `${this.getBaseUrl()}/api`;
     }
 
-    parseCookie(name: string, headers: Headers, decode = true): string | undefined {
-        let value;
-        const setCookieHeader = headers.get('set-cookie');
-        if (setCookieHeader?.includes(name + '=')) {
-            value = setCookieHeader.split(name + '=')[1].split(';')[0];
-            if (decode) {
-                value = decodeURIComponent(value);
-            }
-        }
-        return value;
-    }
-
-    public disconnect() {
-        this.xsrfToken = undefined;
+    public async disconnect() {
         this.apiToken = undefined;
         this.onDisconnect?.();
-    }
-
-    async getCsrfToken() {
-        const result = await fetch(
-            `${this.getBaseUrl()}/sanctum/csrf-cookie`,
-            {method: 'GET'},
-        );
-        this.xsrfToken = this.parseCookie('XSRF-TOKEN', result.headers);
     }
 
     async getConfig(): Response<ConfigState> {
@@ -115,29 +87,23 @@ class Rest {
         );
     }
 
-    async login(email: string, password: string): Response<any> {
+    async login(email: string, password: string): Response<Token> {
         return await this.fetch(
-            `${this.getBaseUrl()}/login`,
+            `${this.getApiRoute()}/login`,
             {method: 'POST', body: JSON.stringify({email, password})},
             false,
         );
     }
 
-    async register(name: string, email: string, password: string, passwordConfirm: string): Response<any> {
+    async register(name: string, email: string, password: string, passwordConfirm: string): Response<Token> {
         return await this.fetch(
-            `${this.getBaseUrl()}/register`,
+            `${this.getApiRoute()}/register`,
             {method: 'POST', body: JSON.stringify({name, email, password, password_confirmation: passwordConfirm})},
-            false,
-        );
-    }
-
-    async getApiToken(email: string, password: string): Response<{token: string}> {
-        return await this.fetch(
-            `${this.getBaseUrl()}/token`,
-            {method: 'POST', body: JSON.stringify({email, password})},
             false,
         );
     }
 }
 
-export default new Rest();
+const Rest = new RestClient();
+
+export default Rest;
