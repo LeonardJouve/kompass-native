@@ -32,7 +32,7 @@ export const getAuthStore: () => Promise<AuthStore | null> = async () => {
 export const removeAuthStore = () => {
     try {
         Object.keys(AuthKeys).forEach((key) => {
-            AsyncStorage.removeItem(`${CONSTANTS.STORAGE.AUTH}_${key}`)
+            AsyncStorage.removeItem(`${CONSTANTS.STORAGE.AUTH}_${key}`);
         });
     } catch (e) {}
 };
