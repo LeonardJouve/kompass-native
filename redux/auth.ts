@@ -2,20 +2,29 @@ import {PayloadAction, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {errorActions} from '@redux/error';
 import Rest from '@api/rest';
 import {ActionStatus, type ActionFulfilled, type ActionRejected} from '@typing/redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import CONSTANTS from '@constants/index';
+import {setAuthStore} from '@utils/auth';
+
+export enum AuthKeys {
+    token = 'token',
+    email = 'email',
+}
+
+export type AuthStore = Record<keyof typeof AuthKeys, string>;
 
 export type AuthState = {
     isLoggedIn: boolean;
-    token?: string;
-    email?: string;
-};
+} & Partial<AuthStore>;
 
 const intialAuthState = {
     isLoggedIn: false,
 };
 
 const setAuth = (_state: AuthState, action: PayloadAction<AuthState>) => action.payload;
+
+const connect = (_state: AuthState, action: PayloadAction<AuthStore>) => ({
+    ...action.payload,
+    isLoggedIn: true,
+});
 
 const disconnect = () => ({isLoggedIn: false});
 
@@ -26,17 +35,13 @@ export type Token = {
 const getAuthState = async (data: Token, email: string, remember?: boolean) => {
     const {token} = data;
     const status: typeof ActionStatus.OK = ActionStatus.OK;
-    const authState: AuthState = {
-        isLoggedIn: true,
+    const authState: AuthStore = {
         email,
         token,
     };
     Rest.apiToken = token;
     if (remember) {
-        try {
-            // TODO: move async storage to individual items to simplify state reconciliation
-            await AsyncStorage.setItem(CONSTANTS.STORAGE.AUTH, JSON.stringify(authState));
-        } catch (e) {}
+        setAuthStore(authState);
     }
     return {
         status,
@@ -50,7 +55,7 @@ type Login = {
     remember: boolean;
 }
 
-const login = createAsyncThunk<ActionFulfilled<AuthState>, Login, ActionRejected>(
+const login = createAsyncThunk<ActionFulfilled<AuthStore>, Login, ActionRejected>(
     'login',
     async ({email, password, remember}, {dispatch, rejectWithValue}) => {
         const {data, error, url, status} = await Rest.login(email, password);
@@ -70,7 +75,7 @@ type Register = {
     remember: boolean;
 }
 
-const register = createAsyncThunk<ActionFulfilled<AuthState>, Register, ActionRejected>(
+const register = createAsyncThunk<ActionFulfilled<AuthStore>, Register, ActionRejected>(
     'register',
     async ({name, email, password, passwordConfirm, remember}, {dispatch, rejectWithValue}) => {
         const {data, error, url, status} = await Rest.register(name, email, password, passwordConfirm);
@@ -87,11 +92,12 @@ const authSlice = createSlice({
     initialState: intialAuthState,
     reducers: {
         setAuth,
+        connect,
         disconnect,
     },
     extraReducers: (builder) => {
-        builder.addCase(login.fulfilled, (state, action) => setAuth(state, {...action, payload: action.payload.data}));
-        builder.addCase(register.fulfilled, (state, action) => setAuth(state, {...action, payload: action.payload.data}));
+        builder.addCase(login.fulfilled, (state, action) => connect(state, {...action, payload: action.payload.data}));
+        builder.addCase(register.fulfilled, (state, action) => connect(state, {...action, payload: action.payload.data}));
     },
 });
 

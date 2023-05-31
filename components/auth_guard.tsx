@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigationContainerRef} from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useAppDispatch} from '@redux/store';
 import {authActions} from '@redux/auth';
 import Rest from '@api/rest';
-import CONSTANTS from '@constants/index';
 import {NavigationStack} from '@typing/navigation';
 import Router from '@components/router';
+import {getAuthStore, removeAuthStore} from '@utils/auth';
 
 const AuthGuard = () => {
     const dispatch = useAppDispatch();
@@ -14,22 +13,20 @@ const AuthGuard = () => {
     const [authStateLoaded, setAuthStateLoaded] = useState<boolean>(false);
 
     const getAuthState = async () => {
-        try {
-            const authStateJSON = await AsyncStorage.getItem(CONSTANTS.STORAGE.AUTH);
-            if (!authStateJSON) {
-                throw new Error();
-            }
-            const authState = JSON.parse(authStateJSON);
-            Rest.apiToken = authState.token;
-            dispatch(authActions.setAuth(authState));
-        } catch (e) {}
+        const authStore = await getAuthStore();
+
+        if (!authStore) {
+            setAuthStateLoaded(true);
+            return;
+        }
+
+        dispatch(authActions.connect(authStore));
+        Rest.apiToken = authStore.token;
         setAuthStateLoaded(true);
     };
 
     const onDisconnect = () => {
-        try {
-            AsyncStorage.removeItem(CONSTANTS.STORAGE.AUTH);
-        } catch (e) {}
+        removeAuthStore();
         navigationRef.current?.navigate('Auth');
         dispatch(authActions.disconnect());
     };

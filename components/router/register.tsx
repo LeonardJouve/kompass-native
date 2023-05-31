@@ -13,7 +13,6 @@ type Props = {
     onConnect: () => void;
 };
 
-// TODO: fix registration
 const Register = ({onLogin, onConnect}: Props) => {
     const dispatch = useAppDispatch();
     const theme = useTheme();
