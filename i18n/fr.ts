@@ -3,9 +3,11 @@ import {TranslationKeys} from '@typing/language';
 const fr: TranslationKeys = {
     'components.generic_modal.confirm': 'Confirmer',
     'components.generic_modal.cancel': 'Annuler',
-    'components.error_modal.header': 'Erreur',
-    'components.error_modal.content': 'Une erreur est survenue, si vous rencontrez un problème, essayer de relancer l\'application.\n\n{url}: {status}\n{error}',
     'api.rest.error.invalid_json': 'Réponse invalide reçu du serveur.',
+    'api.rest.error.auth.credentials': 'Identifiants incorrectes. Veuillez reessayer.',
+    'api.rest.error.auth.password': 'Mot de passe incorrect.',
+    'api.rest.error.auth.throttle': 'Trop de tentatives de connection. Veuillez reessayer plus tard.',
+    'api.rest.error.auth.invalid': 'Identifiants invalides.',
 };
 
 export default fr;

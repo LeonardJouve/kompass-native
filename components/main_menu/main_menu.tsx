@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View} from '@renative/index';
 import MainMenuItem from '@components/main_menu/main_menu_item';
-import MainMenuView from '@components/main_menu/main_menu_views';
+import MainMenuView from '@components/main_menu/main_menu_view';
 import {ViewVariant} from '@typing/theme';
 import ToggleIcon from '@res/toggle_icon.svg';
 import SettingsIcon from '@res/settings_icon.svg';

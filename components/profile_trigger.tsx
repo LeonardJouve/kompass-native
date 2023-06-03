@@ -1,25 +1,24 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Button} from '@renative/index';
 import useTheme from '@hooking/useTheme';
-import CloseIcon from '@res/close_icon.svg';
+import ProfileIcon from '@res/profile_icon.svg';
 import {Navigation} from '@typing/navigation';
+import {StyleSheet} from 'react-native';
 
-const BackpackClose = () => {
+const ProfileTrigger = () => {
     const navigation = useNavigation<Navigation>();
     const theme = useTheme();
-    const onPress = () => navigation.navigate('ExampleView');
+    const onTouch = () => navigation.navigate('Profile');
     return (
         <Button
-            variants={['secondary', 'absolute']}
-            margin={{margin:'s'}}
+            variants={['absolute']}
+            onTouchEnd={onTouch}
             style={styles.button}
-            onPress={onPress}
         >
-            <CloseIcon
-                width={30}
-                height={30}
+            <ProfileIcon
+                width={50}
+                height={50}
                 fill={theme.colors.viewSecondary}
             />
         </Button>
@@ -28,9 +27,9 @@ const BackpackClose = () => {
 
 const styles = StyleSheet.create({
     button: {
-        top: 0,
-        right: 0,
+        top: 7,
+        left: 7,
     },
 });
 
-export default BackpackClose;
+export default ProfileTrigger;

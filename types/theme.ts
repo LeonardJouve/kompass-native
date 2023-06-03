@@ -1,4 +1,4 @@
-import {ThemeState} from '@redux/reducers/theme';
+import {ThemeState} from '@redux/theme';
 import {StyleProp as NativeStyleProp, TextStyle, ViewStyle} from 'react-native/types';
 
 enum ThemeTypes {
@@ -14,6 +14,8 @@ enum Colors {
     textDefault,
     textPrimary,
     textSecondary,
+    dangerous,
+    border,
 }
 
 enum Sizes {
@@ -32,6 +34,7 @@ enum Breakpoints {
 enum ButtonVariants {
     primary,
     secondary,
+    disabled,
     absolute,
     relative,
 }
@@ -42,6 +45,7 @@ enum ViewVariants {
     row,
     column,
     centered,
+    alignCenter,
     rounded,
     fullWidth,
     fullHeight,
@@ -57,9 +61,23 @@ enum TextVariants {
     default,
     primary,
     secondary,
+    error,
     header,
+    label,
     relative,
     absolute,
+    start,
+    center,
+    end,
+}
+
+enum TextInputVariants {
+    primary,
+    secondary,
+    fullWidth,
+    fullHeight,
+    rounded,
+    error,
 }
 
 enum Margins {
@@ -112,10 +130,17 @@ export type TextVariant = keyof typeof TextVariants;
 
 export type ViewVariant = keyof typeof ViewVariants;
 
+export type TextInputVariant = keyof typeof TextInputVariants;
+
+type Others = {
+    rounded: number;
+}
+
 type Variants = {
     button: Record<ButtonVariant, NativeStyleProp<ViewStyle>>,
     view: Record<ViewVariant, NativeStyleProp<ViewStyle>>,
     text: Record<TextVariant, NativeStyleProp<TextStyle>>,
+    textInput: Record<TextInputVariant, NativeStyleProp<TextStyle>>,
 }
 
 export type Theme = {
@@ -123,5 +148,6 @@ export type Theme = {
     colors: Record<Color, string>;
     spacing: Spacings;
     breakpoints: Record<Breakpoint, number>;
+    others: Others;
     variants: Variants;
 };

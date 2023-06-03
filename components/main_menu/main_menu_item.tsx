@@ -8,8 +8,8 @@ export type Props = {
     active: boolean;
     open: boolean;
     Icon: FunctionComponent<SvgProps>;
-    margin?: number;
-    padding?: number;
+    margin: number;
+    padding: number;
     size?: number;
     onTouch: () => void;
 };
@@ -19,8 +19,8 @@ const MainMenuItem = ({
     active,
     open,
     Icon,
-    margin = 7,
-    padding = 7,
+    margin,
+    padding,
     size = 35,
     onTouch,
 }: Props) => {
@@ -62,6 +62,7 @@ const MainMenuItem = ({
         transform: [{rotate}],
         backgroundColor: theme.colors.viewSecondary,
         borderRadius: size / 2,
+        elevation: index !== 0 && active ? 5 : 0,
     };
 
     return (

@@ -3,9 +3,11 @@ import {TranslationKeys} from '@typing/language';
 const en: TranslationKeys = {
     'components.generic_modal.confirm': 'Confirm',
     'components.generic_modal.cancel': 'Cancel',
-    'components.error_modal.header': 'Error',
-    'components.error_modal.content': 'An error has occurred, if you encounter a problem, try to restart the application.\n\n{url}: {status}\n{error}',
     'api.rest.error.invalid_json': 'Received invalid response from the server.',
+    'api.rest.error.auth.credentials': 'Wrong credentials. Please try again.',
+    'api.rest.error.auth.password': 'The provided password is incorrect.',
+    'api.rest.error.auth.throttle': 'Too many login attempts. Please try again later.',
+    'api.rest.error.auth.invalid': 'Invalid credentials.',
 };
 
 export default en;

@@ -3,17 +3,15 @@ import {useSelector} from 'react-redux';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useAppDispatch} from '@redux/store';
 import {View, Button, Text} from '@renative/index';
-import {languageActions} from '@redux/reducers/language';
-import {modalActions} from '@redux/reducers/modal';
-import {themeActions} from '@redux/reducers/theme';
-import {initialFetch} from '@redux/actions/global';
+import {configActions} from '@redux/config';
+import {languageActions} from '@redux/language';
+import {themeActions} from '@redux/theme';
 import {getConfig} from '@redux/selectors/config';
 import {getLanguage} from '@redux/selectors/laguage';
 import Websocket from '@api/websocket';
 import useTheme from '@hooking/useTheme';
 import Tooltip from '@components/tooltip';
 import {NavigationStack} from '@typing/navigation';
-import {ModalIdentifiers} from '@typing/modals';
 
 type Props = NativeStackScreenProps<NavigationStack, 'App'>;
 
@@ -34,17 +32,21 @@ function App({navigation}: Props): JSX.Element {
         }
     }, [websocketHost, websocketPort, websocketKey]);
 
+    const initialFetch = () => {
+        dispatch(configActions.getConfig());
+    };
+
     useEffect(() => {
-        dispatch(initialFetch());
-    }, [dispatch]);
+        initialFetch();
+    }, []);
 
     const changeTheme = () => dispatch(themeActions.setTheme(theme.type === 'dark' ? 'light' : 'dark'));
 
     const changeLanguage = () => dispatch(languageActions.setLanguage(language === 'en' ? 'fr' : 'en'));
 
-    const openModal = () => dispatch(modalActions.openModal({modalId: ModalIdentifiers.ERROR, props: {id: 'components.error_modal.header', values: {}, url: 'http://url.ch', status: 422}}));
-
     const changeView = () => navigation.navigate('ExampleView');
+
+    const handleLogin = () => navigation.navigate('Auth');
 
     return (
         <View
@@ -59,13 +61,13 @@ function App({navigation}: Props): JSX.Element {
                     variants={['secondary']}
                     textVariants={['secondary']}
                     text='secondary'
-                    onTouchEnd={changeTheme}
+                    onPress={changeTheme}
                 />
                 <Button
                     variants={['primary']}
                     textVariants={['primary']}
                     text='primary'
-                    onTouchEnd={changeTheme}
+                    onPress={changeTheme}
                 />
                 <Button
                     variants={['primary']}
@@ -76,14 +78,14 @@ function App({navigation}: Props): JSX.Element {
                 <Button
                     variants={['primary']}
                     textVariants={['primary']}
-                    text='Open modal'
-                    onPress={openModal}
+                    text='Change view'
+                    onPress={changeView}
                 />
                 <Button
                     variants={['primary']}
                     textVariants={['primary']}
-                    text='Change view'
-                    onPress={changeView}
+                    text='Login'
+                    onPress={handleLogin}
                 />
                 <Tooltip tip='tip'>
                     <Text variants={['default']}>

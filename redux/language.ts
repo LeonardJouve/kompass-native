@@ -5,7 +5,7 @@ export type LanguageState = LanguageKey;
 
 const initialLanguageState = 'en' as LanguageKey;
 
-const setLanguage = (state: LanguageState, action: PayloadAction<LanguageKey>) => action.payload;
+const setLanguage = (_state: LanguageState, action: PayloadAction<LanguageKey>) => action.payload;
 
 const languageSlice = createSlice({
     name: 'language',

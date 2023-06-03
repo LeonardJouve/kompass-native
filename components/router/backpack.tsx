@@ -5,11 +5,11 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {SvgProps} from 'react-native-svg';
 import {View} from '@renative/index';
-import BackpackClose from '@components/backpack/backpack_close';
-import Inventory from '@components/router/backpack_tabs/inventory';
-import Craft from '@components/router/backpack_tabs/craft';
-import Equipement from '@components/router/backpack_tabs/equipement';
-import Encyclopedia from '@components/router/backpack_tabs/encyclopedia';
+import BackButton from '@components/back_button';
+import Inventory from '@components/backpack_tabs/inventory';
+import Craft from '@components/backpack_tabs/craft';
+import Equipement from '@components/backpack_tabs/equipement';
+import Encyclopedia from '@components/backpack_tabs/encyclopedia';
 import useTheme from '@hooking/useTheme';
 import InventoryIcon from '@res/inventory_icon.svg';
 import CraftIcon from '@res/craft_icon.svg';
@@ -28,7 +28,7 @@ const ICONS: Record<keyof BackpackTabs, React.FC<SvgProps>> = {
     Encyclopedia: EncyclopediaIcon,
 };
 
-const backpackClose = () => <BackpackClose/>;
+const backpackClose = () => <BackButton routeName='ExampleView'/>;
 
 const getTabOptions = (routeName: keyof BackpackTabs, activeTint: string, inactiveTint: string) => ({
     header: backpackClose,

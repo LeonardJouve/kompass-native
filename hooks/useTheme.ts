@@ -4,7 +4,7 @@ import {getTheme} from '@redux/selectors/theme';
 import {Theme} from '@typing/theme';
 
 const useTheme = (): Theme => {
-    const {type, primaryColor, secondaryColor, backgroundPrimaryColor, backgroundSecondaryColor, textColor} = useSelector(getTheme);
+    const {type, primaryColor, secondaryColor, backgroundPrimaryColor, backgroundSecondaryColor, textColor, dangerous} = useSelector(getTheme);
     const colors: Theme['colors'] = {
         buttonPrimary: primaryColor,
         buttonSecondary: secondaryColor,
@@ -13,7 +13,10 @@ const useTheme = (): Theme => {
         textDefault: textColor,
         textPrimary: secondaryColor,
         textSecondary: primaryColor,
+        border: textColor,
+        dangerous,
     };
+    const rounded = 8;
     return {
         type,
         colors,
@@ -28,19 +31,25 @@ const useTheme = (): Theme => {
             phone: 0,
             tablet: 768,
         },
+        others: {
+            rounded,
+        },
         variants: {
             button: StyleSheet.create({
                 primary: {
-                    width: 'auto',
                     padding: 5,
-                    borderRadius: 10,
+                    borderRadius: rounded,
                     backgroundColor: colors.buttonPrimary,
+                    alignItems: 'center',
                 },
                 secondary: {
-                    width: 'auto',
                     padding: 5,
-                    borderRadius: 10,
+                    borderRadius: rounded,
                     backgroundColor: colors.buttonSecondary,
+                    alignItems: 'center',
+                },
+                disabled: {
+                    opacity: 0.7,
                 },
                 relative: {
                     position: 'relative',
@@ -68,6 +77,9 @@ const useTheme = (): Theme => {
                     justifyContent: 'center',
                     alignItems: 'center',
                 },
+                alignCenter: {
+                    alignItems: 'center',
+                },
                 fullWidth: {
                     width: '100%',
                 },
@@ -75,7 +87,7 @@ const useTheme = (): Theme => {
                     height: '100%',
                 },
                 rounded: {
-                    borderRadius: 8,
+                    borderRadius: rounded,
                 },
                 elevationLow: {
                     elevation: 2,
@@ -106,16 +118,56 @@ const useTheme = (): Theme => {
                 secondary: {
                     color: colors.textSecondary,
                 },
+                error: {
+                    color: colors.dangerous,
+                },
                 header: {
                     textTransform: 'uppercase',
                     fontWeight: 'bold',
                     fontSize: 20,
+                },
+                label: {
+                    fontStyle: 'italic',
+                    fontSize: 13,
                 },
                 relative: {
                     position: 'relative',
                 },
                 absolute: {
                     position: 'absolute',
+                },
+                start: {
+                    alignSelf: 'flex-start',
+                },
+                center: {
+                    alignSelf: 'center',
+                },
+                end: {
+                    alignSelf: 'flex-end',
+                },
+            }),
+            textInput: StyleSheet.create({
+                primary: {
+                    backgroundColor: colors.viewPrimary,
+                    borderColor: colors.border,
+                    borderWidth: 1,
+                },
+                secondary: {
+                    backgroundColor: colors.viewSecondary,
+                    borderColor: colors.border,
+                    borderWidth: 1,
+                },
+                error: {
+                    borderColor: colors.dangerous,
+                },
+                fullWidth: {
+                    width: '100%',
+                },
+                fullHeight: {
+                    height: '100%',
+                },
+                rounded: {
+                    borderRadius: rounded,
                 },
             }),
         },

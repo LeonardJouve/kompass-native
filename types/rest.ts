@@ -6,23 +6,27 @@ enum Methods {
 }
 
 type Result<T> = {
+    error: false;
     data: T;
     url: string;
-    error: false;
     status: number;
 };
 
 export type Error = {
+    error: true;
     data: any;
     url: string;
-    error: true;
-    status: number;
+    status?: number;
 };
 
 export type Options = {
     method: keyof typeof Methods;
     headers?: {[x: string]: string};
     body?: string;
+};
+
+export type Status = {
+    status: 'ok';
 };
 
 export type Response<T> = Promise<Result<T> | Error>;

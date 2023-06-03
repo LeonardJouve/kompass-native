@@ -5,8 +5,8 @@ import MapView, {Circle, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import type {Camera, MapType, MapViewProps, PanDragEvent, UserLocationChangeEvent, Point, LatLng} from 'react-native-maps';
 import {check, request, PERMISSIONS, RESULTS, Permission} from 'react-native-permissions';
 import {useAppDispatch} from '@redux/store';
-import {getPois} from '@redux/actions/map';
-import {getPois as getPoisSelector} from '@redux/selectors/map';
+import {mapActions} from '@redux/map';
+import {getPois} from '@redux/selectors/map';
 import MarkerIcons from '@components/icons/marker_icons';
 
 const DRAG_INTERVAL = 300;
@@ -83,9 +83,9 @@ type Props = {
     mapType?: MapType;
 };
 
-const Maps = ({mapType}: Props) => {
+const Map = ({mapType}: Props) => {
     const dispatch = useAppDispatch();
-    const pois = useSelector(getPoisSelector);
+    const pois = useSelector(getPois);
     const [permissionsGranted, setPermissionsGranted] = useState(false);
     const [location, setLocation] = useState<LatLng | null>(null);
     const mapsRef = useRef<MapView | null>(null);
@@ -116,7 +116,7 @@ const Maps = ({mapType}: Props) => {
         if (coordinate && camera.current && mapsRef.current) {
             const {latitude, longitude} = coordinate;
             if (location?.latitude !== latitude && location?.longitude !== longitude) {
-                dispatch(getPois({latitude, longitude}));
+                dispatch(mapActions.getPois({latitude, longitude}));
             }
             setLocation({latitude, longitude});
             const newCamera = {center: {latitude, longitude}};
@@ -203,4 +203,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Maps;
+export default Map;

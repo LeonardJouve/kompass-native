@@ -1,5 +1,3 @@
-export enum ModalIdentifiers {
-    ERROR = 'ERROR',
-}
+export enum ModalIdentifiers {}
 
 export type ModalIdentifier = keyof typeof ModalIdentifiers;

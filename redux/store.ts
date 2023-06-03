@@ -1,10 +1,12 @@
 import {useDispatch} from 'react-redux';
 import {AnyAction, configureStore, ThunkDispatch} from '@reduxjs/toolkit';
-import language from '@redux/reducers/language';
-import modal from '@redux/reducers/modal';
-import theme from '@redux/reducers/theme';
-import config from '@redux/reducers/config';
-import map from '@redux/reducers/map';
+import language from '@redux/language';
+import modal from '@redux/modal';
+import theme from '@redux/theme';
+import config from '@redux/config';
+import map from '@redux/map';
+import error from '@redux/error';
+import auth from '@redux/auth';
 import {GlobalState} from '@typing/global_state';
 
 export type AppDispatch = ThunkDispatch<GlobalState, any, AnyAction>;
@@ -17,6 +19,8 @@ const store = configureStore({
         theme,
         config,
         map,
+        error,
+        auth,
     },
     devTools: process.env.NODE_ENV === 'development',
 });

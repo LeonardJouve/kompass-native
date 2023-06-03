@@ -1,16 +1,20 @@
-import React from 'react';
-import {NavigationContainer, Theme} from '@react-navigation/native';
+import React, {forwardRef} from 'react';
+import {useSelector} from 'react-redux';
+import {NavigationContainer, NavigationContainerRef, Theme} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationStack} from '@typing/navigation';
+import {getIsLoggedIn} from '@redux/selectors/auth';
+import useTheme from '@hooking/useTheme';
 import App from '@components/router/app';
+import Auth from '@components/router/auth';
 import ExempleView from '@components/router/example_view';
 import Backpack from '@components/router/backpack';
-import useTheme from '@hooking/useTheme';
+import Profile from '@components/router/profile';
+import {NavigationStack} from '@typing/navigation';
 
 const Stack = createNativeStackNavigator<NavigationStack>();
 
-
-const Rooter = () => {
+const Rooter = forwardRef<NavigationContainerRef<NavigationStack>>((_props, ref) => {
+    const isLoggedIn = useSelector(getIsLoggedIn);
     const renativeTheme = useTheme();
     const theme: Theme = {
         dark: renativeTheme.type === 'dark',
@@ -23,15 +27,25 @@ const Rooter = () => {
             notification: renativeTheme.colors.buttonPrimary,
         },
     };
+
+    const initialRouteName = isLoggedIn ? 'App' : 'Auth';
+
     return (
-        <NavigationContainer theme={theme}>
+        <NavigationContainer
+            ref={ref}
+            theme={theme}
+        >
             <Stack.Navigator
-                initialRouteName='App'
+                initialRouteName={initialRouteName}
                 screenOptions={{headerShown: false}}
             >
                 <Stack.Screen
                     name='App'
                     component={App}
+                />
+                <Stack.Screen
+                    name='Auth'
+                    component={Auth}
                 />
                 <Stack.Screen
                     name='ExampleView'
@@ -41,9 +55,13 @@ const Rooter = () => {
                     name='Backpack'
                     component={Backpack}
                 />
+                <Stack.Screen
+                    name='Profile'
+                    component={Profile}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );
-};
+});
 
 export default Rooter;

@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {Animated, ViewStyle} from 'react-native';
 import useTheme from '@hooking/useTheme';
 import {View} from '@renative/index';
-import {MainMenuSection} from '@components/main_menu';
+import {MainMenuSection} from '@components/main_menu/main_menu';
 import MainMenuSettings from '@components/main_menu/main_menu_views/main_menu_settings';
 import MainMenuWeather from '@components/main_menu/main_menu_views/main_menu_weather';
 import MainMenuHelp from '@components/main_menu/main_menu_views/main_menu_help';

@@ -1,9 +1,30 @@
 enum TranslationKeysEnum {
     'components.generic_modal.confirm',
     'components.generic_modal.cancel',
-    'components.error_modal.header',
-    'components.error_modal.content',
-    'api.rest.error.invalid_json'
+    'components.auth.header.login',
+    'components.auth.header.register',
+    'components.auth.username.placeholder',
+    'components.auth.email.placeholder',
+    'components.auth.password.placeholder',
+    'components.auth.password_confirm.placeholder',
+    'components.auth.password_new.placeholder',
+    'components.auth.password_new_confirm.placeholder',
+    'components.auth.login.text',
+    'components.auth.register.text',
+    'components.auth.remember.text',
+    'components.auth.error.email',
+    'components.auth.error.password',
+    'components.auth.error.password_confirm',
+    'components.profile.header.text',
+    'components.profile.disconnect.text',
+    'components.text_input.error.required',
+    'api.rest.error.invalid_json',
+    'api.rest.error.token',
+    'api.rest.error.auth.credentials',
+    'api.rest.error.auth.password',
+    'api.rest.error.auth.throttle',
+    'api.rest.error.auth.invalid',
+    'error.generic',
 }
 
 export type TranslationKeys = Record<keyof typeof TranslationKeysEnum, string>;
