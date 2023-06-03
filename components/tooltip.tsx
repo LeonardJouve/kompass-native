@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState} from 'react';
 import {Pressable, StyleSheet} from 'react-native';
-import {View, Text} from '@renative/index';
+import {View, Text} from '@renative';
 import {LayoutChangeEvent} from 'react-native/types';
 
 type Props = {

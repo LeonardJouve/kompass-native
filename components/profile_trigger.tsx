@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {Button} from '@renative/index';
+import {Button} from '@renative';
 import useTheme from '@hooking/useTheme';
 import ProfileIcon from '@res/profile_icon.svg';
 import {Navigation} from '@typing/navigation';

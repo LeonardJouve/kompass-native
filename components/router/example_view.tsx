@@ -1,6 +1,6 @@
 import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {View, Button} from '@renative/index';
+import {View, Button} from '@renative';
 import {NavigationStack} from '@typing/navigation';
 import MainMenu from '@components/main_menu/main_menu';
 import ProfileTrigger from '@components/profile_trigger';

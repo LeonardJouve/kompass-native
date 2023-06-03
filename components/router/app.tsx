@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useAppDispatch} from '@redux/store';
-import {View, Button, Text} from '@renative/index';
+import {View, Button, Text} from '@renative';
 import {configActions} from '@redux/config';
 import {languageActions} from '@redux/language';
 import {themeActions} from '@redux/theme';

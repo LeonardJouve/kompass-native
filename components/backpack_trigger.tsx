@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {View} from '@renative/index';
+import {View} from '@renative';
 import {Navigation} from '@typing/navigation';
 
 const BackpackTrigger = () => {

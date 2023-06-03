@@ -37,3 +37,9 @@ export type Languages = {
 }
 
 export type LanguageKey = keyof Languages;
+
+export type FormattedMessage = {
+    id: TranslationKey;
+    defaultMessage: string;
+    values?: Record<string, string | number | undefined>;
+};

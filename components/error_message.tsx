@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux';
 import {useAppDispatch} from '@redux/store';
 import {errorActions} from '@redux/error';
 import {getError} from '@redux/selectors/error';
-import {Text} from '@renative/index';
+import {Text} from '@renative';
 import useFormattedMessage from '@hooking/useFormattedMessage';
 
 const ERROR_VISIBILITY_TIME = 10_000;

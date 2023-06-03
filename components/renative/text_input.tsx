@@ -7,7 +7,7 @@ import {
     type TextInputFocusEventData,
     type NativeSyntheticEvent,
 } from 'react-native';
-import {Text, View} from '@renative/index';
+import {Text, View} from '@renative';
 import useTheme from '@hooking/useTheme';
 import {getSpacings} from '@utils/renative';
 import DangerIcon from '@res/danger_icon.svg';

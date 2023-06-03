@@ -1,19 +1,13 @@
 import {useSelector} from 'react-redux';
 import {getLanguage} from '@redux/selectors/laguage';
-import i18n from '@i18n/index';
-import {TranslationKey} from '@typing/language';
-
-type Props = {
-    id: TranslationKey;
-    defaultMessage: string;
-    values?: Record<string, string | number | undefined>;
-};
+import i18n from '@i18n';
+import {FormattedMessage} from '@typing/language';
 
 const useFormattedMessage = () => {
     const languageKey = useSelector(getLanguage);
     const language = i18n[languageKey];
 
-    return ({id, defaultMessage, values}: Props) => {
+    return ({id, defaultMessage, values}: FormattedMessage) => {
         let message = defaultMessage;
         if (language && language[id]) {
             message = language[id];

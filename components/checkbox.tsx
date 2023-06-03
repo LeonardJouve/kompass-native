@@ -1,6 +1,6 @@
 import React from 'react';
 import {type ViewStyle} from 'react-native';
-import {Button, Text, View} from '@renative/index';
+import {Button, Text, View} from '@renative';
 import useTheme from '@hooking/useTheme';
 import CheckIcon from '@res/check_icon.svg';
 
