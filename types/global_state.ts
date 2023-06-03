@@ -5,6 +5,7 @@ import {type ConfigState} from '@redux/config';
 import {type MapState} from '@redux/map';
 import {type ErrorState} from '@redux/error';
 import {type AuthState} from '@redux/auth';
+import {type InventoryState} from '@redux/inventory';
 
 export type GlobalState = {
     language: LanguageState;
@@ -14,4 +15,5 @@ export type GlobalState = {
     map: MapState,
     error: ErrorState,
     auth: AuthState,
+    inventory: InventoryState,
 };

@@ -20,3 +20,7 @@ export type ActionRejected<T = undefined> = T extends undefined ? {
         data: T;
     }
 };
+
+export type OneToOneIdObject<T> = Record<string, T>;
+
+export type OneToManyIdObject<T> = Record<string, T[]>;
