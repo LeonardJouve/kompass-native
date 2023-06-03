@@ -2,10 +2,23 @@ import {StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import {getTheme} from '@redux/selectors/theme';
 import {Theme} from '@typing/theme';
+import {changeColorBrightness} from '@utils/renative';
+
+const getColorVariants = (name: string, value: string): Theme['colors']['variants'] => {
+    const variants: Record<string, string> = {};
+    for (let i = -5; i <= 5; i++) {
+        if (i === 0) {
+            continue;
+        }
+        const tint = i < 0 ? 'dark' : 'light';
+        variants[`${name}-${tint}-${Math.abs(i)}`] = changeColorBrightness(value, i / 5);
+    }
+    return variants;
+};
 
 const useTheme = (): Theme => {
     const {type, primaryColor, secondaryColor, backgroundPrimaryColor, backgroundSecondaryColor, textColor, dangerous} = useSelector(getTheme);
-    const colors: Theme['colors'] = {
+    const colors: Omit<Theme['colors'], 'variants'> = {
         buttonPrimary: primaryColor,
         buttonSecondary: secondaryColor,
         viewPrimary: backgroundPrimaryColor,
@@ -16,10 +29,17 @@ const useTheme = (): Theme => {
         border: textColor,
         dangerous,
     };
+    const colorVariants = Object.entries(colors).reduce((accumulator, [key, value]) => ({
+        ...accumulator,
+        ...getColorVariants(key, value),
+    }), {});
     const rounded = 8;
     return {
         type,
-        colors,
+        colors: {
+            ...colors,
+            variants: colorVariants,
+        },
         spacing: {
             xl: 30,
             l: 20,

@@ -11,16 +11,13 @@ export const getSpacings = (spacings: Spacings, values: MarginProp | PaddingProp
     return newValues;
 };
 
-const clamp = (value: number, min: number, max: number) => {
-    return Math.min(Math.max(value, min), max);
-};
+const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+
+const adjustColor = (value: number, brightnessDelta: number) => Math.round(clamp((1 + brightnessDelta) * value, 0, 255));
 
 export const changeColorBrightness = (hexColor: string, brightnessDelta: number, opacity = 1) => {
-    let r = parseInt(hexColor.substring(1, 3), 16);
-    r = Math.round(clamp((1 + brightnessDelta) * r, 0, 255));
-    let g = parseInt(hexColor.substring(3, 5), 16);
-    g = Math.round(clamp((1 + brightnessDelta) * g, 0, 255));
-    let b = parseInt(hexColor.substring(5, 7), 16);
-    b = Math.round(clamp((1 + brightnessDelta) * b, 0, 255));
+    const r = adjustColor(parseInt(hexColor.substring(1, 3), 16), brightnessDelta);
+    const g = adjustColor(parseInt(hexColor.substring(3, 5), 16), brightnessDelta);
+    const b = adjustColor(parseInt(hexColor.substring(5, 7), 16), brightnessDelta);
     return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 };
