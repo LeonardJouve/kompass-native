@@ -1,7 +1,41 @@
 export type InventoryItem = {
     id: string;
-    name: string;
-    category: InventoryCategory;
+    name: 'test' | 'testtest' | 'testtesttest';
+    category: InventoryCategoryName;
 };
 
-export type InventoryCategory = 'first_category' | 'second_category';
+export type InventoryCategoryName = 'first_category' | 'second_category';
+
+export enum Filter {
+    CATEGORY,
+}
+
+export enum InventoryListItemInfoType {
+    HEADER,
+    ITEM,
+    SEPARATOR,
+}
+
+type ItemInfo =  {
+    type: InventoryListItemInfoType.ITEM;
+    key: InventoryItem['name'];
+    data: {
+        item: InventoryItem;
+    };
+};
+
+type HeaderInfo = {
+    type: InventoryListItemInfoType.HEADER;
+    key: InventoryCategoryName;
+    data: {
+        categoryName: InventoryCategoryName;
+    };
+};
+
+type SeparatorInfo = {
+    type: InventoryListItemInfoType.SEPARATOR;
+    key: `${InventoryCategoryName}-separator`;
+    data: null;
+};
+
+export type InventoryListItemInfo = HeaderInfo | ItemInfo | SeparatorInfo;

@@ -18,6 +18,8 @@ enum TranslationKeysEnum {
     'components.profile.header.text',
     'components.profile.disconnect.text',
     'components.text_input.error.required',
+    'components.inventory_list.header.category_first_category',
+    'components.inventory_list.header.category_second_category',
     'api.rest.error.invalid_json',
     'api.rest.error.token',
     'api.rest.error.auth.credentials',

@@ -1,16 +1,38 @@
-import React, {useEffect} from 'react';
-import {SectionList} from 'react-native';
+import React, {useEffect, useMemo, useState} from 'react';
+import {FlatList, ListRenderItemInfo} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useAppDispatch} from '@redux/store';
 import {inventoryActions} from '@redux/inventory';
-import {getInventoryItemsByCategory} from '@redux/selectors/inventory';
-import type {GlobalState} from '@typing/global_state';
+import {getInventoryItemsArray} from '@redux/selectors/inventory';
 import InventoryListItem from '@components/inventory/inventory_list_item';
+import {filterInventoryItemsByCategory} from '@utils/inventory';
+import {Filter, InventoryListItemInfo, InventoryListItemInfoType} from '@typing/inventory';
 import InventoryListHeader from '@components/inventory/inventory_list_header';
+import InventoryListSeparator from '@components/inventory/inventory_list_separator';
 
 const InventoryList = () => {
     const dispatch = useAppDispatch();
-    const inventoryItemsByCategory = useSelector((state: GlobalState) => getInventoryItemsByCategory(state));
+    const [filter, setFilter] = useState<Filter>(Filter.CATEGORY);
+    const inventoryItems = useSelector(getInventoryItemsArray);
+
+    const filteredInventoryItems = useMemo(() => {
+        switch (filter) {
+        case Filter.CATEGORY:
+            return filterInventoryItemsByCategory(inventoryItems);
+        }
+    }, [filter, inventoryItems]);
+
+    const renderItem = ({item}: ListRenderItemInfo<InventoryListItemInfo>) => {
+        switch (item.type) {
+        case InventoryListItemInfoType.HEADER:
+            return <InventoryListHeader {...item.data}/>;
+        case InventoryListItemInfoType.ITEM:
+            return <InventoryListItem {...item.data}/>;
+        case InventoryListItemInfoType.SEPARATOR:
+            return <InventoryListSeparator/>;
+        }
+    };
+
     useEffect(() => {
         dispatch(inventoryActions.setInventoryItems({
             test: {
@@ -30,12 +52,12 @@ const InventoryList = () => {
             },
         }));
     }, []);
+
     return (
-        <SectionList
-            sections={inventoryItemsByCategory}
-            renderSectionHeader={InventoryListHeader}
-            renderItem={InventoryListItem}
-            keyExtractor={(item) => `inventory-item-${item.id}`}
+        <FlatList
+            data={filteredInventoryItems}
+            renderItem={renderItem}
+            keyExtractor={(item) => `inventory-item-${item.key}`}
         />
     );
 };

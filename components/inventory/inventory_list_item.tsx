@@ -1,5 +1,6 @@
 import React from 'react';
-import {Text} from '@renative';
+import {styled} from 'styled-components/native';
+import {Text, View} from '@renative';
 import {InventoryItem} from '@typing/inventory';
 
 type Props = {
@@ -8,8 +9,17 @@ type Props = {
 
 const InventoryListItem = ({item}: Props) => {
     return (
-        <Text>{item.name}</Text>
+        <StyledItemView
+            variants={['primary', 'row']}
+            padding={{paddingHorizontal: 'l', paddingVertical: 's'}}
+        >
+            <Text variants={['default']}>{item.name}</Text>
+        </StyledItemView>
     );
 };
+
+const StyledItemView = styled(View)(({theme}) => ({
+    borderRadius: theme.spacing.l,
+}));
 
 export default InventoryListItem;
