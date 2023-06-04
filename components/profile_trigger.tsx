@@ -1,14 +1,13 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
+import {styled} from 'styled-components/native';
 import {Button} from '@renative/index';
-import useTheme from '@hooking/useTheme';
 import ProfileIcon from '@res/profile_icon.svg';
 import {Navigation} from '@typing/navigation';
 import {StyleSheet} from 'react-native';
 
 const ProfileTrigger = () => {
     const navigation = useNavigation<Navigation>();
-    const theme = useTheme();
     const onTouch = () => navigation.navigate('Profile');
     return (
         <Button
@@ -16,11 +15,7 @@ const ProfileTrigger = () => {
             onTouchEnd={onTouch}
             style={styles.button}
         >
-            <ProfileIcon
-                width={50}
-                height={50}
-                fill={theme.colors.viewSecondary}
-            />
+            <StyledProfileIcon/>
         </Button>
     );
 };
@@ -31,5 +26,11 @@ const styles = StyleSheet.create({
         left: 7,
     },
 });
+
+const StyledProfileIcon = styled(ProfileIcon)(({theme}) => ({
+    width: 50,
+    height: 50,
+    fill: theme.colors.viewSecondary,
+}));
 
 export default ProfileTrigger;

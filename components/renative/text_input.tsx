@@ -6,13 +6,17 @@ import {
     type TextInputProps,
     type TextInputFocusEventData,
     type NativeSyntheticEvent,
+    type StyleProp,
 } from 'react-native';
-import {Text, View} from '@renative/index';
+import {styled} from 'styled-components/native';
+import Text from '@renative/text';
+import View from '@renative/view';
 import useTheme from '@hooking/useTheme';
+import useFormattedMessage from '@hooking/useFormattedMessage';
 import {getSpacings} from '@utils/renative';
 import DangerIcon from '@res/danger_icon.svg';
 import type {MarginProp, PaddingProp, TextInputVariant, TextVariant} from '@typing/theme';
-import useFormattedMessage from '@hooking/useFormattedMessage';
+import {StyledComponentProps} from '@typing/styled';
 
 type Props = {
     variants?: TextInputVariant[];
@@ -68,11 +72,7 @@ const TextInput = ({
         });
         inputLabel = (
             <>
-                <DangerIcon
-                    width={12}
-                    height={12}
-                    fill={theme.colors.dangerous}
-                />
+                <StyledDangerIcon/>
                 {typeof errorLabel === 'string' || !isRequiredValid ? <Text variants={[...labelVariants, 'error']}>{isRequiredValid ? errorLabel : requiredErrorText}</Text> : errorLabel}
             </>
         );
@@ -93,32 +93,20 @@ const TextInput = ({
         }
     };
 
-    const labelWrapperStyle: TextStyle = {
-        zIndex: 1,
-    };
-
-    const labelContentStyle: TextStyle = {
-        top: 0,
-        left: 15,
-        gap: theme.spacing.xs,
-        backgroundColor: StyleSheet.flatten([textInputStyle, style]).backgroundColor,
-    };
-
     return (
         <>
-
             <View
                 variants={['relative']}
-                style={labelWrapperStyle}
+                style={styles.labelContainer}
             >
                 {hasLabel && (
-                    <View
+                    <StyledLabelView
                         variants={['absolute', 'row', 'alignCenter']}
                         padding={{paddingHorizontal: 'xs'}}
-                        style={labelContentStyle}
+                        styled={{inputStyles: [textInputStyle, style]}}
                     >
                         {inputLabel}
-                    </View>
+                    </StyledLabelView>
                 )}
             </View>
             <NativeTextInput
@@ -132,5 +120,28 @@ const TextInput = ({
         </>
     );
 };
+
+const styles = StyleSheet.create({
+    labelContainer: {
+        zIndex: 1,
+    },
+});
+
+type StyledLabelProps = StyledComponentProps<{
+    inputStyles: StyleProp<TextStyle>,
+  }>;
+
+const StyledLabelView = styled(View)<StyledLabelProps>(({styled: {inputStyles}, theme}) => ({
+    top: 0,
+    left: 15,
+    gap: theme.spacing.xs,
+    backgroundColor: StyleSheet.flatten(inputStyles)?.backgroundColor as string | undefined,
+}));
+
+const StyledDangerIcon = styled(DangerIcon)(({theme}) => ({
+    width: 12,
+    height: 12,
+    fill: theme.colors.dangerous,
+}));
 
 export default TextInput;
