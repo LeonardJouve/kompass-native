@@ -1,12 +1,13 @@
 import React, {useEffect, useRef} from 'react';
-import {Animated, ViewStyle} from 'react-native';
-import useTheme from '@hooking/useTheme';
+import {Animated} from 'react-native';
+import {styled} from 'styled-components/native';
 import {View} from '@renative/index';
 import {MainMenuSection} from '@components/main_menu/main_menu';
 import MainMenuSettings from '@components/main_menu/main_menu_views/main_menu_settings';
 import MainMenuWeather from '@components/main_menu/main_menu_views/main_menu_weather';
 import MainMenuHelp from '@components/main_menu/main_menu_views/main_menu_help';
 import {MarginProp} from '@typing/theme';
+import {StyledComponentProps} from '@typing/styled';
 
 type Props = {
     activeSection: MainMenuSection,
@@ -24,8 +25,6 @@ const MainMenuView = ({
     sectionIndex,
 }: Props) => {
     const top = useRef<number>((itemSizeProps.padding - itemSizeProps.margin) + ((itemSizeProps.size + itemSizeProps.margin)  * sectionIndex));
-    const theme = useTheme();
-
     const animatedTop = new Animated.Value(top.current);
 
     useEffect(() => {
@@ -55,21 +54,6 @@ const MainMenuView = ({
         marginRight: (itemSizeProps.margin * 2) + itemSizeProps.size,
     };
 
-    const arrowStyle: Animated.WithAnimatedObject<ViewStyle> = {
-        position: 'absolute',
-        top: animatedTop,
-        right: -itemSizeProps.margin,
-        borderTopWidth: itemSizeProps.size / 2,
-        borderBottomWidth: itemSizeProps.size / 2,
-        borderLeftWidth: itemSizeProps.margin,
-        borderStyle: 'solid',
-        backgroundColor: 'transparent',
-        borderTopColor: 'transparent',
-        borderBottomColor: 'transparent',
-        borderLeftColor: theme.colors.viewSecondary,
-    };
-
-
     if (sectionIndex === 0) {
         return null;
     }
@@ -80,10 +64,31 @@ const MainMenuView = ({
             margin={wrapperMargin}
             padding={{padding: 'm'}}
         >
-            <Animated.View style={arrowStyle}/>
+            <StyledMainMenuView
+                style={{top: animatedTop}}
+                styled={itemSizeProps}
+            />
             {content}
         </View>
     );
 };
+
+type StyledMainMenuProps = StyledComponentProps<{
+    size: number;
+    margin: number;
+}>;
+
+const StyledMainMenuView = styled(Animated.View)<StyledMainMenuProps>(({styled: {size, margin}, theme}) => ({
+    position: 'absolute',
+    right: -margin,
+    borderTopWidth: size / 2,
+    borderBottomWidth: size / 2,
+    borderLeftWidth: margin,
+    borderStyle: 'solid',
+    backgroundColor: 'transparent',
+    borderTopColor: 'transparent',
+    borderBottomColor: 'transparent',
+    borderLeftColor: theme.colors.viewSecondary,
+}));
 
 export default MainMenuView;
