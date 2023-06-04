@@ -1,7 +1,9 @@
 import React, {FunctionComponent, useEffect} from 'react';
-import {Animated, ViewStyle} from 'react-native';
+import {Animated} from 'react-native';
+import {styled} from 'styled-components/native';
 import {SvgProps} from 'react-native-svg';
 import useTheme from '@hooking/useTheme';
+import {StyledComponentProps} from '@typing/styled';
 
 export type Props = {
     index: number;
@@ -45,38 +47,50 @@ const MainMenuItem = ({
         }).start();
     }, [open]);
 
-    const rotate = animatedRotate.interpolate({
-        inputRange: [0, 180],
-        outputRange: ['0deg', '180deg'],
-    });
-
-    const style: Animated.WithAnimatedObject<ViewStyle> = {
-        display: 'flex',
-        position: 'absolute',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: size,
-        height: size,
-        top: animatedTop,
-        right: margin,
-        transform: [{rotate}],
-        backgroundColor: theme.colors.viewSecondary,
-        borderRadius: size / 2,
-        elevation: index !== 0 && active ? 5 : 0,
-    };
-
     return (
-        <Animated.View
-            style={style}
+        <StyledMenuItemView
+            style={{
+                transform: [{rotate: animatedRotate.interpolate({
+                    inputRange: [0, 180],
+                    outputRange: ['0deg', '180deg'],
+                })}],
+                top: animatedTop,
+            }}
             onTouchEnd={onTouch}
+            styled={{
+                size,
+                margin,
+                index,
+                active,
+            }}
         >
             <Icon
                 width={size - padding}
                 height={size - padding}
                 fill={theme.colors.buttonSecondary}
             />
-        </Animated.View>
+        </StyledMenuItemView>
     );
 };
+
+type StyledMenuItemProps = StyledComponentProps<{
+    size: number;
+    margin: number;
+    index: number;
+    active: boolean;
+}>;
+
+const StyledMenuItemView = styled(Animated.View)<StyledMenuItemProps>(({styled: {size, margin, index, active}, theme}) => ({
+    display: 'flex',
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: size,
+    height: size,
+    right: margin,
+    backgroundColor: theme.colors.viewSecondary,
+    borderRadius: size / 2,
+    elevation: index !== 0 && active ? '5' : '0',
+}));
 
 export default MainMenuItem;

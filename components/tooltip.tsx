@@ -26,7 +26,7 @@ const Tooltip = ({children, tip}: Props) => {
         tooltip = (
             <View
                 onLayout={onLayout}
-                style={{...styles.tooltipWrapper, transform: [{translateY: -height}, {translateX: -(width / 2)}]}}
+                style={[styles.tooltipWrapper, {transform: [{translateY: -height}, {translateX: -(width / 2)}]}]}
             >
                 <View
                     variants={['rounded']}

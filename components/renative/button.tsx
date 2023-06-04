@@ -61,7 +61,6 @@ const Button = ({
         }).start();
     };
 
-    const opacityStyle = {opacity: animated};
     const buttonStyle = variants.map((variant) => theme.variants.button[variant]);
     if (disabled) {
         buttonStyle.push(theme.variants.button.disabled);
@@ -73,7 +72,7 @@ const Button = ({
         <Animated.View
             onTouchStart={onPressIn}
             onTouchEnd={onPressOut}
-            style={[opacityStyle, buttonStyle, marginSpacings, paddingSpacing, style]}
+            style={[{opacity: animated}, buttonStyle, marginSpacings, paddingSpacing, style]}
         >
             <Pressable {...props}>
                 {text ? (

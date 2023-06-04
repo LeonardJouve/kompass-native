@@ -1,6 +1,6 @@
 import React, {forwardRef} from 'react';
 import {useSelector} from 'react-redux';
-import {NavigationContainer, NavigationContainerRef, Theme} from '@react-navigation/native';
+import {NavigationContainer, type NavigationContainerRef, type Theme} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {getIsLoggedIn} from '@redux/selectors/auth';
 import useTheme from '@hooking/useTheme';
@@ -9,22 +9,22 @@ import Auth from '@components/router/auth';
 import ExempleView from '@components/router/example_view';
 import Backpack from '@components/router/backpack';
 import Profile from '@components/router/profile';
-import {NavigationStack} from '@typing/navigation';
+import type {NavigationStack} from '@typing/navigation';
 
 const Stack = createNativeStackNavigator<NavigationStack>();
 
 const Rooter = forwardRef<NavigationContainerRef<NavigationStack>>((_props, ref) => {
     const isLoggedIn = useSelector(getIsLoggedIn);
-    const renativeTheme = useTheme();
-    const theme: Theme = {
-        dark: renativeTheme.type === 'dark',
+    const theme = useTheme();
+    const navigationTheme: Theme = {
+        dark: theme.type === 'dark',
         colors: {
-            primary: renativeTheme.colors.viewPrimary,
-            background: renativeTheme.colors.viewPrimary,
-            card: renativeTheme.colors.viewPrimary,
-            text: renativeTheme.colors.textDefault,
-            border: renativeTheme.colors.viewSecondary,
-            notification: renativeTheme.colors.buttonPrimary,
+            primary: theme.colors.viewPrimary,
+            background: theme.colors.viewPrimary,
+            card: theme.colors.viewPrimary,
+            text: theme.colors.textDefault,
+            border: theme.colors.viewSecondary,
+            notification: theme.colors.buttonPrimary,
         },
     };
 
@@ -33,7 +33,7 @@ const Rooter = forwardRef<NavigationContainerRef<NavigationStack>>((_props, ref)
     return (
         <NavigationContainer
             ref={ref}
-            theme={theme}
+            theme={navigationTheme}
         >
             <Stack.Navigator
                 initialRouteName={initialRouteName}

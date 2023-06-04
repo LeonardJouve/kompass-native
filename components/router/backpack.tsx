@@ -1,9 +1,9 @@
 import React from 'react';
-import {ViewStyle} from 'react-native';
 import {RouteProp} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {SvgProps} from 'react-native-svg';
+import {styled} from 'styled-components/native';
 import {View} from '@renative';
 import BackButton from '@components/back_button';
 import Inventory from '@components/inventory';
@@ -16,6 +16,7 @@ import CraftIcon from '@res/craft_icon.svg';
 import EquipementIcon from '@res/equipement_icon.svg';
 import EncyclopediaIcon from '@res/encyclopedia_icon.svg';
 import {BackpackTabs, NavigationStack} from '@typing/navigation';
+import type {StyledComponentProps} from '@typing/styled';
 
 type Props = NativeStackScreenProps<NavigationStack, 'Backpack'>
 
@@ -30,27 +31,25 @@ const ICONS: Record<keyof BackpackTabs, React.FC<SvgProps>> = {
 
 const backpackClose = () => <BackButton routeName='ExampleView'/>;
 
-const getTabOptions = (routeName: keyof BackpackTabs, activeTint: string, inactiveTint: string) => ({
+const getTabOptions = (routeName: keyof BackpackTabs) => ({
     header: backpackClose,
     tabBarShowLabel: false,
     tabBarIcon: ({focused, color, size}: {focused: boolean, color: string, size: number}) => {
         const Icon = ICONS[routeName];
-        const viewStyle: ViewStyle = {
-            backgroundColor: focused ? inactiveTint : activeTint,
-            width: size,
-            height: size,
-        };
         return (
-            <View
+            <StyledTabOptionView
                 variants={['rounded', 'centered']}
-                style={viewStyle}
+                styled={{
+                    focused,
+                    size,
+                }}
             >
                 <Icon
                     fill={color}
                     width={size - 5}
                     height={size - 5}
                 />
-            </View>
+            </StyledTabOptionView>
         );
     },
 });
@@ -62,7 +61,7 @@ const Backpack = ({}: Props) => {
         tabBarInactiveTintColor: theme.colors.buttonSecondary,
         tabBarActiveBackgroundColor: theme.colors.viewSecondary,
         tabBarInactiveBackgroundColor: theme.colors.viewSecondary,
-        ...getTabOptions(route.name, theme.colors.viewSecondary, theme.colors.buttonSecondary),
+        ...getTabOptions(route.name),
     });
     return (
         <Tab.Navigator screenOptions={screenOptions}>
@@ -85,5 +84,16 @@ const Backpack = ({}: Props) => {
         </Tab.Navigator>
     );
 };
+
+type StyledTabOptionProps = StyledComponentProps<{
+    focused: boolean;
+    size: number;
+}>;
+
+const StyledTabOptionView = styled(View)<StyledTabOptionProps>(({styled: {focused, size}, theme}) => ({
+    backgroundColor: focused ? theme.colors.buttonSecondary : theme.colors.viewSecondary,
+    width: size,
+    height: size,
+}));
 
 export default Backpack;
