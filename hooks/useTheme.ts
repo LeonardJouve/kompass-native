@@ -77,6 +77,14 @@ const useTheme = (): Theme => {
                 absolute: {
                     position: 'absolute',
                 },
+                row: {
+                    flexDirection: 'row',
+                    gap: 10,
+                },
+                column: {
+                    flexDirection: 'column',
+                    gap: 10,
+                },
             }),
             view: StyleSheet.create({
                 primary: {

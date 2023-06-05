@@ -1,5 +1,5 @@
 export type InventoryItem = {
-    id: string;
+    id: 'test' | 'testtest' | 'testtesttest';
     name: 'test' | 'testtest' | 'testtesttest';
     category: InventoryCategoryName;
 };

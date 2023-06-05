@@ -37,6 +37,8 @@ enum ButtonVariants {
     disabled,
     absolute,
     relative,
+    row,
+    column,
 }
 
 enum ViewVariants {

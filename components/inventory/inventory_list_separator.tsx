@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import {View} from '@renative';
+import {changeColorBrightness} from '@utils/renative';
 
 const InventoryListSeparator = () => (
     <StyledBackdropView>
@@ -9,7 +10,7 @@ const InventoryListSeparator = () => (
 );
 
 const StyledBackdropView = styled(View)(({theme}) => ({
-    backgroundColor: theme.colors.variants['viewPrimary-dark-1'],
+    backgroundColor: changeColorBrightness(theme.colors.viewPrimary, -0.07),
 }));
 
 const StyledSeparatorView = styled(View)(({theme}) => ({

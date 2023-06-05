@@ -1,5 +1,5 @@
 import React from 'react';
-import {Animated, Pressable} from 'react-native';
+import {Animated, Pressable, StyleSheet, type GestureResponderEvent} from 'react-native';
 import {Text} from '@renative';
 import useTheme from '@hooking/useTheme';
 import {getSpacings} from '@utils/renative';
@@ -12,14 +12,14 @@ type Props = {
     style?: StyleProp<ViewStyle>
     textStyle?: StyleProp<TextStyle>;
     text?: string;
-    onPress?: () => void;
+    onPress?: (event: GestureResponderEvent) => void;
     children?: React.ReactNode;
     margin?: MarginProp;
     textMargin?: MarginProp;
     padding?: PaddingProp;
     disabled?: boolean;
     textPadding?: PaddingProp;
-} & Omit<PressableProps, 'style' | 'onPressIn' | 'onPressOut'>;
+} & Omit<PressableProps, 'style' | 'onPressOut'>;
 
 // TODO: ripple animation
 const Button = ({
@@ -39,21 +39,22 @@ const Button = ({
 }: Props) => {
     const theme = useTheme();
     const animated = new Animated.Value(1);
-    const onPressIn = () => {
+    const onPressIn = (event: GestureResponderEvent) => {
         if (disabled) {
             return;
         }
+        props.onPressIn?.(event);
         Animated.timing(animated, {
             toValue: 0.6,
             duration: 200,
             useNativeDriver: true,
         }).start();
     };
-    const onPressOut = () => {
+    const onPressOut = (event: GestureResponderEvent) => {
         if (disabled) {
             return;
         }
-        onPress?.();
+        onPress?.(event);
         Animated.timing(animated, {
             toValue: 1,
             duration: 200,
@@ -68,13 +69,18 @@ const Button = ({
     const marginSpacings = getSpacings(theme.spacing, margin);
     const paddingSpacing = getSpacings(theme.spacing, padding);
 
+    const {position, top, bottom, right, left} = StyleSheet.flatten([buttonStyle, style]);
+
     return (
         <Animated.View
             onTouchStart={onPressIn}
             onTouchEnd={onPressOut}
-            style={[{opacity: animated}, buttonStyle, marginSpacings, paddingSpacing, style]}
+            style={{opacity: animated, position, top, bottom, right, left}}
         >
-            <Pressable {...props}>
+            <Pressable
+                style={[buttonStyle, marginSpacings, paddingSpacing, style]}
+                {...props}
+            >
                 {text ? (
                     <Text
                         variants={textVariants}
