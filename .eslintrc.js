@@ -2,6 +2,7 @@ module.exports = {
     root: true,
     extends: '@react-native-community',
     rules: {
+        'react-hooks/exhaustive-deps': 'off',
         'prettier/prettier': 0,
         'semi': ['error', 'always'],
         'indent': ['error', 4],
@@ -11,7 +12,6 @@ module.exports = {
         'jsx-quotes': ['error', 'prefer-single'],
         'react/jsx-max-props-per-line': ['error', {maximum: 1, when: 'always'}],
         'eqeqeq': ['error', 'always'],
-        'react-hooks/exhaustive-deps': 'warn',
         'no-restricted-imports': ['error', {
             paths: [
                 {

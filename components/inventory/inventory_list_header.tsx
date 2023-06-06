@@ -6,24 +6,27 @@ import {changeColorBrightness} from '@utils/renative';
 import type {InventoryCategoryName} from '@typing/inventory';
 
 type Props = {
+    index: number;
     categoryName: InventoryCategoryName;
 };
 
-const InventoryListHeader = ({categoryName}: Props) => {
+const InventoryListHeader = ({categoryName, index}: Props) => {
     const formatMessage = useFormattedMessage();
     const header = formatMessage({
         id: `components.inventory_list.header.category_${categoryName}`,
         defaultMessage: categoryName,
     });
     return (
-        <StyledHeaderView
-            margin={{marginTop: 'xs'}}
-            padding={{paddingHorizontal: 'l', paddingVertical: 'm'}}
-        >
-            <Text variants={['default', 'header', 'center']}>
-                {header}
-            </Text>
-        </StyledHeaderView>
+        <View variants={[index === 1 ? 'secondary' : 'primary']}>
+            <StyledHeaderView
+                margin={{marginTop: 'xs'}}
+                padding={{paddingHorizontal: 'l', paddingVertical: 'm'}}
+            >
+                <Text variants={['default', 'header', 'center']}>
+                    {header}
+                </Text>
+            </StyledHeaderView>
+        </View>
     );
 };
 

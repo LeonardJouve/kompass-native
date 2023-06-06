@@ -72,13 +72,11 @@ const Button = ({
     const {position, top, bottom, right, left} = StyleSheet.flatten([buttonStyle, style]);
 
     return (
-        <Animated.View
-            onTouchStart={onPressIn}
-            onTouchEnd={onPressOut}
-            style={{opacity: animated, position, top, bottom, right, left}}
-        >
+        <Animated.View style={{opacity: animated, position, top, bottom, right, left}}>
             <Pressable
                 style={[buttonStyle, marginSpacings, paddingSpacing, style]}
+                onPressIn={onPressIn}
+                onPressOut={onPressOut}
                 {...props}
             >
                 {text ? (

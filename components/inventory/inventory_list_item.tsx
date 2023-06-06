@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {styled} from 'styled-components/native';
-import {Text, Button} from '@renative';
+import {Text, Button, View} from '@renative';
 import InventoryItemIcons from '@components/icons/inventory_item_icons';
 import {changeColorBrightness} from '@utils/renative';
 import CheckIcon from '@res/check_icon.svg';
@@ -17,29 +17,31 @@ type Props = {
 const InventoryListItem = ({item, selected, selectItem}: Props) => {
     const Icon = InventoryItemIcons[item.id] ?? InventoryItemIcons.not_found;
     return (
-        <StyledItemButton
-            variants={['row']}
-            padding={{paddingHorizontal: 'l', paddingVertical: 's'}}
-            margin={{marginHorizontal: 'm', marginBottom: 'm'}}
-            onLongPress={selectItem}
-            styled={{selected}}
-        >
-            <Icon
-                width={30}
-                height={30}
-            />
-            <Text variants={['default']}>{item.name}</Text>
-            {selected && (
-                <Button
-                    variants={['primary', 'absolute']}
-                    padding={{padding: 'xs'}}
-                    onPress={selectItem}
-                    style={styles.selectButton}
-                >
-                    <StyledCheckIcon/>
-                </Button>
-            )}
-        </StyledItemButton>
+        <View variants={['primary']}>
+            <StyledItemButton
+                variants={['row', 'relative']}
+                padding={{paddingHorizontal: 'l', paddingVertical: 's'}}
+                margin={{marginHorizontal: 'm', marginBottom: 'm'}}
+                onLongPress={selectItem}
+                styled={{selected}}
+            >
+                <Icon
+                    width={30}
+                    height={30}
+                />
+                <Text variants={['default']}>{item.name}</Text>
+                {selected && (
+                    <Button
+                        variants={['primary', 'absolute']}
+                        padding={{padding: 'xs'}}
+                        onPress={selectItem}
+                        style={[styles.selectButton]}
+                    >
+                        <StyledCheckIcon/>
+                    </Button>
+                )}
+            </StyledItemButton>
+        </View>
     );
 };
 
@@ -56,8 +58,8 @@ const styles = StyleSheet.create({
     selectButton: {
         width: 20,
         height: 20,
-        top: '50%',
         right: 10,
+        top: '50%',
         borderRadius: 10,
     },
 });

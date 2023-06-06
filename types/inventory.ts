@@ -6,7 +6,7 @@ export type InventoryItem = {
 
 export type InventoryCategoryName = 'first_category' | 'second_category';
 
-export enum Filter {
+export enum InventoryFilter {
     CATEGORY,
 }
 
@@ -14,6 +14,7 @@ export enum InventoryListItemInfoType {
     HEADER,
     ITEM,
     SEPARATOR,
+    FILTER,
 }
 
 type ItemInfo =  {
@@ -34,8 +35,14 @@ type HeaderInfo = {
 
 type SeparatorInfo = {
     type: InventoryListItemInfoType.SEPARATOR;
-    key: `${InventoryCategoryName}-separator`;
+    key: `${InventoryCategoryName}_separator`;
     data: null;
 };
 
-export type InventoryListItemInfo = HeaderInfo | ItemInfo | SeparatorInfo;
+type FilterInfo = {
+    type: InventoryListItemInfoType.FILTER;
+    key: 'inventory_list_filter_bar';
+    data: null,
+}
+
+export type InventoryListItemInfo = HeaderInfo | ItemInfo | SeparatorInfo | FilterInfo;
