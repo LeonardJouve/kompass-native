@@ -24,12 +24,12 @@ const addInventoryItem = (state: InventoryState, action: PayloadAction<Inventory
 });
 
 const removeInventoryItem = (state: InventoryState, action: PayloadAction<InventoryItem['id']>) => {
+    Reflect.deleteProperty(state.items, action.payload);
+};
+
+const removeInventoryItems = (state: InventoryState, action: PayloadAction<Array<InventoryItem['id']>>) => {
     const items = state.items;
-    Reflect.deleteProperty(items, action.payload);
-    return {
-        ...state,
-        items,
-    };
+    action.payload.forEach((id) => Reflect.deleteProperty(items, id));
 };
 
 const inventorySlice = createSlice({
@@ -39,6 +39,7 @@ const inventorySlice = createSlice({
         setInventoryItems,
         addInventoryItem,
         removeInventoryItem,
+        removeInventoryItems,
     },
 });
 

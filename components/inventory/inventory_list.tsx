@@ -11,12 +11,12 @@ import InventoryListSeparator from '@components/inventory/inventory_list_separat
 import InventoryItemActions from '@components/inventory/inventory_list_actions';
 import InventoryListFilter from '@components/inventory/inventory_list_filter';
 import {filterInventoryItemsByCategory} from '@utils/inventory';
-import {InventoryFilter, InventoryListItemInfoType, type InventoryListItemInfo} from '@typing/inventory';
+import {InventoryFilter, InventoryListItemInfoType, type InventoryListItemInfo, InventoryItem} from '@typing/inventory';
 
 const InventoryList = () => {
     const dispatch = useAppDispatch();
     const [filter, setFilter] = useState<InventoryFilter>(InventoryFilter.CATEGORY);
-    const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>({});
+    const [selectedItems, setSelectedItems] = useState<Array<InventoryItem['id']>>([]);
     const inventoryItems = useSelector(getInventoryItemsArray);
 
     const filteredInventoryItems = useMemo(() => {
@@ -34,12 +34,16 @@ const InventoryList = () => {
         return filteredList;
     }, [filter, inventoryItems]);
 
-    const handleSelectItem = (itemId: string) => setSelectedItems({
-        ...selectedItems,
-        [itemId]: !selectedItems[itemId] ?? true,
-    });
-
-    const selectedItemsCount = Object.values(selectedItems).reduce((count, isCurrentItemSelected) => count + (isCurrentItemSelected ? 1 : 0), 0);
+    const handleSelectItem = (itemId: InventoryItem['id']) => {
+        let newSelectedItems = [...selectedItems];
+        const itemIndex = newSelectedItems.indexOf(itemId);
+        if (itemIndex !== -1) {
+            newSelectedItems.splice(itemIndex, 1);
+        } else {
+            newSelectedItems.push(itemId);
+        }
+        setSelectedItems(newSelectedItems);
+    };
 
     const renderItem = ({item, index}: ListRenderItemInfo<InventoryListItemInfo>) => {
         switch (item.type) {
@@ -61,7 +65,7 @@ const InventoryList = () => {
             const itemId = item.data.item.id;
             return (
                 <InventoryListItem
-                    selected={selectedItems[itemId] ?? false}
+                    selected={selectedItems.includes(itemId)}
                     selectItem={() => handleSelectItem(itemId)}
                     {...item.data}
                 />
@@ -127,17 +131,17 @@ const InventoryList = () => {
     }, []);
 
     return (
-        <View
-            variants={['secondary', 'relative', 'flex']}
-            padding={{paddingHorizontal: 's'}}
-        >
+        <View variants={['relative', 'flex']}>
             <FlatList
                 showsVerticalScrollIndicator={false}
                 data={filteredInventoryItems}
                 renderItem={renderItem}
                 keyExtractor={(item) => `inventory-item-${item.key}`}
             />
-            {Boolean(selectedItemsCount) && <InventoryItemActions/>}
+            <InventoryItemActions
+                selectedItems={selectedItems}
+                setSelectedItems={setSelectedItems}
+            />
         </View>
     );
 };
