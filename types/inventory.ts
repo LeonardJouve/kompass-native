@@ -10,6 +10,11 @@ export enum InventoryFilter {
     CATEGORY,
 }
 
+export enum InventoryOrder {
+    ASCENDING,
+    DESCENDING,
+}
+
 export enum InventoryListItemInfoType {
     HEADER,
     ITEM,

@@ -1,29 +1,99 @@
-import React from 'react';
-import {StyleSheet} from 'react-native';
-import {InventoryFilter} from '@typing/inventory';
-import {Text, View} from '@components/renative';
+import React, {useRef} from 'react';
+import {StyleSheet, TextInput as NativeTextInput, GestureResponderEvent} from 'react-native'; // eslint-disable-line no-restricted-imports
+import styled from 'styled-components/native';
+import {TextInput, View} from '@components/renative';
+import {InventoryFilter, InventoryOrder} from '@typing/inventory';
+import SearchIcon from '@res/search_icon.svg';
+import CloseIcon from '@res/close_icon.svg';
 
 type Props = {
+    search: string;
     filter: InventoryFilter;
+    order: InventoryOrder,
     setFilter: (filter: InventoryFilter) => void;
+    setOrder: (order: InventoryOrder) => void;
+    setSearch: (search: string) => void;
 }
 
-const InventoryListFilter = ({filter, setFilter}: Props) => {
+const InventoryListFilter = ({search, filter, order, setSearch, setFilter, setOrder}: Props) => {
+    // const theme = useTheme();
+    const searchInputRef = useRef<NativeTextInput>(null);
+
+    const handleSearchTouch = () => searchInputRef.current?.focus();
+
+    const handleClearSearch = (e: GestureResponderEvent) => {
+        e.stopPropagation();
+        searchInputRef.current?.clear();
+        searchInputRef.current?.blur();
+        setSearch('');
+    };
+
+    const isClearable = Boolean(search.length);
+
     return (
         <View
             variants={['secondary']}
-            padding={{paddingBottom: 'm'}}
+            margin={{margin: 'm'}}
             style={styles.container}
         >
-            <Text>{'test'}</Text>
+            <View
+                variants={['primary', 'row', 'alignCenter', 'rounded']}
+                style={styles.searchContainer}
+                padding={{paddingHorizontal: 'm', paddingVertical: 'xs'}}
+                onTouchEnd={handleSearchTouch}
+            >
+                <StyledSearchIcon/>
+                <View variants={['flex']}>
+                    <TextInput
+                        ref={searchInputRef}
+                        variants={['primary', 'rounded']}
+                        style={styles.searchInput}
+                        value={search}
+                        onChangeText={setSearch}
+                    />
+                </View>
+                {isClearable && (
+                    <StyledClearSearchView onTouchEnd={handleClearSearch}>
+                        <StyledCloseIcon/>
+                    </StyledClearSearchView>
+                )}
+            </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 100,
+        paddingTop: 59,
+    },
+    searchContainer: {
+        gap: 2,
+    },
+    searchInput: {
+        borderWidth: 0,
     },
 });
+
+const StyledSearchIcon = styled(SearchIcon)(({theme}) => ({
+    width: 20,
+    height: 20,
+    fill: theme.colors.viewSecondary,
+}));
+
+const StyledClearSearchView = styled(View)(({theme}) => ({
+    width: 20,
+    height: 20,
+    backgroundColor: theme.colors.viewSecondary,
+    borderRadius: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}));
+
+const StyledCloseIcon = styled(CloseIcon)(({theme}) => ({
+    width: 14,
+    height: 14,
+    fill: theme.colors.viewPrimary,
+}));
 
 export default InventoryListFilter;

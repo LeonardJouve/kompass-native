@@ -13,12 +13,16 @@ type Props = {
     name: string;
     options: Option[];
     size?: number;
+    colorPrimary?: string;
+    colorSecondary?: string;
 };
 
 const SplitButton = ({
     name,
     options,
     size = 30,
+    colorPrimary,
+    colorSecondary,
 }: Props) => {
     const theme = useTheme();
     const buttons = options.map(({icon, isDangerous, onPress}, index) => {
@@ -28,20 +32,24 @@ const SplitButton = ({
                 variants={['primary']}
                 key={`split_button_${name}_${index}`}
                 onPress={onPress}
-                style={{backgroundColor: theme.colors.viewPrimary}}
+                style={{backgroundColor: colorPrimary ?? theme.colors.viewPrimary}}
             >
                 <Icon
                     width={size}
                     height={size}
-                    fill={isDangerous ? theme.colors.dangerous : theme.colors.viewPrimary}
+                    fill={isDangerous ? theme.colors.dangerous : colorSecondary ?? theme.colors.viewSecondary}
                 />
             </Button>
         );
     });
+    if (!options.length) {
+        return null;
+    }
     return (
         <View
-            variants={['secondary', 'row', 'rounded']}
+            variants={['row', 'rounded']}
             padding={{padding: 'xs'}}
+            style={{backgroundColor: colorSecondary ?? theme.colors.viewSecondary}}
         >
             {buttons}
         </View>

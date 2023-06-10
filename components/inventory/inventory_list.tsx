@@ -11,11 +11,13 @@ import InventoryListSeparator from '@components/inventory/inventory_list_separat
 import InventoryItemActions from '@components/inventory/inventory_list_actions';
 import InventoryListFilter from '@components/inventory/inventory_list_filter';
 import {filterInventoryItemsByCategory} from '@utils/inventory';
-import {InventoryFilter, InventoryListItemInfoType, type InventoryListItemInfo, InventoryItem} from '@typing/inventory';
+import {InventoryFilter, InventoryOrder, InventoryListItemInfoType, type InventoryListItemInfo, type InventoryItem} from '@typing/inventory';
 
 const InventoryList = () => {
     const dispatch = useAppDispatch();
+    const [search, setSearch] = useState<string>('');
     const [filter, setFilter] = useState<InventoryFilter>(InventoryFilter.CATEGORY);
+    const [order, setOrder] = useState<InventoryOrder>(InventoryOrder.ASCENDING);
     const [selectedItems, setSelectedItems] = useState<Array<InventoryItem['id']>>([]);
     const inventoryItems = useSelector(getInventoryItemsArray);
 
@@ -23,7 +25,7 @@ const InventoryList = () => {
         let filteredList: InventoryListItemInfo[];
         switch (filter) {
         case InventoryFilter.CATEGORY:
-            filteredList = filterInventoryItemsByCategory(inventoryItems);
+            filteredList = filterInventoryItemsByCategory(inventoryItems, search, order);
             break;
         }
         filteredList.unshift({
@@ -32,7 +34,7 @@ const InventoryList = () => {
             data: null,
         });
         return filteredList;
-    }, [filter, inventoryItems]);
+    }, [search, filter, order, inventoryItems]);
 
     const handleSelectItem = (itemId: InventoryItem['id']) => {
         let newSelectedItems = [...selectedItems];
@@ -50,8 +52,12 @@ const InventoryList = () => {
         case InventoryListItemInfoType.FILTER:
             return (
                 <InventoryListFilter
+                    search={search}
                     filter={filter}
+                    order={order}
+                    setSearch={setSearch}
                     setFilter={setFilter}
+                    setOrder={setOrder}
                 />
             );
         case InventoryListItemInfoType.HEADER:
@@ -130,8 +136,9 @@ const InventoryList = () => {
         }));
     }, []);
 
+    // TODO: empty list icon / stick to bottom
     return (
-        <View variants={['relative', 'flex']}>
+        <View variants={['secondary', 'relative', 'flex']}>
             <FlatList
                 showsVerticalScrollIndicator={false}
                 data={filteredInventoryItems}
