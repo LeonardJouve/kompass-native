@@ -1,5 +1,5 @@
-import React from 'react';
-import {Animated, Pressable, StyleSheet, type GestureResponderEvent} from 'react-native';
+import React, {forwardRef} from 'react';
+import {Animated, Pressable, StyleSheet, type GestureResponderEvent, View} from 'react-native';
 import {Text} from '@renative';
 import useTheme from '@hooking/useTheme';
 import {getSpacings} from '@utils/renative';
@@ -22,7 +22,7 @@ type Props = {
 } & Omit<PressableProps, 'style' | 'onPressOut'>;
 
 // TODO: ripple animation
-const Button = ({
+const Button = forwardRef<Animated.AnimatedComponent<typeof View>, Props>(({
     variants = [],
     textVariants = [],
     style,
@@ -36,7 +36,7 @@ const Button = ({
     onPress,
     children,
     ...props
-}: Props) => {
+}, ref) => {
     const theme = useTheme();
     const animated = new Animated.Value(1);
     const onPressIn = (event: GestureResponderEvent) => {
@@ -72,7 +72,10 @@ const Button = ({
     const {position, top, bottom, right, left} = StyleSheet.flatten([buttonStyle, style]);
 
     return (
-        <Animated.View style={{opacity: animated, position, top, bottom, right, left}}>
+        <Animated.View
+            ref={ref}
+            style={{opacity: animated, position, top, bottom, right, left}}
+        >
             <Pressable
                 style={[buttonStyle, marginSpacings, paddingSpacing, style]}
                 onPressIn={onPressIn}
@@ -94,6 +97,6 @@ const Button = ({
             </Pressable>
         </Animated.View>
     );
-};
+});
 
 export default Button;

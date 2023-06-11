@@ -2,6 +2,7 @@ import React, {useRef} from 'react';
 import {StyleSheet, TextInput as NativeTextInput, GestureResponderEvent} from 'react-native'; // eslint-disable-line no-restricted-imports
 import styled from 'styled-components/native';
 import {TextInput, View} from '@components/renative';
+import InventoryListFilterMenu from '@components/inventory/inventory_list_filter_menu';
 import {InventoryFilter, InventoryOrder} from '@typing/inventory';
 import SearchIcon from '@res/search_icon.svg';
 import CloseIcon from '@res/close_icon.svg';
@@ -16,7 +17,6 @@ type Props = {
 }
 
 const InventoryListFilter = ({search, filter, order, setSearch, setFilter, setOrder}: Props) => {
-    // const theme = useTheme();
     const searchInputRef = useRef<NativeTextInput>(null);
 
     const handleSearchTouch = () => searchInputRef.current?.focus();
@@ -37,26 +37,36 @@ const InventoryListFilter = ({search, filter, order, setSearch, setFilter, setOr
             style={styles.container}
         >
             <View
-                variants={['primary', 'row', 'alignCenter', 'rounded']}
+                variants={['primary', 'row', 'rounded']}
                 style={styles.searchContainer}
                 padding={{paddingHorizontal: 'm', paddingVertical: 'xs'}}
-                onTouchEnd={handleSearchTouch}
             >
-                <StyledSearchIcon/>
-                <View variants={['flex']}>
-                    <TextInput
-                        ref={searchInputRef}
-                        variants={['primary', 'rounded']}
-                        style={styles.searchInput}
-                        value={search}
-                        onChangeText={setSearch}
+                <View
+                    variants={['row', 'alignCenter', 'flex']}
+                    onTouchEnd={handleSearchTouch}
+                >
+                    <StyledSearchIcon/>
+                    <View variants={['flex']}>
+                        <TextInput
+                            ref={searchInputRef}
+                            variants={['primary', 'rounded']}
+                            style={styles.searchInput}
+                            value={search}
+                            onChangeText={setSearch}
+                        />
+                    </View>
+                </View>
+                <View variants={['row', 'alignCenter']}>
+                    {isClearable && (
+                        <StyledClearSearchView onTouchEnd={handleClearSearch}>
+                            <StyledCloseIcon/>
+                        </StyledClearSearchView>
+                    )}
+                    <InventoryListFilterMenu
+                        filter={filter}
+                        setFilter={setFilter}
                     />
                 </View>
-                {isClearable && (
-                    <StyledClearSearchView onTouchEnd={handleClearSearch}>
-                        <StyledCloseIcon/>
-                    </StyledClearSearchView>
-                )}
             </View>
         </View>
     );

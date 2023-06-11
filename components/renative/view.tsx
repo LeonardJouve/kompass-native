@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import {View as NativeView, type ViewProps} from 'react-native';
 import useTheme from '@hooking/useTheme';
 import {getSpacings} from '@utils/renative';
@@ -11,19 +11,20 @@ type Props = {
     padding?: PaddingProp;
 } & ViewProps;
 
-const View = ({variants = [], style, margin = {}, padding = {}, children, ...props}: Props) => {
+const View = forwardRef<NativeView, Props>(({variants = [], style, margin = {}, padding = {}, children, ...props}, ref) => {
     const theme = useTheme();
     const viewStyle = variants.map((variant) => theme.variants.view[variant]);
     const marginSpacings = getSpacings(theme.spacing, margin);
     const paddingSpacings = getSpacings(theme.spacing, padding);
     return (
         <NativeView
+            ref={ref}
             style={[viewStyle, marginSpacings, paddingSpacings, style]}
             {...props}
         >
             {children}
         </NativeView>
     );
-};
+});
 
 export default View;
