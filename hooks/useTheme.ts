@@ -71,6 +71,9 @@ const useTheme = (): Theme => {
                 disabled: {
                     opacity: 0.7,
                 },
+                alignCenter: {
+                    alignItems: 'center',
+                },
                 relative: {
                     position: 'relative',
                 },

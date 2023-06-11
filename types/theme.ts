@@ -39,6 +39,7 @@ enum ButtonVariants {
     relative,
     row,
     column,
+    alignCenter,
 }
 
 enum ViewVariants {
