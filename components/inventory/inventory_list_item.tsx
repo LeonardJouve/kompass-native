@@ -19,12 +19,13 @@ const InventoryListItem = ({item, selected, selectItem}: Props) => {
     return (
         <View variants={['primary']}>
             <StyledItemButton
-                variants={['row', 'relative']}
+                variants={['relative', 'row', 'alignCenter']}
                 padding={{paddingHorizontal: 'l', paddingVertical: 's'}}
                 margin={{marginHorizontal: 'm', marginBottom: 'm'}}
                 onLongPress={selectItem}
                 styled={{selected}}
             >
+                <Text variants={['default']}>{item.amount}</Text>
                 <Icon
                     width={30}
                     height={30}

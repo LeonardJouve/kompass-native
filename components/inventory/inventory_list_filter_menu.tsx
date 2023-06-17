@@ -32,7 +32,16 @@ const InventoryListFilterMenu = ({filter, setFilter}: Props) => {
     });
 
     const items: MenuItem[] = [
-        {text: formatMessage({id: 'components.inventory_list.filter.menu.category', defaultMessage: 'Category'}), selected: filter === InventoryFilter.CATEGORY, onPress: () => handleItemPress(InventoryFilter.CATEGORY)},
+        {
+            text: formatMessage({id: 'components.inventory_list.filter.menu.category', defaultMessage: 'Category'}),
+            selected: filter === InventoryFilter.CATEGORY,
+            onPress: () => handleItemPress(InventoryFilter.CATEGORY),
+        },
+        {
+            text: formatMessage({id: 'components.inventory_list.filter.menu.amount', defaultMessage: 'Amount'}),
+            selected: filter === InventoryFilter.AMOUNT,
+            onPress: () => handleItemPress(InventoryFilter.AMOUNT),
+        },
     ];
 
     return (

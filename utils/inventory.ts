@@ -30,14 +30,48 @@ export const filterInventoryItemsByCategory = (inventoryItems: InventoryItem[], 
             });
             accumulator.push({
                 type: InventoryListItemInfoType.SEPARATOR,
-                key: `${category}_separator`,
-                data: null,
+                key: `${category}_top_separator`,
+                data: {placement: 'top'},
             });
             items.forEach((item) => accumulator.push({
                 type: InventoryListItemInfoType.ITEM,
                 key: item.name,
                 data: {item},
             }));
+            accumulator.push({
+                type: InventoryListItemInfoType.SEPARATOR,
+                key: `${category}_bottom_separator}`,
+                data: {placement: 'bottom'},
+            });
             return accumulator;
         }, []);
+};
+
+export const filterInventoryItemsByAmount = (inventoryItems: InventoryItem[], search: string, order: InventoryOrder): InventoryListItemInfo[] => {
+    const inventoryItemsByAmount: InventoryListItemInfo[] = inventoryItems.
+        filter((item) => item.name.includes(search)).
+        sort((a, b) => order === InventoryOrder.ASCENDING ? b.amount - a.amount : a.amount - b.amount).
+        map((item) => ({
+            type: InventoryListItemInfoType.ITEM,
+            key: item.name,
+            data: {item},
+        }));
+    if (inventoryItemsByAmount.length) {
+        inventoryItemsByAmount.unshift({
+            type: InventoryListItemInfoType.SEPARATOR,
+            key: 'items_top_separator',
+            data: {placement: 'top'},
+        });
+        inventoryItemsByAmount.unshift({
+            type: InventoryListItemInfoType.HEADER,
+            key: 'items',
+            data: {categoryName: 'items'},
+        });
+        inventoryItemsByAmount.push({
+            type: InventoryListItemInfoType.SEPARATOR,
+            key: 'items_bottom_separator',
+            data: {placement: 'bottom'},
+        });
+    }
+    return inventoryItemsByAmount;
 };

@@ -43,7 +43,7 @@ const InventoryListFilter = ({search, filter, order, setSearch, setFilter, setOr
     return (
         <View
             variants={['secondary']}
-            margin={{margin: 'm'}}
+            margin={{marginVertical: 'm'}}
             style={styles.container}
         >
             <View

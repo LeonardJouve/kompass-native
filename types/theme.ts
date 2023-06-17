@@ -72,6 +72,7 @@ enum TextVariants {
     start,
     center,
     end,
+    textCenter,
 }
 
 enum TextInputVariants {

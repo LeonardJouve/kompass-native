@@ -176,6 +176,9 @@ const useTheme = (): Theme => {
                 end: {
                     alignSelf: 'flex-end',
                 },
+                textCenter: {
+                    textAlign: 'center',
+                },
             }),
             textInput: StyleSheet.create({
                 primary: {
