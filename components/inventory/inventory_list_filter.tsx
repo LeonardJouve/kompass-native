@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {StyleSheet, TextInput as NativeTextInput, GestureResponderEvent} from 'react-native'; // eslint-disable-line no-restricted-imports
+import {StyleSheet, GestureResponderEvent, type TextInput as NativeTextInput} from 'react-native'; // eslint-disable-line no-restricted-imports
 import styled from 'styled-components/native';
 import {Button, TextInput, View} from '@renative';
 import useFormattedMessage from '@hooking/useFormattedMessage';

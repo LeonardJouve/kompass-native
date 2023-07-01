@@ -6,20 +6,20 @@ import {View} from '@renative';
 import SplitButton from '@components/split_button';
 import {useCenterAbsolute} from '@hooking/useCenterAbsolute';
 import TrashIcon from '@res/trash_icon.svg';
-import type {InventoryItem} from '@typing/inventory';
+import type {Item} from '@typing/inventory';
 
 type Props = {
-    selectedItems: Array<InventoryItem['id']>;
-    setSelectedItems: (selectedItems: Array<InventoryItem['id']>) => void;
+    selectedItems: Array<Item['item_id']>;
+    resetSelectedItems: () => void;
 };
 
-const InventoryItemActions = ({selectedItems, setSelectedItems}: Props) => {
+const InventoryItemActions = ({selectedItems, resetSelectedItems}: Props) => {
     const {translateX, onLayout} = useCenterAbsolute();
     const dispatch = useAppDispatch();
 
     const handleDelete = () => {
         dispatch(inventoryActions.removeInventoryItems(selectedItems));
-        setSelectedItems([]);
+        resetSelectedItems();
     };
 
     if (!selectedItems.length) {

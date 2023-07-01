@@ -18,9 +18,6 @@ enum TranslationKeysEnum {
     'components.profile.header.text',
     'components.profile.disconnect.text',
     'components.text_input.error.required',
-    'components.inventory_list.header.category_first_category',
-    'components.inventory_list.header.category_second_category',
-    'components.inventory_list.header.category_items',
     'components.inventory_list.search.placeholder',
     'components.inventory_list.filter.menu.header',
     'components.inventory_list.filter.menu.category',
@@ -33,6 +30,9 @@ enum TranslationKeysEnum {
     'api.rest.error.auth.password',
     'api.rest.error.auth.throttle',
     'api.rest.error.auth.invalid',
+    'api.rest.error.not_found',
+    'api.rest.error.unprocessable_entity',
+    'api.rest.error.service_unavailable',
     'error.generic',
 }
 

@@ -1,13 +1,13 @@
 import {
     InventoryListItemInfoType,
     InventoryOrder,
-    type InventoryCategoryName,
-    type InventoryItem,
+    type InventoryCategory,
+    type Item,
     type InventoryListItemInfo,
 } from '@typing/inventory';
 
-export const filterInventoryItemsByCategory = (inventoryItems: InventoryItem[], search: string, order: InventoryOrder): InventoryListItemInfo[] => {
-    const inventoryItemsByCategoryMap = new Map<InventoryCategoryName, InventoryItem[]>();
+export const filterInventoryItemsByCategory = (inventoryItems: Item[], search: string, order: InventoryOrder): InventoryListItemInfo[] => {
+    const inventoryItemsByCategoryMap = new Map<InventoryCategory, Item[]>();
     inventoryItems.forEach((inventoryItem) => {
         const matchSearch = inventoryItem.name.includes(search);
         if (!matchSearch) {
@@ -26,7 +26,7 @@ export const filterInventoryItemsByCategory = (inventoryItems: InventoryItem[], 
             accumulator.push({
                 type: InventoryListItemInfoType.HEADER,
                 key: category,
-                data: {categoryName: category},
+                data: {category},
             });
             accumulator.push({
                 type: InventoryListItemInfoType.SEPARATOR,
@@ -59,17 +59,17 @@ export const filterInventoryItemsByAmount = (inventoryItems: InventoryItem[], se
     if (inventoryItemsByAmount.length) {
         inventoryItemsByAmount.unshift({
             type: InventoryListItemInfoType.SEPARATOR,
-            key: 'items_top_separator',
+            key: 'all_top_separator',
             data: {placement: 'top'},
         });
         inventoryItemsByAmount.unshift({
             type: InventoryListItemInfoType.HEADER,
-            key: 'items',
-            data: {categoryName: 'items'},
+            key: 'all',
+            data: {category: 'all'},
         });
         inventoryItemsByAmount.push({
             type: InventoryListItemInfoType.SEPARATOR,
-            key: 'items_bottom_separator',
+            key: 'all_bottom_separator',
             data: {placement: 'bottom'},
         });
     }

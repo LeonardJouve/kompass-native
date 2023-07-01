@@ -32,12 +32,8 @@ function App({navigation}: Props): JSX.Element {
         }
     }, [websocketHost, websocketPort, websocketKey]);
 
-    const initialFetch = () => {
-        dispatch(configActions.getConfig());
-    };
-
     useEffect(() => {
-        initialFetch();
+        dispatch(configActions.getConfig());
     }, []);
 
     const changeTheme = () => dispatch(themeActions.setTheme(theme.type === 'dark' ? 'light' : 'dark'));

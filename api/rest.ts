@@ -1,7 +1,8 @@
 import BuildConfig from 'react-native-config';
 import {type ConfigState} from '@redux/config';
 import {type Token} from '@redux/auth';
-import type {Options, Response} from '@typing/rest';
+import type {Options, Response, Status} from '@typing/rest';
+import type {Item} from '@typing/inventory';
 import type {Poi} from '@typing/map';
 
 class RestClient {
@@ -60,6 +61,11 @@ class RestClient {
         };
     }
 
+    public disconnect() {
+        this.apiToken = undefined;
+        this.onDisconnect?.();
+    }
+
     getBaseUrl() {
         return this.baseUrl;
     }
@@ -68,38 +74,67 @@ class RestClient {
         return `${this.getBaseUrl()}/api`;
     }
 
-    public async disconnect() {
-        this.apiToken = undefined;
-        this.onDisconnect?.();
+    getAuthRoute() {
+        return `${this.getApiRoute()}/auth`;
     }
 
-    async getConfig(): Response<ConfigState> {
-        return await this.fetch(
+    getItemsRoute() {
+        return `${this.getApiRoute()}/items`;
+    }
+
+    getOpentripmapRoute() {
+        return `${this.getApiRoute()}/opentripmap`;
+    }
+
+
+    getConfig(): Response<ConfigState> {
+        return this.fetch(
             `${this.getApiRoute()}/config`,
             {method: 'GET'},
         );
     }
 
-    async getPois(latitude: number, longitude: number): Response<Poi[]> {
-        return await this.fetch(
-            `${this.getApiRoute()}/opentripmap?latitude=${latitude}&longitude=${longitude}`,
-            {method: 'GET'},
-        );
-    }
-
-    async login(email: string, password: string): Response<Token> {
-        return await this.fetch(
-            `${this.getApiRoute()}/login`,
+    login(email: string, password: string): Response<Token> {
+        return this.fetch(
+            `${this.getAuthRoute()}/login`,
             {method: 'POST', body: JSON.stringify({email, password})},
             false,
         );
     }
 
-    async register(name: string, email: string, password: string, passwordConfirm: string): Response<Token> {
-        return await this.fetch(
-            `${this.getApiRoute()}/register`,
+    register(name: string, email: string, password: string, passwordConfirm: string): Response<Token> {
+        return this.fetch(
+            `${this.getAuthRoute()}/register`,
             {method: 'POST', body: JSON.stringify({name, email, password, password_confirmation: passwordConfirm})},
             false,
+        );
+    }
+
+    getItems(): Response<Item[]> {
+        return this.fetch(
+            this.getItemsRoute(),
+            {method: 'GET'},
+        );
+    }
+
+    deleteItem(itemId: string, amount: number): Response<Status> {
+        return this.fetch(
+            `${this.getItemsRoute()}/${itemId}?amount=${amount}`,
+            {method: 'DELETE'},
+        );
+    }
+
+    getPois(latitude: number, longitude: number): Response<Poi[]> {
+        return this.fetch(
+            `${this.getOpentripmapRoute()}?latitude=${latitude}&longitude=${longitude}`,
+            {method: 'GET'},
+        );
+    }
+
+    searchPoi(xid: string): Response<Poi[]> {
+        return this.fetch(
+            `${this.getOpentripmapRoute()}/search?xid=${xid}`,
+            {method: 'GET'},
         );
     }
 }

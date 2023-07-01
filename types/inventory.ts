@@ -1,11 +1,13 @@
-export type InventoryItem = {
-    id: 'test' | 'testtest' | 'testtesttest';
-    name: 'test' | 'testtest' | 'testtesttest';
-    category: InventoryCategoryName;
+export type Item = {
+    item_id: number;
     amount: number;
+    name: string;
+    category: ItemCategory;
 };
 
-export type InventoryCategoryName = 'items' | 'first_category' | 'second_category';
+export type ItemCategory = 'ressource' | 'equipement' | 'food' | 'weapon' | 'tool';
+
+export type InventoryCategory = ItemCategory | 'all';
 
 export enum InventoryFilter {
     CATEGORY,
@@ -27,17 +29,17 @@ export enum InventoryListItemInfoType {
 
 type ItemInfo =  {
     type: InventoryListItemInfoType.ITEM;
-    key: InventoryItem['name'];
+    key: Item['name'];
     data: {
-        item: InventoryItem;
+        item: Item;
     };
 };
 
 type HeaderInfo = {
     type: InventoryListItemInfoType.HEADER;
-    key: InventoryCategoryName;
+    key: InventoryCategory;
     data: {
-        categoryName: InventoryCategoryName;
+        category: InventoryCategory;
     };
 };
 
@@ -45,7 +47,7 @@ type InventorySeparatorPlacement = 'top' | 'bottom';
 
 type SeparatorInfo = {
     type: InventoryListItemInfoType.SEPARATOR;
-    key: `${InventoryCategoryName}_${InventorySeparatorPlacement}_separator`;
+    key: `${InventoryCategory}_${InventorySeparatorPlacement}_separator`;
     data: {placement: InventorySeparatorPlacement};
 };
 

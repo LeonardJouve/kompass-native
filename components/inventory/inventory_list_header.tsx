@@ -3,17 +3,17 @@ import {styled} from 'styled-components/native';
 import {Text, View} from '@renative';
 import useFormattedMessage from '@hooking/useFormattedMessage';
 import {changeColorBrightness} from '@utils/renative';
-import type {InventoryCategoryName} from '@typing/inventory';
+import type {InventoryCategory} from '@typing/inventory';
 
 type Props = {
-    categoryName: InventoryCategoryName;
+    category: InventoryCategory;
 };
 
-const InventoryListHeader = ({categoryName}: Props) => {
+const InventoryListHeader = ({category}: Props) => {
     const formatMessage = useFormattedMessage();
     const header = formatMessage({
-        id: `components.inventory_list.header.category_${categoryName}`,
-        defaultMessage: categoryName,
+        id: `components.inventory_list.header.category_${category}`,
+        defaultMessage: category,
     });
     return (
         <View>
