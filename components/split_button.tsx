@@ -1,17 +1,18 @@
 import React from 'react';
+import {type SvgProps} from 'react-native-svg';
 import {View, Button} from '@renative';
 import useTheme from '@hooking/useTheme';
-import {type SvgProps} from 'react-native-svg';
+import type {ViewVariant} from '@typing/theme';
 
-type Option = {
-    icon: React.FC<SvgProps>;
+type Option = ({icon: React.FC<SvgProps>; content?: never;} | {content: React.ReactNode; icon?: never;}) & {
     isDangerous?: boolean;
-    onPress: () => void;
+    onPress?: () => void;
 };
 
 type Props = {
     name: string;
     options: Option[];
+    variants?: ViewVariant[];
     size?: number;
     colorPrimary?: string;
     colorSecondary?: string;
@@ -20,12 +21,13 @@ type Props = {
 const SplitButton = ({
     name,
     options,
+    variants = [],
     size = 30,
     colorPrimary,
     colorSecondary,
 }: Props) => {
     const theme = useTheme();
-    const buttons = options.map(({icon, isDangerous, onPress}, index) => {
+    const buttons = options.map(({icon, content, isDangerous, onPress}, index) => {
         const Icon = icon;
         return (
             <Button
@@ -34,11 +36,14 @@ const SplitButton = ({
                 onPress={onPress}
                 style={{backgroundColor: colorPrimary ?? theme.colors.viewPrimary}}
             >
-                <Icon
-                    width={size}
-                    height={size}
-                    fill={isDangerous ? theme.colors.dangerous : colorSecondary ?? theme.colors.viewSecondary}
-                />
+                {Boolean(content) && content}
+                {Icon && (
+                    <Icon
+                        width={size}
+                        height={size}
+                        fill={isDangerous ? theme.colors.dangerous : colorSecondary ?? theme.colors.viewSecondary}
+                    />
+                )}
             </Button>
         );
     });
@@ -47,7 +52,7 @@ const SplitButton = ({
     }
     return (
         <View
-            variants={['row', 'rounded']}
+            variants={['row', 'rounded', ...variants]}
             padding={{padding: 'xs'}}
             style={{backgroundColor: colorSecondary ?? theme.colors.viewSecondary}}
         >

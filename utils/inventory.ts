@@ -1,77 +1,50 @@
 import {
-    InventoryListItemInfoType,
+    InventoryListItemType,
     InventoryOrder,
     type InventoryCategory,
     type Item,
-    type InventoryListItemInfo,
+    type InventoryListItem,
 } from '@typing/inventory';
 
-export const filterInventoryItemsByCategory = (inventoryItems: Item[], search: string, order: InventoryOrder): InventoryListItemInfo[] => {
-    const inventoryItemsByCategoryMap = new Map<InventoryCategory, Item[]>();
-    inventoryItems.forEach((inventoryItem) => {
-        const matchSearch = inventoryItem.name.includes(search);
-        if (!matchSearch) {
-            return;
+// TODO: sort with locale formatted item name
+
+export const filterInventoryItemsByCategory = (inventoryItems: Item[], search: string, order: InventoryOrder): InventoryListItem[] => {
+    const filteredItems = inventoryItems.filter((inventoryItem) => inventoryItem.name.includes(search.toLocaleLowerCase()));
+    const formattedCategories = filteredItems.reduce<Array<{category: InventoryCategory; items: Item[]}>>((acc, inventoryItem) => {
+        const {category} = inventoryItem;
+        const existantCategory = acc.find((cat) => cat.category === category);
+        if (existantCategory) {
+            existantCategory.items.push(inventoryItem);
+        } else {
+            acc.push({
+                category,
+                items: [inventoryItem],
+            });
         }
-        const categoryItems = inventoryItemsByCategoryMap.get(inventoryItem.category);
-        if (!categoryItems) {
-            inventoryItemsByCategoryMap.set(inventoryItem.category, [inventoryItem]);
-            return;
-        }
-        categoryItems.push(inventoryItem);
-    });
-    return Array.from(inventoryItemsByCategoryMap).
-        sort(([a], [b]) => order === InventoryOrder.ASCENDING ? a.localeCompare(b) : b.localeCompare(a)).
-        reduce<InventoryListItemInfo[]>((accumulator, [category, items]) => {
-            accumulator.push({
-                type: InventoryListItemInfoType.HEADER,
-                key: category,
-                data: {category},
-            });
-            accumulator.push({
-                type: InventoryListItemInfoType.SEPARATOR,
-                key: `${category}_top_separator`,
-                data: {placement: 'top'},
-            });
-            items.forEach((item) => accumulator.push({
-                type: InventoryListItemInfoType.ITEM,
-                key: item.name,
-                data: {item},
-            }));
-            accumulator.push({
-                type: InventoryListItemInfoType.SEPARATOR,
-                key: `${category}_bottom_separator}`,
-                data: {placement: 'bottom'},
-            });
-            return accumulator;
-        }, []);
+        return acc;
+    }, []);
+    return formattedCategories.
+        sort((a, b) => order === InventoryOrder.ASCENDING ? a.category.localeCompare(b.category) : b.category.localeCompare(a.category)).
+        map(({category, items}) => ({
+            type: InventoryListItemType.CATEGORY,
+            key: category,
+            data: {
+                category,
+                items: items.sort((a, b) => order === InventoryOrder.ASCENDING ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)),
+            },
+        }));
 };
 
-export const filterInventoryItemsByAmount = (inventoryItems: InventoryItem[], search: string, order: InventoryOrder): InventoryListItemInfo[] => {
-    const inventoryItemsByAmount: InventoryListItemInfo[] = inventoryItems.
-        filter((item) => item.name.includes(search)).
-        sort((a, b) => order === InventoryOrder.ASCENDING ? b.amount - a.amount : a.amount - b.amount).
-        map((item) => ({
-            type: InventoryListItemInfoType.ITEM,
-            key: item.name,
-            data: {item},
-        }));
-    if (inventoryItemsByAmount.length) {
-        inventoryItemsByAmount.unshift({
-            type: InventoryListItemInfoType.SEPARATOR,
-            key: 'all_top_separator',
-            data: {placement: 'top'},
-        });
-        inventoryItemsByAmount.unshift({
-            type: InventoryListItemInfoType.HEADER,
-            key: 'all',
-            data: {category: 'all'},
-        });
-        inventoryItemsByAmount.push({
-            type: InventoryListItemInfoType.SEPARATOR,
-            key: 'all_bottom_separator',
-            data: {placement: 'bottom'},
-        });
-    }
-    return inventoryItemsByAmount;
+export const filterInventoryItemsByAmount = (inventoryItems: Item[], search: string, order: InventoryOrder): InventoryListItem[] => {
+    const items: Item[] = inventoryItems.
+        filter((item) => item.name.includes(search.toLocaleLowerCase())).
+        sort((a, b) => order === InventoryOrder.ASCENDING ? b.amount - a.amount : a.amount - b.amount);
+    return [{
+        type: InventoryListItemType.CATEGORY,
+        key: 'all',
+        data: {
+            category: 'all',
+            items,
+        },
+    }];
 };

@@ -6,13 +6,11 @@ import {getInventoryItemsArray} from '@redux/selectors/inventory';
 import {View} from '@renative';
 import useFormattedMessage from '@hooking/useFormattedMessage';
 import NoResultIndicator from '@components/no_result_indicator';
-import InventoryListItem from '@components/inventory/inventory_list_item';
-import InventoryListHeader from '@components/inventory/inventory_list_header';
-import InventoryListSeparator from '@components/inventory/inventory_list_separator';
 import InventoryItemActions from '@components/inventory/inventory_list_actions';
 import InventoryListFilter from '@components/inventory/inventory_list_filter';
+import InventoryListCategory from '@components/inventory/inventory_list_category';
 import {filterInventoryItemsByAmount, filterInventoryItemsByCategory} from '@utils/inventory';
-import {InventoryFilter, InventoryOrder, InventoryListItemInfoType, type InventoryListItemInfo, type Item} from '@typing/inventory';
+import {InventoryFilter, InventoryOrder, InventoryListItemType, type InventoryListItem, type Item} from '@typing/inventory';
 import EmptyInventoryIcon from '@res/empty_inventory_icon.svg';
 
 const InventoryList = () => {
@@ -24,7 +22,7 @@ const InventoryList = () => {
     const inventoryItems = useSelector(getInventoryItemsArray);
 
     const filteredInventoryItems = useMemo(() => {
-        let filteredList: InventoryListItemInfo[];
+        let filteredList: InventoryListItem[];
         switch (filter) {
         case InventoryFilter.CATEGORY:
             filteredList = filterInventoryItemsByCategory(inventoryItems, search, order);
@@ -34,13 +32,13 @@ const InventoryList = () => {
         }
         if (!filteredList.length) {
             filteredList.push({
-                type: InventoryListItemInfoType.EMPTY,
+                type: InventoryListItemType.EMPTY,
                 key: 'inventory_list_empty',
                 data: null,
             });
         }
         filteredList.unshift({
-            type: InventoryListItemInfoType.FILTER,
+            type: InventoryListItemType.FILTER,
             key: 'inventory_list_filter_bar',
             data: null,
         });
@@ -60,9 +58,9 @@ const InventoryList = () => {
 
     const resetSelectedItems = () => setSelectedItems([]);
 
-    const renderItem = ({item}: ListRenderItemInfo<InventoryListItemInfo>) => {
+    const renderItem = ({item}: ListRenderItemInfo<InventoryListItem>) => {
         switch (item.type) {
-        case InventoryListItemInfoType.FILTER:
+        case InventoryListItemType.FILTER:
             return (
                 <InventoryListFilter
                     search={search}
@@ -73,20 +71,15 @@ const InventoryList = () => {
                     setOrder={setOrder}
                 />
             );
-        case InventoryListItemInfoType.HEADER:
-            return <InventoryListHeader {...item.data}/>;
-        case InventoryListItemInfoType.ITEM:
-            const itemId = item.data.item.item_id;
+        case InventoryListItemType.CATEGORY:
             return (
-                <InventoryListItem
-                    selected={selectedItems.includes(itemId)}
-                    selectItem={() => handleSelectItem(itemId)}
+                <InventoryListCategory
+                    selectedItems={selectedItems}
+                    selectItem={handleSelectItem}
                     {...item.data}
                 />
             );
-        case InventoryListItemInfoType.SEPARATOR:
-            return <InventoryListSeparator {...item.data}/>;
-        case InventoryListItemInfoType.EMPTY:
+        case InventoryListItemType.EMPTY:
             return (
                 <NoResultIndicator
                     icon={<StyledEmptyInventoryIcon/>}
@@ -108,6 +101,11 @@ const InventoryList = () => {
         });
     }
 
+    let selectedItemMaxAmount;
+    if (selectedItems.length === 1) {
+        selectedItemMaxAmount = inventoryItems.find((inventoryItem) => inventoryItem.item_id === selectedItems[0])?.amount;
+    }
+
     return (
         <View
             variants={['secondary', 'relative', 'flex']}
@@ -121,6 +119,7 @@ const InventoryList = () => {
             />
             <InventoryItemActions
                 selectedItems={selectedItems}
+                selectedItemMaxAmount={selectedItemMaxAmount}
                 resetSelectedItems={resetSelectedItems}
             />
         </View>

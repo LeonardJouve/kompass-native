@@ -19,48 +19,31 @@ export enum InventoryOrder {
     DESCENDING,
 }
 
-export enum InventoryListItemInfoType {
-    HEADER,
-    ITEM,
-    SEPARATOR,
+export enum InventoryListItemType {
     FILTER,
+    CATEGORY,
     EMPTY,
 }
 
-type ItemInfo =  {
-    type: InventoryListItemInfoType.ITEM;
-    key: Item['name'];
-    data: {
-        item: Item;
-    };
-};
-
-type HeaderInfo = {
-    type: InventoryListItemInfoType.HEADER;
-    key: InventoryCategory;
-    data: {
-        category: InventoryCategory;
-    };
-};
-
-type InventorySeparatorPlacement = 'top' | 'bottom';
-
-type SeparatorInfo = {
-    type: InventoryListItemInfoType.SEPARATOR;
-    key: `${InventoryCategory}_${InventorySeparatorPlacement}_separator`;
-    data: {placement: InventorySeparatorPlacement};
-};
-
-type EmptyInfo = {
-    type: InventoryListItemInfoType.EMPTY;
+type EmptyListItem = {
+    type: InventoryListItemType.EMPTY;
     key: 'inventory_list_empty';
     data: null;
 };
 
-type FilterInfo = {
-    type: InventoryListItemInfoType.FILTER;
+type FilterListItem = {
+    type: InventoryListItemType.FILTER;
     key: 'inventory_list_filter_bar';
     data: null,
-}
+};
 
-export type InventoryListItemInfo = HeaderInfo | ItemInfo | SeparatorInfo | FilterInfo | EmptyInfo;
+type CategoryListItem = {
+    type: InventoryListItemType.CATEGORY;
+    key: InventoryCategory;
+    data: {
+        category: InventoryCategory;
+        items: Item[];
+    },
+};
+
+export type InventoryListItem = FilterListItem | CategoryListItem | EmptyListItem;

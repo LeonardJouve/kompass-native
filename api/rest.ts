@@ -117,7 +117,7 @@ class RestClient {
         );
     }
 
-    deleteItem(itemId: string, amount: number): Response<Status> {
+    deleteItem(itemId: number, amount: number): Response<Status> {
         return this.fetch(
             `${this.getItemsRoute()}/${itemId}?amount=${amount}`,
             {method: 'DELETE'},
