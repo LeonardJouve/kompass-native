@@ -1,12 +1,12 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {Image, StyleSheet} from 'react-native';
 import {styled} from 'styled-components/native';
 import {Text, Button} from '@renative';
-import InventoryItemIcons from '@components/icons/inventory_item_icons';
+import Rest from '@api/rest';
 import {changeColorBrightness} from '@utils/renative';
-import CheckIcon from '@res/check_icon.svg';
 import type {Item} from '@typing/inventory';
 import type {StyledComponentProps} from '@typing/styled';
+import CheckIcon from '@res/check_icon.svg';
 
 type Props = {
     item: Item;
@@ -15,7 +15,6 @@ type Props = {
 };
 
 const InventoryListItem = ({item, selected, selectItem}: Props) => {
-    const Icon = InventoryItemIcons[item.item_id] ?? InventoryItemIcons.not_found;
     return (
         <StyledItemButton
             variants={['relative', 'row', 'alignCenter']}
@@ -24,9 +23,12 @@ const InventoryListItem = ({item, selected, selectItem}: Props) => {
             styled={{selected}}
         >
             <Text variants={['default']}>{item.amount}</Text>
-            <Icon
-                width={30}
-                height={30}
+            <Image
+                source={{
+                    uri: Rest.getItemImageRoute(item.name),
+                    width: 30,
+                    height: 30,
+                }}
             />
             <Text variants={['default']}>{item.name}</Text>
             {selected && (

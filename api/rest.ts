@@ -86,6 +86,9 @@ class RestClient {
         return `${this.getApiRoute()}/opentripmap`;
     }
 
+    getItemImageRoute(itemName: string) {
+        return `${Rest.getBaseUrl()}/storage/items/${itemName}.png`;
+    }
 
     getConfig(): Response<ConfigState> {
         return this.fetch(
