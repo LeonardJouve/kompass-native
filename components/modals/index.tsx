@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from '@renative/index';
+import {View} from '@renative';
 
 const Modals = () => (
     <View/>

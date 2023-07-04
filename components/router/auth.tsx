@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Text, View} from '@renative/index';
+import {Text, View} from '@renative';
 import BackButton from '@components/back_button';
 import {NavigationStack} from '@typing/navigation';
 import useFormattedMessage from '@hooking/useFormattedMessage';

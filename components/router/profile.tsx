@@ -1,7 +1,7 @@
 import React from 'react';
 import BackButton from '@components/back_button';
 import Rest from '@api/rest';
-import {Button, Text, View} from '@renative/index';
+import {Button, Text, View} from '@renative';
 import useFormattedMessage from '@hooking/useFormattedMessage';
 
 const Profile = () => {

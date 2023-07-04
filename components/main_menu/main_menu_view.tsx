@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import {Animated} from 'react-native';
 import {styled} from 'styled-components/native';
-import {View} from '@renative/index';
+import {View} from '@renative';
 import {MainMenuSection} from '@components/main_menu/main_menu';
 import MainMenuSettings from '@components/main_menu/main_menu_views/main_menu_settings';
 import MainMenuWeather from '@components/main_menu/main_menu_views/main_menu_weather';

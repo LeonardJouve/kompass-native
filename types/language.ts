@@ -18,12 +18,21 @@ enum TranslationKeysEnum {
     'components.profile.header.text',
     'components.profile.disconnect.text',
     'components.text_input.error.required',
+    'components.inventory_list.search.placeholder',
+    'components.inventory_list.filter.menu.header',
+    'components.inventory_list.filter.menu.category',
+    'components.inventory_list.filter.menu.amount',
+    'components.inventory_list.no_result.text',
+    'components.inventory_list.no_result.search',
     'api.rest.error.invalid_json',
     'api.rest.error.token',
     'api.rest.error.auth.credentials',
     'api.rest.error.auth.password',
     'api.rest.error.auth.throttle',
     'api.rest.error.auth.invalid',
+    'api.rest.error.not_found',
+    'api.rest.error.unprocessable_entity',
+    'api.rest.error.service_unavailable',
     'error.generic',
 }
 
@@ -37,3 +46,9 @@ export type Languages = {
 }
 
 export type LanguageKey = keyof Languages;
+
+export type FormattedMessage = {
+    id: TranslationKey;
+    defaultMessage: string;
+    values?: Record<string, string | number | undefined>;
+};

@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {useAppDispatch} from '@redux/store';
 import {authActions} from '@redux/auth';
-import {Button, Text, View, TextInput} from '@renative/index';
+import {Button, Text, View, TextInput} from '@renative';
 import useTheme from '@hooking/useTheme';
 import useFormattedMessage from '@hooking/useFormattedMessage';
 import Checkbox from '@components/checkbox';
-import CONSTANTS from '@constants/index';
+import CONSTANTS from '@constants';
 import {ActionStatus} from '@typing/redux';
 
 type Props = {

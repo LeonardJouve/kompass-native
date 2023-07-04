@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {styled} from 'styled-components/native';
-import {Button, Text, View} from '@renative/index';
+import {Button, Text, View} from '@renative';
 import CheckIcon from '@res/check_icon.svg';
 import type {StyledComponentProps} from '@typing/styled';
 

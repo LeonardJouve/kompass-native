@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {forwardRef, useState} from 'react';
 import {
     TextInput as NativeTextInput,
     StyleSheet,
@@ -27,12 +27,12 @@ type Props = {
     errorLabel?: string | React.ReactNode;
     hasError?: boolean;
     required?: boolean;
-    value?: string;
-    onChangeText?: (text: string) => void;
+    value: string;
+    onChangeText: (text: string) => void;
     onBlur?: (e: NativeSyntheticEvent<TextInputFocusEventData>) => void;
 } & TextInputProps;
 
-const TextInput = ({
+const TextInput = forwardRef<NativeTextInput, Props>(({
     variants = [],
     margin = {},
     padding = {},
@@ -47,7 +47,7 @@ const TextInput = ({
     onBlur,
     children,
     ...props
-}: Props) => {
+}, ref) => {
     const theme = useTheme();
     const [isRequiredValid, setIsRequiredValid] = useState<boolean>(true);
     const formatMessage = useFormattedMessage();
@@ -110,6 +110,7 @@ const TextInput = ({
                 )}
             </View>
             <NativeTextInput
+                ref={ref}
                 style={[textInputStyle, marginSpacings, paddingSpacing, style]}
                 onBlur={handleBlur}
                 onChangeText={handleChangeText}
@@ -119,7 +120,7 @@ const TextInput = ({
             </NativeTextInput>
         </>
     );
-};
+});
 
 const styles = StyleSheet.create({
     labelContainer: {

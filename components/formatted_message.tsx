@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text} from '@renative/index';
+import {Text} from '@renative';
 import useFormattedMessage from '@hooking/useFormattedMessage';
 import {TranslationKey} from '@typing/language';
 

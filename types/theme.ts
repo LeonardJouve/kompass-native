@@ -37,6 +37,9 @@ enum ButtonVariants {
     disabled,
     absolute,
     relative,
+    row,
+    column,
+    alignCenter,
 }
 
 enum ViewVariants {
@@ -69,6 +72,7 @@ enum TextVariants {
     start,
     center,
     end,
+    textCenter,
 }
 
 enum TextInputVariants {
@@ -143,9 +147,11 @@ type Variants = {
     textInput: Record<TextInputVariant, NativeStyleProp<TextStyle>>,
 }
 
+type ColorVariants = {variants: {[K in `${Color}-${'dark' | 'light'}-${number}`]: string}};
+
 export type Theme = {
     type: ThemeState['type']
-    colors: Record<Color, string>;
+    colors: Record<Color, string> & ColorVariants;
     spacing: Spacings;
     breakpoints: Record<Breakpoint, number>;
     others: Others;

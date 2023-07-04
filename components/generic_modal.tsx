@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 import {useAppDispatch} from '@redux/store';
 import {modalActions} from '@redux/modal';
 import {isModalOpen} from '@redux/selectors/modal';
-import {Button, Text, View} from '@renative/index';
+import {Button, Text, View} from '@renative';
 import useFormattedMessage from '@hooking/useFormattedMessage';
 import {GlobalState} from '@typing/global_state';
 import {ModalIdentifier} from '@typing/modals';

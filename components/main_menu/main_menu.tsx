@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View} from '@renative/index';
+import {View} from '@renative';
 import MainMenuItem from '@components/main_menu/main_menu_item';
 import MainMenuView from '@components/main_menu/main_menu_view';
 import {ViewVariant} from '@typing/theme';

@@ -1,4 +1,4 @@
-import CONSTANTS from '@constants/index';
+import CONSTANTS from '@constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthKeys, AuthStore} from '@redux/auth';
 

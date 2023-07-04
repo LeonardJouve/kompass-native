@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {styled} from 'styled-components/native';
-import {Button} from '@renative/index';
+import {Button} from '@renative';
 import CloseIcon from '@res/close_icon.svg';
 import {Navigation, NavigationStack} from '@typing/navigation';
 
