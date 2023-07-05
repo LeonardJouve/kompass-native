@@ -3,9 +3,9 @@ import {Animated} from 'react-native';
 import {styled} from 'styled-components/native';
 import {View} from '@renative';
 import {MainMenuSection} from '@components/main_menu/main_menu';
-import MainMenuSettings from '@components/main_menu/main_menu_views/main_menu_settings';
-import MainMenuWeather from '@components/main_menu/main_menu_views/main_menu_weather';
-import MainMenuHelp from '@components/main_menu/main_menu_views/main_menu_help';
+import MainMenuSettings from '@components/main_menu/main_menu_settings';
+import MainMenuWeather from '@components/main_menu/main_menu_weather';
+import MainMenuHelp from '@components/main_menu/main_menu_help';
 import {MarginProp} from '@typing/theme';
 import {StyledComponentProps} from '@typing/styled';
 
