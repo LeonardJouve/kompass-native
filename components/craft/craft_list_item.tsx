@@ -13,7 +13,7 @@ const CraftListItem = ({craft, size}: Props) => {
             style={{
                 width: size,
                 height: size,
-                backgroundColor: `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`
+                backgroundColor: `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`,
             }}
         >
             {craft.name}

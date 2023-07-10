@@ -3,17 +3,28 @@ import {FlatList, type ListRenderItemInfo, type FlatListProps, type View as Nati
 import {View} from '@renative';
 
 type Props<Item> = {
-    size: number;
-    minGap: number;
     items: Item[];
+    size: number;
+    gap?: number;
+    setSize: (size: number) => void;
     renderItem: (item: Item, index: number) => JSX.Element;
 } & Omit<FlatListProps<Item[]>, 'renderItem' | 'data'>;
 
-const GridList = <Item,>({items, size, minGap, renderItem, ...props}: Props<Item>) => {
+const GridList = <Item,>({
+    items,
+    size,
+    gap = 15,
+    setSize,
+    renderItem,
+    ...props
+}: Props<Item>) => {
     const containerRef = useRef<NativeView>(null);
     const [width, setWidth] = useState<number>(0);
-    const itemsPerRow = Math.floor((width + minGap) / (size + minGap));
-    const gap = (width - (itemsPerRow * size)) / (itemsPerRow - 1);
+    const itemsPerRow = Math.floor((width + gap) / (size + gap));
+    const newSize = Math.floor((width - ((itemsPerRow - 1) * gap)) / itemsPerRow);
+    if (itemsPerRow !== 0 && size !== newSize) {
+        setSize(newSize);
+    }
     const rows = useMemo(() => {
         const itemRow = [];
         if (!itemsPerRow) {
@@ -44,7 +55,6 @@ const GridList = <Item,>({items, size, minGap, renderItem, ...props}: Props<Item
     return (
         <View
             ref={containerRef}
-            variants={['fullWidth']}
             onLayout={handleLayout}
         >
             <FlatList
