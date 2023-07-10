@@ -138,6 +138,10 @@ const useTheme = (): Theme => {
                 absolute: {
                     position: 'absolute',
                 },
+                bordered: {
+                    borderColor: colors.border,
+                    borderWidth: 3,
+                },
             }),
             text: StyleSheet.create({
                 default: {

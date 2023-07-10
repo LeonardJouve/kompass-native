@@ -58,6 +58,7 @@ enum ViewVariants {
     flex,
     relative,
     absolute,
+    bordered,
 }
 
 enum TextVariants {

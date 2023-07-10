@@ -26,15 +26,15 @@ const GridList = <Item,>({
         setSize(newSize);
     }
     const rows = useMemo(() => {
-        const itemRow = [];
+        const itemRows = [];
         if (!itemsPerRow) {
             return [];
         }
         for (let i = 0; i < items.length; i += itemsPerRow) {
             const row = items.slice(i, i + itemsPerRow);
-            itemRow.push(row);
+            itemRows.push(row);
         }
-        return itemRow;
+        return itemRows;
     }, [items, itemsPerRow]);
 
     const handleLayout = () => containerRef.current?.measure((_x, _y, containerWidth) => setWidth(containerWidth));

@@ -1,6 +1,8 @@
 import React from 'react';
-import {Text} from '@renative';
+import styled from 'styled-components/native';
+import {Text, View} from '@renative';
 import type {Craft} from '@typing/craft';
+import type {StyledComponentProps} from '@typing/styled';
 
 type Props = {
     craft: Craft;
@@ -9,16 +11,24 @@ type Props = {
 
 const CraftListItem = ({craft, size}: Props) => {
     return (
-        <Text
-            style={{
-                width: size,
-                height: size,
-                backgroundColor: `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`,
-            }}
+        <StyledContainerView
+            variants={['centered', 'rounded', 'bordered', 'primary']}
+            styled={{size}}
         >
-            {craft.name}
-        </Text>
+            <Text>
+                {craft.name}
+            </Text>
+        </StyledContainerView>
     );
 };
+
+type StyledContainerProps = StyledComponentProps<{
+    size: number;
+}>;
+
+const StyledContainerView = styled(View)<StyledContainerProps>(({styled: {size}}) => ({
+    width: size,
+    height: size,
+}));
 
 export default CraftListItem;
