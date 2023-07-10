@@ -166,7 +166,7 @@ const Map = ({mapType}: Props) => {
         const {lat: latitude, lon: longitude} = point;
         return (
             <Marker
-                key={xid}
+                key={'marker_' + xid}
                 coordinate={{latitude, longitude}}
                 title={name}
                 style={styles.marker}

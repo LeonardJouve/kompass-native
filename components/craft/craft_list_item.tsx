@@ -1,6 +1,8 @@
 import React from 'react';
+import {Image} from 'react-native';
 import styled from 'styled-components/native';
 import {Text, View} from '@renative';
+import Rest from '@api/rest';
 import type {Craft} from '@typing/craft';
 import type {StyledComponentProps} from '@typing/styled';
 
@@ -10,14 +12,23 @@ type Props = {
 };
 
 const CraftListItem = ({craft, size}: Props) => {
+    const {name, id} = craft;
     return (
         <StyledContainerView
-            variants={['centered', 'rounded', 'bordered', 'primary']}
+            variants={['primary', 'centered', 'rounded', 'bordered']}
             styled={{size}}
         >
             <Text>
-                {craft.name}
+                {name}
             </Text>
+            <Image
+                source={{
+                    uri: Rest.getCraftImageRoute(id),
+                    headers: {Authorization: `Bearer ${Rest.apiToken}`},
+                    width: 50,
+                    height: 50,
+                }}
+            />
         </StyledContainerView>
     );
 };

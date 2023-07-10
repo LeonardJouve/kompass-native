@@ -142,6 +142,9 @@ const useTheme = (): Theme => {
                     borderColor: colors.border,
                     borderWidth: 3,
                 },
+                closable: {
+                    paddingTop: 60,
+                },
             }),
             text: StyleSheet.create({
                 default: {

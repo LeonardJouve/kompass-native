@@ -4,6 +4,7 @@ import {type Token} from '@redux/auth';
 import type {Options, Response, Status} from '@typing/rest';
 import type {Item} from '@typing/inventory';
 import type {Poi} from '@typing/map';
+import type {Craft} from '@typing/craft';
 
 class RestClient {
     public onDisconnect?: () => void;
@@ -86,8 +87,16 @@ class RestClient {
         return `${this.getApiRoute()}/opentripmap`;
     }
 
-    getItemImageRoute(itemName: string) {
-        return `${Rest.getBaseUrl()}/storage/items/${itemName}.png`;
+    getItemImageRoute(itemId: number) {
+        return `${this.getItemsRoute()}/image/${itemId}`;
+    }
+
+    getCraftImageRoute(craftId: number) {
+        return `${this.getCraftsRoute()}/image/${craftId}`;
+    }
+
+    getCraftsRoute() {
+        return `${this.getApiRoute()}/crafts`;
     }
 
     getConfig(): Response<ConfigState> {
@@ -138,6 +147,13 @@ class RestClient {
         return this.fetch(
             `${this.getOpentripmapRoute()}/search?xid=${xid}`,
             {method: 'GET'},
+        );
+    }
+
+    getAvailableCrafts(): Response<Craft[]> {
+        return this.fetch(
+            this.getCraftsRoute(),
+            {method: 'GET'}
         );
     }
 }

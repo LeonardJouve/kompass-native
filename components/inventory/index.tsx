@@ -16,7 +16,10 @@ const Inventory = ({}: Props) => {
     }, []);
 
     return (
-        <View variants={['primary', 'flex']}>
+        <View
+            variants={['secondary', 'flex', 'closable']}
+            padding={{paddingHorizontal: 's'}}
+        >
             <InventoryList/>
         </View>
     );

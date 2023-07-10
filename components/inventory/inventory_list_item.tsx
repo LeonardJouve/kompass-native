@@ -15,6 +15,7 @@ type Props = {
 };
 
 const InventoryListItem = ({item, selected, selectItem}: Props) => {
+    const {name, amount, item_id: itemId} = item;
     return (
         <StyledItemButton
             variants={['relative', 'row', 'alignCenter']}
@@ -22,15 +23,16 @@ const InventoryListItem = ({item, selected, selectItem}: Props) => {
             onLongPress={selectItem}
             styled={{selected}}
         >
-            <Text variants={['default']}>{item.amount}</Text>
+            <Text variants={['default']}>{amount}</Text>
             <Image
                 source={{
-                    uri: Rest.getItemImageRoute(item.name),
+                    uri: Rest.getItemImageRoute(itemId),
+                    headers: {Authorization: `Bearer ${Rest.apiToken}`},
                     width: 30,
                     height: 30,
                 }}
             />
-            <Text variants={['default']}>{item.name}</Text>
+            <Text variants={['default']}>{name}</Text>
             {selected && (
                 <Button
                     variants={['primary', 'absolute']}

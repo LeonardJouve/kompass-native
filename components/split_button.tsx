@@ -32,7 +32,7 @@ const SplitButton = ({
         return (
             <Button
                 variants={['primary']}
-                key={`split_button_${name}_${index}`}
+                key={'split_button_' + name + index}
                 onPress={onPress}
                 style={{backgroundColor: colorPrimary ?? theme.colors.viewPrimary}}
             >

@@ -1,4 +1,4 @@
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {FlatList, type ListRenderItemInfo, type FlatListProps, type View as NativeView} from 'react-native'; // eslint-disable-line no-restricted-imports
 import {View} from '@renative';
 
@@ -22,9 +22,6 @@ const GridList = <Item,>({
     const [width, setWidth] = useState<number>(0);
     const itemsPerRow = Math.floor((width + gap) / (size + gap));
     const newSize = Math.floor((width - ((itemsPerRow - 1) * gap)) / itemsPerRow);
-    if (itemsPerRow !== 0 && size !== newSize) {
-        setSize(newSize);
-    }
     const rows = useMemo(() => {
         const itemRows = [];
         if (!itemsPerRow) {
@@ -36,6 +33,12 @@ const GridList = <Item,>({
         }
         return itemRows;
     }, [items, itemsPerRow]);
+
+    useEffect(() => {
+        if (itemsPerRow !== 0 && size !== newSize) {
+            setSize(newSize);
+        }
+    }, [itemsPerRow, size, newSize]);
 
     const handleLayout = () => containerRef.current?.measure((_x, _y, containerWidth) => setWidth(containerWidth));
 

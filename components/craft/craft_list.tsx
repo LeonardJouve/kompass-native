@@ -15,7 +15,7 @@ const CraftList = () => {
     ));
 
     return (
-        <View padding={{paddingHorizontal: 's'}}>
+        <View>
             {renderedCrafts}
         </View>
     );

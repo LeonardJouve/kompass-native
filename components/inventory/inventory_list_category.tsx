@@ -25,7 +25,7 @@ const InventoryListCategory = ({category, items, selectedItems, selectItem}: Pro
         const itemId = item.item_id;
         return (
             <InventoryListItem
-                key={itemId}
+                key={'inventory_category_' + itemId}
                 selected={selectedItems.includes(itemId)}
                 selectItem={() => selectItem(itemId)}
                 item={item}
