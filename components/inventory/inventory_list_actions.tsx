@@ -58,9 +58,9 @@ const InventoryItemActions = ({selectedItems, selectedItemMaxAmount, resetSelect
             </View>
         );
         selectOptions.push(
-            {icon: MinusIcon, onPress: () => handleSelectAmount(-1)},
+            {icon: MinusIcon, disabled: selectedItemAmount === 1, onPress: () => handleSelectAmount(-1)},
             {content: renderedSelectedAmount},
-            {icon: PlusIcon, onPress: () => handleSelectAmount(1)},
+            {icon: PlusIcon, disabled: selectedItemAmount === selectedItemMaxAmount, onPress: () => handleSelectAmount(1)},
         );
     }
 
