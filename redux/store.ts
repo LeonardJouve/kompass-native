@@ -8,6 +8,7 @@ import map from '@redux/map';
 import error from '@redux/error';
 import auth from '@redux/auth';
 import inventory from '@redux/inventory';
+import craft from '@redux/craft';
 import {GlobalState} from '@typing/global_state';
 
 export type AppDispatch = ThunkDispatch<GlobalState, any, AnyAction>;
@@ -23,6 +24,7 @@ const store = configureStore({
         error,
         auth,
         inventory,
+        craft,
     },
     devTools: process.env.NODE_ENV === 'development',
 });

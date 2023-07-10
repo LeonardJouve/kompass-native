@@ -18,6 +18,7 @@ const View = forwardRef<NativeView, Props>(({variants = [], style, margin = {}, 
     const paddingSpacings = getSpacings(theme.spacing, padding);
     return (
         <NativeView
+            ref={ref}
             style={[viewStyle, marginSpacings, paddingSpacings, style]}
             {...props}
         >

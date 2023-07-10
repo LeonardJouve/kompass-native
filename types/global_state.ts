@@ -6,6 +6,7 @@ import {type MapState} from '@redux/map';
 import {type ErrorState} from '@redux/error';
 import {type AuthState} from '@redux/auth';
 import {type InventoryState} from '@redux/inventory';
+import {type CraftState} from '@redux/craft';
 
 export type GlobalState = {
     language: LanguageState;
@@ -16,4 +17,5 @@ export type GlobalState = {
     error: ErrorState,
     auth: AuthState,
     inventory: InventoryState,
+    craft: CraftState,
 };

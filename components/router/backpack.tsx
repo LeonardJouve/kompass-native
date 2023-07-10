@@ -7,7 +7,7 @@ import {styled} from 'styled-components/native';
 import {View} from '@renative';
 import BackButton from '@components/back_button';
 import Inventory from '@components/inventory';
-import Craft from '@components/backpack_tabs/craft';
+import Craft from '@components/craft';
 import Equipement from '@components/backpack_tabs/equipement';
 import Encyclopedia from '@components/backpack_tabs/encyclopedia';
 import useTheme from '@hooking/useTheme';
