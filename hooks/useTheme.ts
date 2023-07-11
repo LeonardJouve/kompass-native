@@ -88,6 +88,17 @@ const useTheme = (): Theme => {
                     flexDirection: 'column',
                     gap: 10,
                 },
+                centered: {
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                },
+                rounded: {
+                    borderRadius: rounded,
+                },
+                bordered: {
+                    borderColor: colors.border,
+                    borderWidth: 3,
+                },
             }),
             view: StyleSheet.create({
                 primary: {

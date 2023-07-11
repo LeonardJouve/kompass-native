@@ -1,7 +1,8 @@
 import {GlobalState} from '@typing/global_state';
+import {ModalIdentifiers} from '@typing/modals';
 
-export const isModalOpen = (state: GlobalState, modalId: string): boolean => state.modal.visible && state.modal.modalId === modalId;
+export const isModalOpen = (state: GlobalState, modalId: ModalIdentifiers): boolean => state.modal.visible && state.modal.modalId === modalId;
 
-export const getModalId = (state: GlobalState): string => state.modal.modalId;
+export const getModalId = (state: GlobalState): ModalIdentifiers => state.modal.modalId;
 
 export const getModalProps = (state: GlobalState): Record<string, any> => state.modal.props;

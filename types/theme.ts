@@ -40,6 +40,9 @@ enum ButtonVariants {
     row,
     column,
     alignCenter,
+    centered,
+    rounded,
+    bordered,
 }
 
 enum ViewVariants {

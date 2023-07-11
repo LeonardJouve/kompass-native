@@ -7,18 +7,18 @@ import {isModalOpen} from '@redux/selectors/modal';
 import {Button, Text, View} from '@renative';
 import useFormattedMessage from '@hooking/useFormattedMessage';
 import {GlobalState} from '@typing/global_state';
-import {ModalIdentifier} from '@typing/modals';
+import {ModalIdentifiers} from '@typing/modals';
 
 type Props = {
-    modalId: ModalIdentifier;
-    isCancelable: boolean;
+    modalId: ModalIdentifiers;
     content: JSX.Element | string;
     header?: JSX.Element | string;
     footer?: JSX.Element;
-    onConfirm?: () => void;
-    onCancel?: () => void;
     confirmText?: string;
     cancelText?: string;
+    isCancelable?: boolean;
+    onConfirm?: () => void;
+    onCancel?: () => void;
 }
 
 const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm, onCancel, confirmText, cancelText}: Props) => {
@@ -87,9 +87,9 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
 
     let footerView = footer ?? (
         <View
-            variants={['row']}
-            style={styles.footer}
+            variants={['row', 'rounded']}
             padding={{paddingHorizontal: 'xl', paddingBottom: 's'}}
+            style={styles.footer}
         >
             {cancelButton}
             {confirmButton}
@@ -112,17 +112,16 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
                         variants={['primary', 'rounded', 'elevationHigh', 'column']}
                         style={styles.modal}
                     >
-                        <View
-                            variants={['secondary', 'elevationLow']}
-                            padding={{paddingHorizontal: 'xl', paddingVertical: 'xs'}}
-                            style={styles.header}
-                        >
-                            {headerView}
-                        </View>
-                        <View
-                            variants={['primary']}
-                            padding={{paddingHorizontal: 'xl'}}
-                        >
+                        {headerView && (
+                            <View
+                                variants={['secondary', 'elevationLow', 'rounded']}
+                                padding={{paddingHorizontal: 'xl', paddingVertical: 'xs'}}
+                                style={styles.header}
+                            >
+                                {headerView}
+                            </View>
+                        )}
+                        <View padding={{paddingHorizontal: 'xl', paddingVertical: 'xs'}}>
                             {contentView}
                         </View>
                         {footerView}
@@ -135,16 +134,16 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
 
 const styles = StyleSheet.create({
     header: {
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8,
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
     },
     modal: {
         width: '90%',
     },
     footer: {
         justifyContent: 'space-between',
-        borderBottomLeftRadius: 8,
-        borderBottomRightRadius: 8,
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
     },
 });
 

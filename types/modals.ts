@@ -1,3 +1,4 @@
-export enum ModalIdentifiers {}
-
-export type ModalIdentifier = keyof typeof ModalIdentifiers;
+export enum ModalIdentifiers {
+    NONE,
+    CRAFT_MODAL,
+}
