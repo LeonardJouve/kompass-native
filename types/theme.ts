@@ -63,6 +63,7 @@ enum ViewVariants {
     absolute,
     bordered,
     closable,
+    spaceBetween,
 }
 
 enum TextVariants {

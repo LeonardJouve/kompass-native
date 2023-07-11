@@ -1,6 +1,13 @@
+import {ItemType} from '@typing/inventory';
+
+export type Ingredient = {
+    type: ItemType;
+    min_tier: number;
+};
+
 export type Craft = {
-    id: number;
+    craft_id: number;
     category: string;
-    name: string;
-    min_level: number;
+    type: ItemType;
+    recipe: Ingredient[];
 };

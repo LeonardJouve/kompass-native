@@ -12,7 +12,7 @@ import CheckIcon from '@res/check_icon.svg';
 
 export type MenuItem = {
     text: string;
-    selected: boolean;
+    selected?: boolean;
     rightDecorator?: JSX.Element;
     leftDecorator?: JSX.Element;
     onPress: () => void;
@@ -174,7 +174,7 @@ const Menu = ({open, name, position, button, header, items, handleOpen}: Props) 
 };
 
 type StyledItemProps = StyledComponentProps<{
-    selected: boolean;
+    selected?: boolean;
 }>;
 
 const StyledItemButton = styled(Button)<StyledItemProps>(({styled: {selected}, theme}) => ({

@@ -156,6 +156,9 @@ const useTheme = (): Theme => {
                 closable: {
                     paddingTop: 60,
                 },
+                spaceBetween: {
+                    justifyContent: 'space-between',
+                },
             }),
             text: StyleSheet.create({
                 default: {

@@ -27,7 +27,7 @@ const getAvailableCrafts = createAsyncThunk<ActionFulfilled<CraftState['availabl
         }
         const formattedData = data.reduce((acc, craft) => ({
             ...acc,
-            [craft.id]: craft,
+            [craft.craft_id]: craft,
         }), {});
         return {status: ActionStatus.OK, data: formattedData};
     },

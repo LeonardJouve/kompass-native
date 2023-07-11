@@ -16,7 +16,7 @@ const CraftListCategory = ({
     const [size, setSize] = useState<number>(70);
     const renderItem = (craft: Craft) => (
         <CraftListItem
-            key={'craft_' + craft.name}
+            key={'craft_' + craft.type}
             craft={craft}
             size={size}
         />

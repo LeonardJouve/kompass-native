@@ -16,7 +16,7 @@ type Props = {
 
 const CraftListItem = ({craft, size}: Props) => {
     const dispatch = useAppDispatch();
-    const {name, id} = craft;
+    const {type, craft_id: craftId} = craft;
 
     const handlePress = () => {
         dispatch(modalActions.openModal({
@@ -34,11 +34,11 @@ const CraftListItem = ({craft, size}: Props) => {
             onPress={handlePress}
         >
             <Text>
-                {name}
+                {type}
             </Text>
             <Image
                 source={{
-                    uri: Rest.getCraftImageRoute(id),
+                    uri: Rest.getCraftImageRoute(craftId),
                     headers: {Authorization: `Bearer ${Rest.apiToken}`},
                     width: 50,
                     height: 50,

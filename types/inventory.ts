@@ -3,9 +3,13 @@ export type Item = {
     amount: number;
     name: string;
     category: ItemCategory;
+    type: ItemType;
+    tier: number;
 };
 
 export type ItemCategory = 'ressource' | 'equipement' | 'food' | 'weapon' | 'tool';
+
+export type ItemType = 'log' | 'stick' | 'powder' | 'ingot' | 'plate' | 'vegetable' | 'soup' | 'salad';
 
 export type InventoryCategory = ItemCategory | 'all';
 
