@@ -121,7 +121,7 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
                                 {headerView}
                             </View>
                         )}
-                        <View padding={{paddingHorizontal: 'xl', paddingVertical: 'xs'}}>
+                        <View padding={{paddingHorizontal: 'xl', paddingVertical: headerView ? 0 : 'm'}}>
                             {contentView}
                         </View>
                         {footerView}

@@ -21,7 +21,9 @@ const CraftListItem = ({craft, size}: Props) => {
     const handlePress = () => {
         dispatch(modalActions.openModal({
             modalId: ModalIdentifiers.CRAFT_MODAL,
-            props: {},
+            props: {
+                craft,
+            },
         }));
     };
 

@@ -1,22 +1,31 @@
 import React from 'react';
-import {Text} from '@renative';
+import {useSelector} from 'react-redux';
+import {Text, View} from '@renative';
+import {getModalProps, isModalOpen} from '@redux/selectors/modal';
 import GenericModal from '@components/modals/generic_modal';
-import {ModalIdentifiers} from '@typing/modals';
+import {ModalIdentifiers, type CraftModalProps} from '@typing/modals';
+import type {GlobalState} from '@typing/global_state';
 
-type Props = {
+const CraftModal = () => {
+    const isCraftModalOpen = useSelector((state: GlobalState) => isModalOpen(state, ModalIdentifiers.CRAFT_MODAL));
+    const {craft} = useSelector(getModalProps) as CraftModalProps['props'];
 
-};
+    if (!isCraftModalOpen) {
+        return null;
+    }
 
-const CraftModal = ({}: Props) => {
     const content = (
-        <Text>
-            {'Craft modal'}
-        </Text>
+        <View>
+            <Text>
+                {craft.name}
+            </Text>
+        </View>
     );
     return (
         <GenericModal
             modalId={ModalIdentifiers.CRAFT_MODAL}
             content={content}
+            isCancelable={true}
         />
     );
 };
