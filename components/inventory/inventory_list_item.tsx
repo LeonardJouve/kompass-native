@@ -31,6 +31,7 @@ const InventoryListItem = ({item, selected, selectItem}: Props) => {
                     width: 30,
                     height: 30,
                 }}
+                resizeMethod='resize'
             />
             <Text variants={['default']}>{name}</Text>
             {selected && (

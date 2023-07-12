@@ -1,21 +1,21 @@
 import type {GlobalState} from '@typing/global_state';
 import type {Craft} from '@typing/craft';
 
-export const getAvailableCrafts = (state: GlobalState) => state.craft.availableCrafts;
+export const getCrafts = (state: GlobalState) => state.craft.crafts;
 
-export const getAvailableCraftsArray = (state: GlobalState) => Object.values(getAvailableCrafts(state));
+export const getCraftsArray = (state: GlobalState) => Object.values(getCrafts(state));
 
-export const getAvailableCraftsByCategory = (state: GlobalState) => {
-    const availableCrafts = getAvailableCraftsArray(state);
-    return availableCrafts.reduce<Array<{category: Craft['category']; crafts: Craft[]}>>((acc, availableCraft) => {
-        const {category} = availableCraft;
-        const existantCategory = acc.find((craft) => craft.category === category);
+export const getCraftsByCategory = (state: GlobalState) => {
+    const crafts = getCraftsArray(state);
+    return crafts.reduce<Array<{category: Craft['category']; crafts: Craft[]}>>((acc, craft) => {
+        const {category} = craft;
+        const existantCategory = acc.find((existantCraft) => existantCraft.category === category);
         if (existantCategory) {
-            existantCategory.crafts.push(availableCraft);
+            existantCategory.crafts.push(craft);
         } else {
             acc.push({
                 category,
-                crafts: [availableCraft],
+                crafts: [craft],
             });
         }
         return acc;

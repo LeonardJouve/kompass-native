@@ -1,27 +1,64 @@
-import React from 'react';
-import {StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Image, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
-import {Button, Text, View} from '@renative';
+import {Button, View} from '@renative';
+import Rest from '@api/rest';
 import {getModalProps, isModalOpen} from '@redux/selectors/modal';
 import GenericModal from '@components/modals/generic_modal';
 import CraftBlueprintItem from '@components/craft/craft_blueprint_item';
 import {ModalIdentifiers, type CraftModalProps} from '@typing/modals';
 import type {GlobalState} from '@typing/global_state';
+import type {OneToOneIdObject} from '@typing/redux';
+import type {Item} from '@typing/inventory';
+import type {CraftSelectedItem} from '@typing/craft';
 
 const CraftModal = () => {
     const isCraftModalOpen = useSelector((state: GlobalState) => isModalOpen(state, ModalIdentifiers.CRAFT_MODAL));
     const {craft} = useSelector(getModalProps) as CraftModalProps['props'];
+    const [selectedItems, setSelectedItems] = useState<OneToOneIdObject<CraftSelectedItem>>({});
+    const [result, setResult] = useState<Item|null>(null);
+
+    const getResultPreview = async () => {
+        const selectedItemsId = Object.values(selectedItems).map(({itemId}) => itemId);
+        if (craft && selectedItemsId.length === craft.recipe.length) {
+            const {data, error} = await Rest.getCraftPreview(craft.craft_id, selectedItemsId);
+            if (error) {
+                return;
+            }
+            setResult(data);
+        }
+    };
+
+    useEffect(() => {
+        getResultPreview();
+    }, [selectedItems]);
+
+    useEffect(() => {
+        return () => {
+            setSelectedItems({});
+            setResult(null);
+        };
+    }, [isCraftModalOpen]);
 
     if (!isCraftModalOpen) {
         return null;
     }
 
+    const handleSelectItem = (index: number, item: CraftSelectedItem) => setSelectedItems({
+        ...selectedItems,
+        [index]: item,
+    });
+
     const craftBlueprintItems = craft.recipe.map((ingredient, index) => (
         <CraftBlueprintItem
             key={'craft_blueprint_item' + index}
             ingredient={ingredient}
+            selectedItem={selectedItems[index]}
+            setSelectedItem={(item: CraftSelectedItem) => handleSelectItem(index, item)}
         />
     ));
+
+    const resultUri = result ? Rest.getItemImageRoute(result.item_id) : Rest.getItemPreviewImageRoute(craft.type);
 
     const content = (
         <View>
@@ -37,9 +74,14 @@ const CraftModal = () => {
                         variants={['centered', 'rounded', 'bordered']}
                         style={styles.result}
                     >
-                        <Text>
-                            {'result'}
-                        </Text>
+                        <Image
+                            source={{
+                                uri: resultUri,
+                                headers: {Authorization: `Bearer ${Rest.apiToken}`},
+                            }}
+                            resizeMethod='resize'
+                            style={styles.resultImage}
+                        />
                     </Button>
                 </View>
             </View>
@@ -59,7 +101,10 @@ const CraftModal = () => {
 const styles = StyleSheet.create({
     result: {
         aspectRatio: 1,
-        backgroundColor: `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`,
+    },
+    resultImage: {
+        flex: 1,
+        aspectRatio: 1,
     },
 });
 

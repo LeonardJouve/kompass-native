@@ -2,7 +2,6 @@ import {ItemType} from '@typing/inventory';
 
 export type Ingredient = {
     type: ItemType;
-    min_tier: number;
 };
 
 export type Craft = {
@@ -10,4 +9,9 @@ export type Craft = {
     category: string;
     type: ItemType;
     recipe: Ingredient[];
+};
+
+export type CraftSelectedItem = {
+    itemId: number;
+    amount: number;
 };

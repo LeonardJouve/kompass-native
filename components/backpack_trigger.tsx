@@ -14,8 +14,9 @@ const BackpackTrigger = () => {
             onTouchEnd={onTouch}
         >
             <Image
-                style={styles.image}
                 source={require('@res/backpack.png')}
+                resizeMethod='resize'
+                style={styles.image}
             />
         </View>
     );

@@ -1,8 +1,8 @@
 import BuildConfig from 'react-native-config';
-import {type ConfigState} from '@redux/config';
-import {type Token} from '@redux/auth';
+import type {ConfigState} from '@redux/config';
+import type {Token} from '@redux/auth';
 import type {Options, Response, Status} from '@typing/rest';
-import type {Item} from '@typing/inventory';
+import type {Item, ItemType} from '@typing/inventory';
 import type {Poi} from '@typing/map';
 import type {Craft} from '@typing/craft';
 
@@ -91,8 +91,8 @@ class RestClient {
         return `${this.getItemsRoute()}/image/${itemId}`;
     }
 
-    getCraftImageRoute(craftId: number) {
-        return `${this.getCraftsRoute()}/image/${craftId}`;
+    getItemPreviewImageRoute(type: ItemType) {
+        return `${this.getItemsRoute()}/image-preview/${type}`;
     }
 
     getCraftsRoute() {
@@ -150,10 +150,17 @@ class RestClient {
         );
     }
 
-    getAvailableCrafts(): Response<Craft[]> {
+    getCrafts(): Response<Craft[]> {
         return this.fetch(
             this.getCraftsRoute(),
-            {method: 'GET'}
+            {method: 'GET'},
+        );
+    }
+
+    getCraftPreview(craftId: number, selectedItemsId: number[]): Response<Item> {
+        return this.fetch(
+            `${this.getCraftsRoute()}/preview`,
+            {method: 'PUT', body: JSON.stringify({craft_id: craftId, selected_items_id: selectedItemsId})},
         );
     }
 }

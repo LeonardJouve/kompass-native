@@ -120,7 +120,8 @@ const Menu = ({open, name, position, button, header, items, handleOpen}: Props) 
         });
     }, [open]);
 
-    const menuButton = React.cloneElement(button, {ref: menuButtonRef});
+    const menuButton = React.cloneElement(button, {ref: menuButtonRef, disabled: !items.length});
+
     let renderedHeader;
     if (header) {
         renderedHeader = typeof header === 'string' ? (
@@ -132,6 +133,7 @@ const Menu = ({open, name, position, button, header, items, handleOpen}: Props) 
             </Text>
         ) : header;
     }
+
     const renderedItems = items.map(({text, selected, rightDecorator, leftDecorator, onPress}, index) => (
         <StyledItemButton
             key={name + index}
@@ -140,9 +142,9 @@ const Menu = ({open, name, position, button, header, items, handleOpen}: Props) 
             styled={{selected}}
             onTouchEnd={onPress}
         >
-            {rightDecorator}
+            {leftDecorator}
             <Text>{text}</Text>
-            {selected ? <StyledCheckIcon/> : leftDecorator}
+            {selected ? <StyledCheckIcon/> : rightDecorator}
         </StyledItemButton>
     ));
 

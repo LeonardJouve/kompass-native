@@ -5,22 +5,22 @@ import {ActionStatus, type ActionFulfilled, type ActionRejected, type OneToOneId
 import  type {Craft} from '@typing/craft';
 
 export type CraftState = {
-    availableCrafts: OneToOneIdObject<Craft>;
+    crafts: OneToOneIdObject<Craft>;
 };
 
 const initialCraftState: CraftState = {
-    availableCrafts: {},
+    crafts: {},
 };
 
-const setAvailableCrafts = (state: CraftState, action: PayloadAction<CraftState['availableCrafts']>) => ({
+const setCrafts = (state: CraftState, action: PayloadAction<CraftState['crafts']>) => ({
     ...state,
-    availableCrafts: action.payload,
+    crafts: action.payload,
 });
 
-const getAvailableCrafts = createAsyncThunk<ActionFulfilled<CraftState['availableCrafts']>, undefined, ActionRejected>(
-    'getAvailableCrafts',
+const getCrafts = createAsyncThunk<ActionFulfilled<CraftState['crafts']>, undefined, ActionRejected>(
+    'getcrafts',
     async (_args, {dispatch, rejectWithValue}) => {
-        const {data, url, error, status} = await Rest.getAvailableCrafts();
+        const {data, url, error, status} = await Rest.getCrafts();
         if (error) {
             dispatch(errorActions.setError({data, url, status}));
             return rejectWithValue({status: ActionStatus.ERROR});
@@ -38,10 +38,10 @@ const craftSlice = createSlice({
     name: 'craft',
     initialState: initialCraftState,
     reducers: {
-        setAvailableCrafts,
+        setCrafts,
     },
     extraReducers: (builder) => {
-        builder.addCase(getAvailableCrafts.fulfilled, (state, action) => setAvailableCrafts(state, {...action, payload: action.payload.data}));
+        builder.addCase(getCrafts.fulfilled, (state, action) => setCrafts(state, {...action, payload: action.payload.data}));
     },
 });
 
@@ -49,7 +49,7 @@ const {reducer, actions} = craftSlice;
 
 const craftActions = {
     ...actions,
-    getAvailableCrafts,
+    getCrafts,
 };
 
 export {craftActions};

@@ -12,7 +12,7 @@ const Craft = ({}: Props) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(craftActions.getAvailableCrafts());
+        dispatch(craftActions.getCrafts());
     }, []);
 
     return (

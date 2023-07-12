@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image} from 'react-native';
+import {Image, StyleSheet} from 'react-native';
 import styled from 'styled-components/native';
 import {Button, Text} from '@renative';
 import Rest from '@api/rest';
@@ -16,7 +16,7 @@ type Props = {
 
 const CraftListItem = ({craft, size}: Props) => {
     const dispatch = useAppDispatch();
-    const {type, craft_id: craftId} = craft;
+    const {type} = craft;
 
     const handlePress = () => {
         dispatch(modalActions.openModal({
@@ -38,15 +38,22 @@ const CraftListItem = ({craft, size}: Props) => {
             </Text>
             <Image
                 source={{
-                    uri: Rest.getCraftImageRoute(craftId),
+                    uri: Rest.getItemPreviewImageRoute(type),
                     headers: {Authorization: `Bearer ${Rest.apiToken}`},
-                    width: 50,
-                    height: 50,
                 }}
+                resizeMethod='resize'
+                style={styles.image}
             />
         </StyledContainerButton>
     );
 };
+
+const styles = StyleSheet.create({
+    image: {
+        flex: 1,
+        aspectRatio: 1,
+    },
+});
 
 type StyledContainerProps = StyledComponentProps<{
     size: number;
