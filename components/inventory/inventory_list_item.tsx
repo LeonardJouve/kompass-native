@@ -1,5 +1,6 @@
 import React from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {styled} from 'styled-components/native';
 import {Text, Button} from '@renative';
 import Rest from '@api/rest';
@@ -24,14 +25,12 @@ const InventoryListItem = ({item, selected, selectItem}: Props) => {
             styled={{selected}}
         >
             <Text variants={['default']}>{amount}</Text>
-            <Image
+            <FastImage
                 source={{
                     uri: Rest.getItemImageRoute(itemId),
                     headers: {Authorization: `Bearer ${Rest.apiToken}`},
-                    width: 30,
-                    height: 30,
                 }}
-                resizeMethod='resize'
+                style={styles.image}
             />
             <Text variants={['default']}>{name}</Text>
             {selected && (
@@ -64,6 +63,10 @@ const styles = StyleSheet.create({
         right: 10,
         top: '50%',
         borderRadius: 10,
+    },
+    image: {
+        width: 30,
+        height: 30,
     },
 });
 

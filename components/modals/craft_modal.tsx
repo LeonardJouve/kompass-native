@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
 import {Button, View} from '@renative';
 import Rest from '@api/rest';
@@ -9,14 +10,14 @@ import CraftBlueprintItem from '@components/craft/craft_blueprint_item';
 import {ModalIdentifiers, type CraftModalProps} from '@typing/modals';
 import type {GlobalState} from '@typing/global_state';
 import type {OneToOneIdObject} from '@typing/redux';
-import type {Item} from '@typing/inventory';
+import type {AvailableItem} from '@typing/inventory';
 import type {CraftSelectedItem} from '@typing/craft';
 
 const CraftModal = () => {
     const isCraftModalOpen = useSelector((state: GlobalState) => isModalOpen(state, ModalIdentifiers.CRAFT_MODAL));
     const {craft} = useSelector(getModalProps) as CraftModalProps['props'];
     const [selectedItems, setSelectedItems] = useState<OneToOneIdObject<CraftSelectedItem>>({});
-    const [result, setResult] = useState<Item|null>(null);
+    const [result, setResult] = useState<AvailableItem|null>(null);
 
     const getResultPreview = async () => {
         const selectedItemsId = Object.values(selectedItems).map(({itemId}) => itemId);
@@ -58,7 +59,7 @@ const CraftModal = () => {
         />
     ));
 
-    const resultUri = result ? Rest.getItemImageRoute(result.item_id) : Rest.getItemPreviewImageRoute(craft.type);
+    const resultUri = result ? Rest.getItemImageRoute(result.id) : Rest.getItemPreviewImageRoute(craft.type);
 
     const content = (
         <View>
@@ -74,12 +75,11 @@ const CraftModal = () => {
                         variants={['centered', 'rounded', 'bordered']}
                         style={styles.result}
                     >
-                        <Image
+                        <FastImage
                             source={{
                                 uri: resultUri,
                                 headers: {Authorization: `Bearer ${Rest.apiToken}`},
                             }}
-                            resizeMethod='resize'
                             style={styles.resultImage}
                         />
                     </Button>

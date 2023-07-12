@@ -2,7 +2,7 @@ import BuildConfig from 'react-native-config';
 import type {ConfigState} from '@redux/config';
 import type {Token} from '@redux/auth';
 import type {Options, Response, Status} from '@typing/rest';
-import type {Item, ItemType} from '@typing/inventory';
+import type {AvailableItem, Item, ItemType} from '@typing/inventory';
 import type {Poi} from '@typing/map';
 import type {Craft} from '@typing/craft';
 
@@ -157,7 +157,7 @@ class RestClient {
         );
     }
 
-    getCraftPreview(craftId: number, selectedItemsId: number[]): Response<Item> {
+    getCraftPreview(craftId: number, selectedItemsId: number[]): Response<AvailableItem> {
         return this.fetch(
             `${this.getCraftsRoute()}/preview`,
             {method: 'PUT', body: JSON.stringify({craft_id: craftId, selected_items_id: selectedItemsId})},

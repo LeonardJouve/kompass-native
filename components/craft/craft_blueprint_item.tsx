@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
 import {Button, Text, View} from '@renative';
 import Rest from '@api/rest';
@@ -37,14 +38,12 @@ const CraftBlueprintItem = ({ingredient, selectedItem, setSelectedItem}: Props) 
             leftDecorator: (
                 <View variants={['row', 'alignCenter']}>
                     <Text>{item.amount}</Text>
-                    <Image
+                    <FastImage
                         source={{
                             uri: Rest.getItemImageRoute(item.item_id),
                             headers: {Authorization: `Bearer ${Rest.apiToken}`},
-                            width: 20,
-                            height: 20,
                         }}
-                        resizeMethod='resize'
+                        style={styles.menuImage}
                     />
                 </View>
             ),
@@ -66,12 +65,11 @@ const CraftBlueprintItem = ({ingredient, selectedItem, setSelectedItem}: Props) 
                     onPress={handleOpen}
                     style={styles.button}
                 >
-                    <Image
+                    <FastImage
                         source={{
                             uri: previewUri,
                             headers: {Authorization: `Bearer ${Rest.apiToken}`},
                         }}
-                        resizeMethod='resize'
                         style={styles.image}
                     />
                 </Button>
@@ -89,6 +87,10 @@ const styles = StyleSheet.create({
     image: {
         flex: 1,
         aspectRatio: 1,
+    },
+    menuImage: {
+        width: 20,
+        height: 20,
     },
 });
 

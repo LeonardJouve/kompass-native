@@ -1,5 +1,6 @@
 import React from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import styled from 'styled-components/native';
 import {Button, Text} from '@renative';
 import Rest from '@api/rest';
@@ -36,12 +37,11 @@ const CraftListItem = ({craft, size}: Props) => {
             <Text>
                 {type}
             </Text>
-            <Image
+            <FastImage
                 source={{
                     uri: Rest.getItemPreviewImageRoute(type),
                     headers: {Authorization: `Bearer ${Rest.apiToken}`},
                 }}
-                resizeMethod='resize'
                 style={styles.image}
             />
         </StyledContainerButton>

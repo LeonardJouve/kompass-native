@@ -7,6 +7,10 @@ export type Item = {
     tier: number;
 };
 
+export type AvailableItem = Omit<Item, 'item_id'|'amount'> & {
+    id: number;
+};
+
 export type ItemCategory = 'ressource' | 'equipement' | 'food' | 'weapon' | 'tool';
 
 export type ItemType = 'log' | 'stick' | 'powder' | 'ingot' | 'plate' | 'vegetable' | 'soup' | 'salad';
