@@ -122,6 +122,9 @@ const useTheme = (): Theme => {
                 alignCenter: {
                     alignItems: 'center',
                 },
+                justifyCenter: {
+                    justifyContent: 'center',
+                },
                 fullWidth: {
                     width: '100%',
                 },

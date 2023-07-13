@@ -52,6 +52,7 @@ enum ViewVariants {
     column,
     centered,
     alignCenter,
+    justifyCenter,
     rounded,
     fullWidth,
     fullHeight,

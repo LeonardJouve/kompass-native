@@ -6,8 +6,11 @@ import {Button, View} from '@renative';
 import Rest from '@api/rest';
 import {getModalProps, isModalOpen} from '@redux/selectors/modal';
 import {getInventoryItemsArray} from '@redux/selectors/inventory';
+import useFormattedMessage from '@hooking/useFormattedMessage';
 import GenericModal from '@components/modals/generic_modal';
 import CraftBlueprintItem from '@components/craft/craft_blueprint_item';
+import ProgressBar from '@components/progress_bar';
+import Slider, { SliderDirection } from '@components/slider';
 import {ModalIdentifiers, type CraftModalProps} from '@typing/modals';
 import type {GlobalState} from '@typing/global_state';
 import type {AvailableItem} from '@typing/inventory';
@@ -16,6 +19,7 @@ const CraftModal = () => {
     const isCraftModalOpen = useSelector((state: GlobalState) => isModalOpen(state, ModalIdentifiers.CRAFT_MODAL));
     const {craft} = useSelector(getModalProps) as CraftModalProps['props'];
     const items = useSelector(getInventoryItemsArray);
+    const formatMessage = useFormattedMessage();
     const [selectedItems, setSelectedItems] = useState<Record<number, number>>({});
     const [amount, setAmount] = useState<number>(1);
     const [result, setResult] = useState<AvailableItem|null>(null);
@@ -37,6 +41,7 @@ const CraftModal = () => {
         if (craft && selectedItemsId.length === craft.recipe.length) {
             const {data, error} = await Rest.getCraftPreview(craft.craft_id, selectedItemsId);
             if (error) {
+                setResult(null);
                 return;
             }
             setResult(data);
@@ -76,14 +81,21 @@ const CraftModal = () => {
 
     const resultUri = result ? Rest.getItemImageRoute(result.id) : Rest.getItemPreviewImageRoute(craft.type);
 
+    const confirmText = formatMessage({
+        id: 'components.craft_modal.confirm',
+        defaultMessage: 'Craft',
+    });
+
+    const maxAmount = 10;
+
     const content = (
-        <View>
+        <View variants={['column']}>
             <View variants={['row', 'alignCenter']}>
                 <View variants={['flex', 'column']}>
                     {craftBlueprintItems}
                 </View>
-                <View>
-                    {/* <ProgressBar/> craft progress bar*/}
+                <View margin={{marginHorizontal: 'm'}}>
+                    <ProgressBar/>
                 </View>
                 <View variants={['flex', 'column']}>
                     <Button
@@ -100,7 +112,7 @@ const CraftModal = () => {
                     </Button>
                 </View>
             </View>
-            {/* <Slider/> amount slider */}
+            <Slider max={maxAmount}/>
         </View>
     );
     return (
@@ -108,7 +120,8 @@ const CraftModal = () => {
             modalId={ModalIdentifiers.CRAFT_MODAL}
             header={craft.type}
             content={content}
-            isCancelable={true}
+            confirmText={confirmText}
+            isClosable={true}
         />
     );
 };

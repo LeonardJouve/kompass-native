@@ -1,13 +1,16 @@
 import React from 'react';
 import {Modal, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
+import {styled} from 'styled-components/native';
 import {useAppDispatch} from '@redux/store';
 import {modalActions} from '@redux/modal';
 import {isModalOpen} from '@redux/selectors/modal';
 import {Button, Text, View} from '@renative';
 import useFormattedMessage from '@hooking/useFormattedMessage';
-import {GlobalState} from '@typing/global_state';
 import {ModalIdentifiers} from '@typing/modals';
+import type {GlobalState} from '@typing/global_state';
+import type {StyledComponentProps} from '@typing/styled';
+import CloseIcon from '@res/close_icon.svg';
 
 type Props = {
     modalId: ModalIdentifiers;
@@ -17,11 +20,12 @@ type Props = {
     confirmText?: string;
     cancelText?: string;
     isCancelable?: boolean;
+    isClosable?: boolean;
     onConfirm?: () => void;
     onCancel?: () => void;
 }
 
-const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm, onCancel, confirmText, cancelText}: Props) => {
+const GenericModal = ({modalId, isCancelable, isClosable, content, header, footer, onConfirm, onCancel, confirmText, cancelText}: Props) => {
     const dispatch = useAppDispatch();
     const visible = useSelector((state: GlobalState) => isModalOpen(state, modalId));
     const formatMessage = useFormattedMessage();
@@ -76,6 +80,16 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
         }
     }
 
+    let close;
+    if (isClosable) {
+        close = (
+            <StyledCloseIcon
+                onTouchEnd={handleCancel}
+                styled={{header: Boolean(header)}}
+            />
+        );
+    }
+
     let contentView;
     if (content) {
         if (typeof content === 'string') {
@@ -121,6 +135,7 @@ const GenericModal = ({modalId, isCancelable, content, header, footer, onConfirm
                                 {headerView}
                             </View>
                         )}
+                        {close}
                         <View padding={{paddingHorizontal: 'xl', paddingVertical: headerView ? 0 : 'm'}}>
                             {contentView}
                         </View>
@@ -146,5 +161,19 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 0,
     },
 });
+
+type StyledCloseProps = StyledComponentProps<{
+    header: boolean;
+}>;
+
+const StyledCloseIcon = styled(CloseIcon)<StyledCloseProps>(({styled: {header}, theme}) => ({
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    fill: header ? theme.colors.viewPrimary : theme.colors.viewSecondary,
+    width: 27,
+    height: 27,
+    margin: theme.spacing.xs,
+}));
 
 export default GenericModal;

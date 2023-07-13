@@ -4,7 +4,7 @@ import {styled} from 'styled-components/native';
 import {useAppDispatch} from '@redux/store';
 import {inventoryActions} from '@redux/inventory';
 import {Text, View} from '@renative';
-import {useCenterAbsolute} from '@hooking/useCenterAbsolute';
+import useCenterAbsolute from '@hooking/useCenterAbsolute';
 import SplitButton from '@components/split_button';
 import type {Item} from '@typing/inventory';
 import TrashIcon from '@res/trash_icon.svg';
