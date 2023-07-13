@@ -10,8 +10,3 @@ export type Craft = {
     type: ItemType;
     recipe: Ingredient[];
 };
-
-export type CraftSelectedItem = {
-    itemId: number;
-    amount: number;
-};

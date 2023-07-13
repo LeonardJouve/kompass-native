@@ -1,26 +1,39 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {useSelector} from 'react-redux';
 import {Button, View} from '@renative';
 import Rest from '@api/rest';
 import {getModalProps, isModalOpen} from '@redux/selectors/modal';
+import {getInventoryItemsArray} from '@redux/selectors/inventory';
 import GenericModal from '@components/modals/generic_modal';
 import CraftBlueprintItem from '@components/craft/craft_blueprint_item';
 import {ModalIdentifiers, type CraftModalProps} from '@typing/modals';
 import type {GlobalState} from '@typing/global_state';
-import type {OneToOneIdObject} from '@typing/redux';
 import type {AvailableItem} from '@typing/inventory';
-import type {CraftSelectedItem} from '@typing/craft';
 
 const CraftModal = () => {
     const isCraftModalOpen = useSelector((state: GlobalState) => isModalOpen(state, ModalIdentifiers.CRAFT_MODAL));
     const {craft} = useSelector(getModalProps) as CraftModalProps['props'];
-    const [selectedItems, setSelectedItems] = useState<OneToOneIdObject<CraftSelectedItem>>({});
+    const items = useSelector(getInventoryItemsArray);
+    const [selectedItems, setSelectedItems] = useState<Record<number, number>>({});
+    const [amount, setAmount] = useState<number>(1);
     const [result, setResult] = useState<AvailableItem|null>(null);
 
+    const filteredItems = useMemo(() => {
+        // Deep clone items
+        const newItems = items.map((item) => ({...item}));
+        Object.values(selectedItems).forEach((itemId) => {
+            const newItem = newItems.find((item) => item.item_id === itemId);
+            if (newItem) {
+                newItem.amount -= amount;
+            }
+        });
+        return newItems.filter((item) => item.amount);
+    }, [items, selectedItems]);
+
     const getResultPreview = async () => {
-        const selectedItemsId = Object.values(selectedItems).map(({itemId}) => itemId);
+        const selectedItemsId = Object.values(selectedItems);
         if (craft && selectedItemsId.length === craft.recipe.length) {
             const {data, error} = await Rest.getCraftPreview(craft.craft_id, selectedItemsId);
             if (error) {
@@ -38,6 +51,7 @@ const CraftModal = () => {
         return () => {
             setSelectedItems({});
             setResult(null);
+            setAmount(1);
         };
     }, [isCraftModalOpen]);
 
@@ -45,17 +59,18 @@ const CraftModal = () => {
         return null;
     }
 
-    const handleSelectItem = (index: number, item: CraftSelectedItem) => setSelectedItems({
+    const handleSelectItem = (index: number, itemId: number) => setSelectedItems({
         ...selectedItems,
-        [index]: item,
+        [index]: itemId,
     });
 
     const craftBlueprintItems = craft.recipe.map((ingredient, index) => (
         <CraftBlueprintItem
             key={'craft_blueprint_item' + index}
             ingredient={ingredient}
-            selectedItem={selectedItems[index]}
-            setSelectedItem={(item: CraftSelectedItem) => handleSelectItem(index, item)}
+            items={filteredItems.filter(({type}) => type === ingredient.type)}
+            selectedItemId={selectedItems[index]}
+            setSelectedItemId={(itemId: number) => handleSelectItem(index, itemId)}
         />
     ));
 
