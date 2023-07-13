@@ -23,7 +23,7 @@ const CraftListCategory = ({
     );
 
     return (
-        <View>
+        <View variants={['column']}>
             <Text variants={['header']}>{category}</Text>
             <GridList
                 size={size}

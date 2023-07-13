@@ -10,7 +10,7 @@ import useFormattedMessage from '@hooking/useFormattedMessage';
 import GenericModal from '@components/modals/generic_modal';
 import CraftBlueprintItem from '@components/craft/craft_blueprint_item';
 import ProgressBar from '@components/progress_bar';
-import Slider, { SliderDirection } from '@components/slider';
+import Slider from '@components/slider';
 import {ModalIdentifiers, type CraftModalProps} from '@typing/modals';
 import type {GlobalState} from '@typing/global_state';
 import type {AvailableItem} from '@typing/inventory';
