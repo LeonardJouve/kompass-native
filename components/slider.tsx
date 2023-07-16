@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Animated, LayoutChangeEvent, PanResponder, StyleSheet} from 'react-native';
 import {styled} from 'styled-components/native';
 import type {SvgProps} from 'react-native-svg';
@@ -12,32 +12,37 @@ import SliderThumbIcon from '@res/slider_thumb_icon.svg';
 type Props = {
     max: number;
     min?: number;
+    disabled?: boolean;
     trackThickness?: number;
     thumbSize?: number;
     showAmount?: boolean;
     trackColor?: string;
     thumbColor?: string;
     thumbIcon?: React.FC<SvgProps>;
+    setAmount: (amount: number) => void;
 };
 
 const Slider = ({
     max,
     min = 1,
+    disabled = false,
     trackThickness = 10,
     thumbSize = 20,
     showAmount = true,
     trackColor,
     thumbColor,
     thumbIcon = SliderThumbIcon,
+    setAmount,
 }: Props) => {
     const theme = useTheme();
     const {translateX, translateY, onLayout} = useCenterAbsolute();
     const [thumbTranslateX, setThumbTranslateX] = useState<number>(0);
     const [step, setStep] = useState<number>(0);
     const pan = useRef(new Animated.ValueXY());
+    const isDisabled = useRef<boolean>(disabled);
     const panResponder = useRef(
         PanResponder.create({
-            onStartShouldSetPanResponder: () => true,
+            onStartShouldSetPanResponder: () => !isDisabled.current,
             onPanResponderMove: (_event, gestureState) => {
                 pan.current.setValue({x: gestureState.dx, y: 0});
             },
@@ -50,6 +55,10 @@ const Slider = ({
             },
         })
     );
+
+    if (disabled !== isDisabled.current) {
+        isDisabled.current = disabled;
+    }
 
     const onTrackLayout = (event: LayoutChangeEvent) => {
         const {width} = event.nativeEvent.layout;
@@ -67,13 +76,17 @@ const Slider = ({
     });
 
     const clampedTranslateX = clamp(thumbTranslateX + translateX, translateX, maxTranslate);
-    const amount = Math.round(min + (clampedTranslateX / maxTranslate * steps));
+    const amount = maxTranslate > 0 ? Math.round(min + (clampedTranslateX / maxTranslate * steps)) : 1;
+
+    useEffect(() => {
+        setAmount(amount);
+    }, [amount]);
 
     return (
         <View variants={['column']}>
             {showAmount && <Text variants={['header', 'center']}>{amount}</Text>}
             <StyledTrackView
-                variants={['relative', 'bordered', 'rounded', 'justifyCenter']}
+                variants={['relative', 'bordered', 'rounded', 'justifyCenter', 'primary']}
                 styled={{
                     color: trackColor,
                     thickness: trackThickness,
@@ -109,9 +122,9 @@ type StyledTrackProps = StyledComponentProps<{
     color?: string;
 }>;
 
-const StyledTrackView = styled(View)<StyledTrackProps>(({styled: {thickness, color}, theme}) => ({
+const StyledTrackView = styled(View)<StyledTrackProps>(({styled: {thickness, color}}) => ({
     height: thickness,
-    backgroundColor: color ?? theme.colors.viewPrimary,
+    backgroundColor: color,
 }));
 
 export default Slider;

@@ -21,11 +21,26 @@ type Props = {
     cancelText?: string;
     isCancelable?: boolean;
     isClosable?: boolean;
+    isConfirmDisabled?: boolean;
+    closeOnConfirm?: boolean;
     onConfirm?: () => void;
     onCancel?: () => void;
 }
 
-const GenericModal = ({modalId, isCancelable, isClosable, content, header, footer, onConfirm, onCancel, confirmText, cancelText}: Props) => {
+const GenericModal = ({
+    modalId,
+    content,
+    header,
+    footer,
+    confirmText,
+    cancelText,
+    isCancelable,
+    isClosable,
+    isConfirmDisabled,
+    closeOnConfirm = true,
+    onConfirm,
+    onCancel,
+}: Props) => {
     const dispatch = useAppDispatch();
     const visible = useSelector((state: GlobalState) => isModalOpen(state, modalId));
     const formatMessage = useFormattedMessage();
@@ -36,7 +51,9 @@ const GenericModal = ({modalId, isCancelable, isClosable, content, header, foote
         if (onConfirm) {
             onConfirm();
         }
-        closeModal();
+        if (closeOnConfirm) {
+            closeModal();
+        }
     };
 
     const handleCancel = () => {
@@ -52,6 +69,7 @@ const GenericModal = ({modalId, isCancelable, isClosable, content, header, foote
             variants={['primary']}
             textVariants={['primary']}
             text={confirmButtonText}
+            disabled={isConfirmDisabled}
             onPress={handleConfirm}
         />
     );
