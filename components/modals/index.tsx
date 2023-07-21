@@ -1,8 +1,8 @@
 import React from 'react';
-import {View} from '@renative';
+import CraftModal from '@components/modals/craft_modal';
 
 const Modals = () => (
-    <View/>
+    <CraftModal/>
 );
 
 export default Modals;

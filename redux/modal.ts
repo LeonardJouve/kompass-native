@@ -1,29 +1,25 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {ModalIdentifier} from '@typing/modals';
+import {ModalIdentifiers, ModalProps} from '@typing/modals';
 
-export type ModalState = {
-    modalId: string;
-    props: Record<string, any>;
+export type ModalState = ModalProps & {
     visible: boolean;
 };
 
 const initialModalState = {
-    modalId: '',
+    modalId: ModalIdentifiers.NONE,
     props: {},
     visible: false,
-};
+} as ModalState;
 
-const openModal = (_state: ModalState, action: PayloadAction<{modalId: ModalIdentifier; props?: Record<string, any>}>) => ({
-    modalId: action.payload.modalId,
-    props: action.payload.props ?? {},
+const openModal = (_state: ModalState, action: PayloadAction<ModalProps>) => ({
+    ...action.payload,
     visible: true,
 });
 
-const closeModal = (state: ModalState, action: PayloadAction<ModalIdentifier>) => {
+const closeModal = (state: ModalState, action: PayloadAction<ModalIdentifiers>) => {
     if (state.modalId === action.payload) {
         return {
-            modalId: action.payload,
-            props: {},
+            ...state,
             visible: false,
         };
     }

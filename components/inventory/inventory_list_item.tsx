@@ -1,5 +1,6 @@
 import React from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {styled} from 'styled-components/native';
 import {Text, Button} from '@renative';
 import Rest from '@api/rest';
@@ -15,6 +16,7 @@ type Props = {
 };
 
 const InventoryListItem = ({item, selected, selectItem}: Props) => {
+    const {name, amount, item_id: itemId} = item;
     return (
         <StyledItemButton
             variants={['relative', 'row', 'alignCenter']}
@@ -22,15 +24,15 @@ const InventoryListItem = ({item, selected, selectItem}: Props) => {
             onLongPress={selectItem}
             styled={{selected}}
         >
-            <Text variants={['default']}>{item.amount}</Text>
-            <Image
+            <Text variants={['default']}>{amount}</Text>
+            <FastImage
                 source={{
-                    uri: Rest.getItemImageRoute(item.name),
-                    width: 30,
-                    height: 30,
+                    uri: Rest.getItemImageRoute(itemId),
+                    headers: {Authorization: `Bearer ${Rest.apiToken}`},
                 }}
+                style={styles.image}
             />
-            <Text variants={['default']}>{item.name}</Text>
+            <Text variants={['default']}>{name}</Text>
             {selected && (
                 <Button
                     variants={['primary', 'absolute']}
@@ -61,6 +63,10 @@ const styles = StyleSheet.create({
         right: 10,
         top: '50%',
         borderRadius: 10,
+    },
+    image: {
+        width: 30,
+        height: 30,
     },
 });
 

@@ -88,6 +88,17 @@ const useTheme = (): Theme => {
                     flexDirection: 'column',
                     gap: 10,
                 },
+                centered: {
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                },
+                rounded: {
+                    borderRadius: rounded,
+                },
+                bordered: {
+                    borderColor: colors.border,
+                    borderWidth: 3,
+                },
             }),
             view: StyleSheet.create({
                 primary: {
@@ -110,6 +121,9 @@ const useTheme = (): Theme => {
                 },
                 alignCenter: {
                     alignItems: 'center',
+                },
+                justifyCenter: {
+                    justifyContent: 'center',
                 },
                 fullWidth: {
                     width: '100%',
@@ -137,6 +151,16 @@ const useTheme = (): Theme => {
                 },
                 absolute: {
                     position: 'absolute',
+                },
+                bordered: {
+                    borderColor: colors.border,
+                    borderWidth: 3,
+                },
+                closable: {
+                    paddingTop: 60,
+                },
+                spaceBetween: {
+                    justifyContent: 'space-between',
                 },
             }),
             text: StyleSheet.create({

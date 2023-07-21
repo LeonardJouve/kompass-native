@@ -1,4 +1,5 @@
 import {MarginProp, PaddingProp, Spacings} from '@typing/theme';
+import {clamp} from '@utils/utils';
 
 export const getSpacings = (spacings: Spacings, values: MarginProp | PaddingProp): Partial<Record<keyof MarginProp | keyof PaddingProp, number>> => {
     const newValues = Object.keys(values).reduce((currentValues, key) => {
@@ -10,8 +11,6 @@ export const getSpacings = (spacings: Spacings, values: MarginProp | PaddingProp
     }, {});
     return newValues;
 };
-
-const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
 const adjustColor = (value: number, brightnessDelta: number) => Math.round(clamp((1 + brightnessDelta) * value, 0, 255));
 

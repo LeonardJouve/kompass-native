@@ -1,3 +1,20 @@
-export enum ModalIdentifiers {}
+import {Craft} from '@typing/craft';
 
-export type ModalIdentifier = keyof typeof ModalIdentifiers;
+export enum ModalIdentifiers {
+    NONE,
+    CRAFT_MODAL,
+}
+
+export type ModalProps = NoneModalProps | CraftModalProps;
+
+export type NoneModalProps = {
+    modalId: ModalIdentifiers.NONE;
+    props: {};
+};
+
+export type CraftModalProps = {
+    modalId: ModalIdentifiers.CRAFT_MODAL;
+    props: {
+        craft: Craft;
+    };
+};

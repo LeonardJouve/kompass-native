@@ -40,6 +40,9 @@ enum ButtonVariants {
     row,
     column,
     alignCenter,
+    centered,
+    rounded,
+    bordered,
 }
 
 enum ViewVariants {
@@ -49,6 +52,7 @@ enum ViewVariants {
     column,
     centered,
     alignCenter,
+    justifyCenter,
     rounded,
     fullWidth,
     fullHeight,
@@ -58,6 +62,9 @@ enum ViewVariants {
     flex,
     relative,
     absolute,
+    bordered,
+    closable,
+    spaceBetween,
 }
 
 enum TextVariants {

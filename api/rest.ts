@@ -1,9 +1,10 @@
 import BuildConfig from 'react-native-config';
-import {type ConfigState} from '@redux/config';
-import {type Token} from '@redux/auth';
+import type {ConfigState} from '@redux/config';
+import type {Token} from '@redux/auth';
 import type {Options, Response, Status} from '@typing/rest';
-import type {Item} from '@typing/inventory';
+import type {AvailableItem, Item, ItemType} from '@typing/inventory';
 import type {Poi} from '@typing/map';
+import type {Craft, CraftResponse} from '@typing/craft';
 
 class RestClient {
     public onDisconnect?: () => void;
@@ -86,8 +87,16 @@ class RestClient {
         return `${this.getApiRoute()}/opentripmap`;
     }
 
-    getItemImageRoute(itemName: string) {
-        return `${Rest.getBaseUrl()}/storage/items/${itemName}.png`;
+    getItemImageRoute(itemId: number) {
+        return `${this.getItemsRoute()}/image/${itemId}`;
+    }
+
+    getItemPreviewImageRoute(type: ItemType) {
+        return `${this.getItemsRoute()}/image-preview/${type}`;
+    }
+
+    getCraftsRoute() {
+        return `${this.getApiRoute()}/crafts`;
     }
 
     getConfig(): Response<ConfigState> {
@@ -138,6 +147,27 @@ class RestClient {
         return this.fetch(
             `${this.getOpentripmapRoute()}/search?xid=${xid}`,
             {method: 'GET'},
+        );
+    }
+
+    getCrafts(): Response<Craft[]> {
+        return this.fetch(
+            this.getCraftsRoute(),
+            {method: 'GET'},
+        );
+    }
+
+    getCraftPreview(craftId: number, selectedItemsId: number[]): Response<AvailableItem> {
+        return this.fetch(
+            `${this.getCraftsRoute()}/preview`,
+            {method: 'PUT', body: JSON.stringify({craft_id: craftId, selected_items_id: selectedItemsId})},
+        );
+    }
+
+    craft(craftId: number, selectedItemsId: number[], amount: number): Response<CraftResponse> {
+        return this.fetch(
+            `${this.getCraftsRoute()}`,
+            {method: 'POST', body: JSON.stringify({craft_id: craftId, selected_items_id: selectedItemsId, amount})},
         );
     }
 }

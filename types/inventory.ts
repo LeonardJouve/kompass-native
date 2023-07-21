@@ -1,11 +1,19 @@
 export type Item = {
     item_id: number;
-    amount: number;
     name: string;
     category: ItemCategory;
+    type: ItemType;
+    tier: number;
+    amount: number;
+};
+
+export type AvailableItem = Omit<Item, 'item_id'|'amount'> & {
+    id: number;
 };
 
 export type ItemCategory = 'ressource' | 'equipement' | 'food' | 'weapon' | 'tool';
+
+export type ItemType = 'log' | 'stick' | 'powder' | 'ingot' | 'plate' | 'vegetable' | 'soup' | 'salad';
 
 export type InventoryCategory = ItemCategory | 'all';
 

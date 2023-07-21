@@ -1,5 +1,6 @@
 import React from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {useNavigation} from '@react-navigation/native';
 import {View} from '@renative';
 import {Navigation} from '@typing/navigation';
@@ -13,9 +14,9 @@ const BackpackTrigger = () => {
             style={styles.wrapper}
             onTouchEnd={onTouch}
         >
-            <Image
-                style={styles.image}
+            <FastImage
                 source={require('@res/backpack.png')}
+                style={styles.image}
             />
         </View>
     );

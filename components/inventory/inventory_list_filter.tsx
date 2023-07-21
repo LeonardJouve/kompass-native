@@ -43,8 +43,7 @@ const InventoryListFilter = ({search, filter, order, setSearch, setFilter, setOr
     return (
         <View
             variants={['secondary']}
-            margin={{marginVertical: 'm'}}
-            style={styles.container}
+            margin={{marginBottom: 'm'}}
         >
             <View
                 variants={['primary', 'row', 'rounded', 'alignCenter']}
@@ -87,9 +86,6 @@ const InventoryListFilter = ({search, filter, order, setSearch, setFilter, setOr
 };
 
 const styles = StyleSheet.create({
-    container: {
-        paddingTop: 59,
-    },
     searchContainer: {
         gap: 2,
     },

@@ -24,6 +24,8 @@ enum TranslationKeysEnum {
     'components.inventory_list.filter.menu.amount',
     'components.inventory_list.no_result.text',
     'components.inventory_list.no_result.search',
+    'components.craft_list.no_result.text',
+    'components.craft_modal.confirm',
     'api.rest.error.invalid_json',
     'api.rest.error.token',
     'api.rest.error.auth.credentials',

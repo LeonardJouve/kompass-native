@@ -5,6 +5,7 @@ import useTheme from '@hooking/useTheme';
 import type {ViewVariant} from '@typing/theme';
 
 type Option = ({icon: React.FC<SvgProps>; content?: never;} | {content: React.ReactNode; icon?: never;}) & {
+    disabled?: boolean;
     isDangerous?: boolean;
     onPress?: () => void;
 };
@@ -27,12 +28,13 @@ const SplitButton = ({
     colorSecondary,
 }: Props) => {
     const theme = useTheme();
-    const buttons = options.map(({icon, content, isDangerous, onPress}, index) => {
+    const buttons = options.map(({icon, content, disabled, isDangerous, onPress}, index) => {
         const Icon = icon;
         return (
             <Button
                 variants={['primary']}
-                key={`split_button_${name}_${index}`}
+                key={'split_button_' + name + index}
+                disabled={disabled}
                 onPress={onPress}
                 style={{backgroundColor: colorPrimary ?? theme.colors.viewPrimary}}
             >

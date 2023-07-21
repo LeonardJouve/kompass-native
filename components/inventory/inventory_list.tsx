@@ -107,10 +107,7 @@ const InventoryList = () => {
     }
 
     return (
-        <View
-            variants={['secondary', 'relative', 'flex']}
-            padding={{paddingHorizontal: 's'}}
-        >
+        <View variants={['flex', 'relative']}>
             <FlatList
                 showsVerticalScrollIndicator={false}
                 data={filteredInventoryItems}

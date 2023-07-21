@@ -1,5 +1,5 @@
 import {PayloadAction, createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {type LatLng} from 'react-native-maps';
+import type {LatLng} from 'react-native-maps';
 import {errorActions} from '@redux/error';
 import Rest from '@api/rest';
 import type {Poi} from '@typing/map';
