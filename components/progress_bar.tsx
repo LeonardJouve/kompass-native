@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {Animated} from 'react-native';
 import {styled} from 'styled-components/native';
 import {View} from '@renative';
@@ -37,18 +37,18 @@ const ProgressBar = ({
         }
     }, [show]);
 
-    useEffect(() => {
-        animatedProgress.current.addListener(handleProgress);
-        () => animatedProgress.current.removeAllListeners();
-    }, []);
-
-    const handleProgress = ({value: newProgress}: {value: number}) => {
+    const handleProgress = useCallback(({value: newProgress}: {value: number}) => {
         progress.current = newProgress;
         onProgress?.(newProgress);
         if (newProgress >= 100) {
             onComplete();
         }
-    };
+    }, [onProgress, onComplete]);
+
+    useEffect(() => {
+        animatedProgress.current.addListener(handleProgress);
+        return () => animatedProgress.current.removeAllListeners();
+    }, [handleProgress]);
 
     if (!show) {
         return null;

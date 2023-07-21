@@ -19,13 +19,20 @@ const setInventoryItems = (state: InventoryState, action: PayloadAction<Inventor
     items: action.payload,
 });
 
-const addInventoryItem = (state: InventoryState, action: PayloadAction<Item>) => ({
-    ...state,
-    items: {
-        ...state.items,
-        [action.payload.item_id]: action.payload,
-    },
-});
+const addInventoryItem = (state: InventoryState, action: PayloadAction<Item>) => {
+    const item = state.items[action.payload.item_id];
+    if (item) {
+        item.amount += action.payload.amount;
+        return;
+    }
+    return {
+        ...state,
+        items: {
+            ...state.items,
+            [action.payload.item_id]: action.payload,
+        },
+    };
+};
 
 type deleteItemPayload = {
     itemId: Item['item_id'];

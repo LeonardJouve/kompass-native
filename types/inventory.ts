@@ -1,10 +1,10 @@
 export type Item = {
     item_id: number;
-    amount: number;
     name: string;
     category: ItemCategory;
     type: ItemType;
     tier: number;
+    amount: number;
 };
 
 export type AvailableItem = Omit<Item, 'item_id'|'amount'> & {

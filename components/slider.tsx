@@ -75,7 +75,7 @@ const Slider = ({
         extrapolate: 'clamp',
     });
 
-    const clampedTranslateX = clamp(thumbTranslateX + translateX, translateX, maxTranslate);
+    const clampedTranslateX = clamp(thumbTranslateX + translateX, 0, maxTranslate - translateX);
     const amount = maxTranslate > 0 ? Math.round(min + (clampedTranslateX / maxTranslate * steps)) : 1;
 
     useEffect(() => {

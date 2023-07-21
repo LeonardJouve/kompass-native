@@ -5,6 +5,7 @@ import {useSelector} from 'react-redux';
 import {Button, View} from '@renative';
 import Rest from '@api/rest';
 import {useAppDispatch} from '@redux/store';
+import {craftActions} from '@redux/craft';
 import {modalActions} from '@redux/modal';
 import {getModalProps, isModalOpen} from '@redux/selectors/modal';
 import {getInventoryItemsArray} from '@redux/selectors/inventory';
@@ -48,7 +49,7 @@ const CraftModal = () => {
         const newItems = items.map((item) => ({...item}));
         let newAmount = 0;
 
-        while (!newItems.find((item) => item.amount <= 0)) {
+        while (!newItems.find((item) => item.amount < 0)) {
             newAmount++;
             newSelectedItems.forEach((selectedItem) => {
                 const newItem = newItems.find((item) => item.item_id === selectedItem);
@@ -82,13 +83,13 @@ const CraftModal = () => {
     }, [selectedItems]);
 
     useEffect(() => {
-        return () => {
+        if (!isCraftModalOpen) {
             setSelectedItems({});
             setResult(null);
             setMaxAmount(0);
             setAmount(1);
             setIsCrafting(false);
-        };
+        }
     }, [isCraftModalOpen]);
 
     if (!isCraftModalOpen) {
@@ -105,6 +106,11 @@ const CraftModal = () => {
     };
 
     const onCraft = () => {
+        dispatch(craftActions.craft({
+            craftId: craft.craft_id,
+            selectedItemsId: Object.values(selectedItems),
+            amount,
+        }));
         dispatch(modalActions.closeModal(ModalIdentifiers.CRAFT_MODAL));
     };
 

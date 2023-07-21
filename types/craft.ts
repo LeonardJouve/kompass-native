@@ -1,4 +1,4 @@
-import {ItemType} from '@typing/inventory';
+import {Item, ItemType} from '@typing/inventory';
 
 export type Ingredient = {
     type: ItemType;
@@ -9,4 +9,14 @@ export type Craft = {
     category: string;
     type: ItemType;
     recipe: Ingredient[];
+};
+
+type RemovedItem = {
+    item_id: number;
+    amount: number;
+};
+
+export type CraftResponse = {
+    result: Item;
+    removed: RemovedItem[];
 };
