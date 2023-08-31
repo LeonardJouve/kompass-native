@@ -102,7 +102,7 @@ const getPositionStyleFromPlacement = (measures: Measures, dimensions: Dimension
 };
 
 const Menu = ({open, name, position, button, header, items, handleOpen}: Props) => {
-    const [positionStyle, setPositionStyle] = useState<PositionStyle>({});
+    const [positionStyle, setPositionStyle] = useState<PositionStyle>({top: -1});
     const menuButtonRef = useRef<NativeView>(null);
     const menuRef = useRef<NativeView>(null);
 
@@ -147,6 +147,10 @@ const Menu = ({open, name, position, button, header, items, handleOpen}: Props) 
             {selected ? <StyledCheckIcon/> : rightDecorator}
         </StyledItemButton>
     ));
+
+    if (positionStyle.top === -1) {
+        return menuButton;
+    }
 
     return (
         <>
